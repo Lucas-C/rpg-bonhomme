@@ -88,7 +88,7 @@ def put_or_get(method, path, query_params, form):
             value = db_get(key)
         else:
             value = query_params if method == 'GET' else form
-            log('PUT key="{}":value=""'.format(key, value))
+            log('PUT key="{}":value="{}"'.format(key, value))
             db_put(key, value)
         return json.dumps({key: value})
     except KeyError:

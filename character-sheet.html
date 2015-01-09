@@ -118,6 +118,8 @@
             if (value) {
                 if (input.type === 'image') {
                     input.src = value;
+                } else if (input.type === 'checkbox') {
+                    input.checked = (value === "on");
                 } else {
                     input.value = value;
                 }
@@ -127,9 +129,12 @@
     scrape_inputs = function () {
         var inputs_data = {};
         [].forEach.call(document.querySelectorAll('#character-sheet input, textarea'), function(input) {
-            if (input.type === 'file') { return; }
-            if (input.type === 'image') {
+            if (input.type === 'file') {
+                return; 
+            } else if (input.type === 'image') {
                 inputs_data[input.id] = input.src;
+            } else if (input.type === 'checkbox') {
+                inputs_data[input.id] = (input.checked ? "on" : "off");
             } else {
                 inputs_data[input.id] = input.value;
             }
