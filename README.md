@@ -8,7 +8,7 @@ which enables you to share it with others simply by providing a unique URL.
 # Examples
 
 - [Lythes](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Dedale&name=lythes), an android from the French RPG [Dédale](http://lab00.free.fr/sommaire/home.htm).
-- [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=raphaelle_lepercq), two characters from a 'one-shot' RPG called 'Absence'.
+- [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=raphaelle_lepercq_se_fait_appeler_lila_), two characters from a 'one-shot' RPG called 'Absence'.
 - [Atharès](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
 - [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
 
@@ -34,9 +34,7 @@ It's a simple key-value store using a SQLite DB (yes, Redis may have been a bett
 The **key** MUST be a string, and the **value** MUST be a JSON dictionary.
 There are some length limitations currently hardcoded at the top of the Python file.
 In case of a lookup error, the return value will be '{}', else it will returns {key: value} or throw an error
-(calling 'alert' if using JSONP, else displaying an HTML error page).
-- [Atharès](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
-- [Atharès](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
+(calling Javascript 'alert' if using JSONP, else displaying an HTML error page).
 
 ## Setup
 
@@ -66,6 +64,6 @@ All icons are from Google Material Design icons set (CC BY 4.0) : https://github
 
 # Notes
 
-- why the name ? It's a reference to the video "Tom et ses chums! Farador D&D" : http://youtu.be/T9FMURHhgzc?t=4m40s
-- in case the character sheet you want to use is in PDF format, you can use `pdftoppm` then ImageMagick `convert` to get PNG image file.
+- why this project name ? It's a reference to the line "T'as tué mon bonhomme !" from the video "Tom et ses chums! Farador D&D" : http://youtu.be/T9FMURHhgzc?t=4m40s
+- in case you want to add a character sheet in PDF format, you can use `pdftoppm` then ImageMagick `convert` to get a PNG image file.
 
