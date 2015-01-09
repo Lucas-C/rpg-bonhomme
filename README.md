@@ -31,10 +31,11 @@ More details [here](http://security.stackexchange.com/a/23439).
 That being said, this WSGI app won't do anything nasty.
 It's a simple key-value store using a SQLite DB (yes, Redis may have been a better fit), developped to allow simple GET/PUT through JSONP.
 
-The **key** MUST be a string, and the **value** MUST be a JSON dictionary.
-There are some length limitations currently hardcoded at the top of the Python file.
-In case of a lookup error, the return value will be '{}', else it will returns {key: value} or throw an error
+- The **key** MUST be a string, and the **value** MUST be a JSON dictionary.
+- In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or throw an error
 (calling Javascript 'alert' if using JSONP, else displaying an HTML error page).
+- There are some key/value length limitations currently hardcoded at the top of the Python file.
+- There is also a client & server limitation on the request URI (between 2KB & 8KB usually), that can trigger a 414 error.
 
 ## Setup
 
@@ -44,10 +45,13 @@ In case of a lookup error, the return value will be '{}', else it will returns {
 
 ## Testing
 
-    curl -X POST -d name="John Doe" https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe
+    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x?42
+    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x
+    curl -X POST -d '{name:"John Doe"}' https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe
     curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe
-    curl 'https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe?_do=put&name=John%20Doe'
+    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe?%7Bname%3A%22John%20Doe%22%7D
     curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe&callback=foo
+    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x?%7Ba%3A%7Bb%3Atrue%7D%7D
 
 Error handling:
 

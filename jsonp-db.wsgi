@@ -1,4 +1,5 @@
-import cgi, json, logging, logging.handlers, os, requests, sqlite3, sys, traceback, urlparse
+import cgi, logging, logging.handlers, os, requests, sqlite3, sys, traceback, urlparse
+from collections import namedtuple
 from contextlib import closing
 from functools import wraps
 from threading import Lock
@@ -11,6 +12,7 @@ LOG_FILE = os.path.join(os.path.dirname(__file__), 'jsonp-db.log')
 LOG_FORMAT = '%(asctime)s - %(process)s [%(levelname)s] %(filename)s %(lineno)d %(message)s'
 
 class Error400(Exception): pass
+class RequestParameters(namedtuple('_RequestParameters', 'args kwargs')): pass
 
 def configure_logger():
     logger = logging.getLogger(__name__)
@@ -31,28 +33,30 @@ def log(msg, lvl=logging.INFO):
 def application(env, start_response):
     path = env.get('PATH_INFO', '')
     method = env['REQUEST_METHOD']
-    query_params = dict(urlparse.parse_qsl(env['QUERY_STRING'])) # Note: this discards single values (eg. .../jsonp-db/key?42)
-    callback = query_params.pop('callback', None)
+    query_string = env['QUERY_STRING']
     form = pop_form(env)
-    log('Handling request: {} "{}" with query_params: "{}", form: "{}"'.format(method, path, query_params, form))
+    log('Handling request: {} "{}" with query_string: "{}", form: "{}"'.format(method, path, query_string, form))
     try:
-        response = put_or_get(method, path, query_params, form)
+        query_params = parse_query_string(query_string)
+        form_params = parse_form(form)
+        callback = query_params.kwargs.pop('callback', None)
+        response = put_or_get(path, query_params, form_params)
         start_response('200 OK', [('Content-Type', 'application/javascript')])
         return [callback + '(' + response + ')' if callback else response]
     except Error400 as error:
         log('[ERROR] 400 : {}'.format(error))
-        error_response, mime_type = format_error_response(error.message, '404 - Client-side error', callback)
+        error_response, mime_type = format_error_response(error.message, '404 - Client-side error', bool(callback))
         start_response('400 Bad Request', [('Content-Type', mime_type)])
         return [error_response]
     except Exception:
         error_msg = traceback.format_exc()
         log('[ERROR] 500 : {}'.format(error_msg))
-        error_response, mime_type = format_error_response(error_msg, '500 - Server-side error', callback)
+        error_response, mime_type = format_error_response(error_msg, '500 - Server-side error', bool(callback))
         start_response('500 Internal Server Error', [('Content-Type', mime_type)])
         return [error_response]
 
-def format_error_response(error_msg, title, callback):
-    if callback: # JSONP => call javascript 'alert'
+def format_error_response(error_msg, title, use_jsonp):
+    if use_jsonp:
         return ("alert('{}')".format(error_msg), 'application/javascript')
     return (('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>{title}</title></head>'
              '<body><pre>{msg}</pre></body></html>'.format(title=title, msg=cgi.escape(error_msg))), 'text/html')
@@ -71,28 +75,48 @@ def pop_form(env):
         environ = post_env,
         keep_blank_values = True
     )
-    return {k:form[k].value for k in form.keys()} # Note: this discard single values (eg. curl -d 42 ...)
+    return form
 
-def put_or_get(method, path, query_params, form):
-    if method not in ('GET', 'POST', 'PUT'):
-        raise Error400('Invalid method type: {}'.format(method))
+def parse_query_string(query_string):
+    qp = dict(urlparse.parse_qsl(query_string, True))
+    return RequestParameters(
+        [k for k in qp if qp[k] == ''],
+        {k:qp[k] for k in qp if qp[k] != ''},
+    )
+
+def parse_form(form):
+    return RequestParameters(
+        [k for k in form if form[k].value == ''],
+        {k:form[k].value for k in form if form[k].value != ''},
+    )
+
+def put_or_get(path, query_params, form_params):
     if not path.startswith('/') or path.count('/') != 1:
         raise Error400('Incorrect request syntax, expecting /<key> and got: "{}"'.format(path))
+    if len(query_params.args) > 1 or len(form_params.args) > 1:
+        raise Error404(('Incorrect request syntax, extra args:'
+                + 'query_params={.args} - form_params={.args}').format(query_params, form_params))
+    if query_params.kwargs or form_params.kwargs:
+        log(('Extra kwargs found:'
+            + 'query_params={.kwargs} - form_params={.kwargs}').format(query_params, form_params))
     key = path[1:]
-    action = query_params.pop('_do', None)
+    value = None
+    if query_params.args:
+        value = query_params.args[0]
+    elif form_params.args:
+        value = form_params.args[0]
     try:
         if len(key) > MAX_KEY_LENGTH:
             raise ValueError('Key length exceeded maximum: {} > {}'.format(len(key), MAX_KEY_LENGTH))
-        if method == 'GET' and action != 'put':
-            log('GET key="{}"'.format(key))
-            value = db_get(key)
-        else:
-            value = query_params if method == 'GET' else form
+        if value:
             log('PUT key="{}":value="{}"'.format(key, value))
             db_put(key, value)
-        return json.dumps({key: value})
+        else:
+            log('GET key="{}"'.format(key))
+            value = db_get(key)
+        return value
     except KeyError:
-        return '{}'
+        return 'undefined'
     except (ValueError, MemoryError) as error:
         raise Error400('{}: {}'.format(error.__class__.__name__, error.message))
 
@@ -103,16 +127,14 @@ def db_get(key):
         query_result = db_cursor.fetchone()
     if not query_result or len(query_result) != 1:
         raise KeyError(query_result)
-    string_value = query_result[0]
-    return json.loads(string_value)
+    return str(query_result[0])
 
 def db_put(key, value):
     db_check_table_size()
     with closing(_db.cursor()) as db_cursor:
-        string_value = json.dumps(value)
-        if len(string_value) > MAX_VALUE_LENGTH:
-            raise ValueError('Value length exceeded maximum: {} > {}'.format(len(string_value), MAX_VALUE_LENGTH))
-        db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, string_value))
+        if len(value) > MAX_VALUE_LENGTH:
+            raise ValueError('Value length exceeded maximum: {} > {}'.format(len(value), MAX_VALUE_LENGTH))
+        db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, value))
         _db.commit()
 
 def db_check_table_size():

@@ -69,13 +69,12 @@
         var script = document.createElement('script'),
             callback_func_name = 'jsonp_callback_' + jsonp_calls_counter++,
             callback_param_name = request.callback_param_name || 'callback',
-            data = extend({}, request.data);
+            search_query = (typeof request.data === 'string' ? request.data : encode_query_params(request.data));
         window[callback_func_name] = function (data) {
             delete window[callback_func_name];
             request.success(data);
-        };
-        data[callback_param_name] = callback_func_name;
-        script.src = request.url + '?' + encode_query_params(data);
+        }
+        script.src = request.url + '?' + search_query + '&' + callback_param_name + '=' + callback_func_name;
         document.body.appendChild(script);
     },
     jsonp_calls_counter = 0,
@@ -130,7 +129,7 @@
         var inputs_data = {};
         [].forEach.call(document.querySelectorAll('#character-sheet input, textarea'), function(input) {
             if (input.type === 'file') {
-                return; 
+                return;
             } else if (input.type === 'image') {
                 inputs_data[input.id] = input.src;
             } else if (input.type === 'checkbox') {
@@ -145,14 +144,12 @@
         var character_id = get_character_id();
         assert(character_id, 'No character name provided');
         console.log('Sending character sheet to remote server : ' + character_id);
-        var data = scrape_inputs();
-        data._do = 'put';
+        var inputs = scrape_inputs();
         jsonp({
             url: SERVER_STORAGE_CGI + character_id,
-            data: data,
+            data: JSON.stringigfy(inputs),
             success: function (data) {
-                console.log('Character sheet successfully saved');
-                console.log(data[character_id]);
+                console.log('Character sheet ' + character_id + ' successfully saved', data);
                 location.search = get_location_search();
             }
         });
@@ -164,8 +161,8 @@
         jsonp({
             url: SERVER_STORAGE_CGI + character_id,
             success: function (data) {
-                assert(data && Object.keys(data).length, 'Empty data received from server', data);
-                fill_inputs(data[character_id]);
+                assert(data !=== undefined, 'Undefined data received from server');
+                fill_inputs(data);
                 update_title(character_id);
             }
         });
