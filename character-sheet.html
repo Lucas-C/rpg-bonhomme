@@ -164,7 +164,11 @@
         jsonp({
             url: SERVER_STORAGE_CGI + character_id,
             success: function (data) {
-                assert(data !== undefined, 'Undefined data received from server');
+                if (!data) {
+                    console.log('No data found on server matching : ' + character_id);
+                    location.search = '?layout=' + params.layout;
+                    return;
+                }
                 fill_inputs(data);
                 update_title(character_id);
             }
@@ -205,6 +209,9 @@
             background_img.src = 'img/' + params.layout + '.png';
             background_img.alt = 'Character sheet image cannot be displayed';
             main_div.appendChild(background_img);
+            if (!input_ids.name) {
+                throw_error('The <layout>.css does not define any #name input, this is required.');
+            }
             Object.keys(input_ids).forEach(function (input_id) {
                 var input_specs = input_ids[input_id],
                     input = document.createElement(input_specs.tag);

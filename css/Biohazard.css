@@ -3,7 +3,7 @@ input, textarea {
   font-family: Tahoma,Geneva,sans-serif;
   font-size: 110%;
 }
-input#lastname { top: 325px; left: 165px; width: 185px; }
+input#name { top: 325px; left: 165px; width: 185px; }
 input#firstname { top: 362px; left: 195px; width: 156px; }
 input#sexe { top: 430px; left: 164px; width: 187px; }
 input#age { top: 465px; left: 157px; width: 194px; }
