@@ -50,6 +50,9 @@
         return arguments[0];
     },
     encode_query_params = function (data) {
+        if (!data) {
+            return '';
+        }
         var params_pairs = [];
         Object.keys(data).forEach(function(key) {
             var value = data[key];
@@ -161,7 +164,7 @@
         jsonp({
             url: SERVER_STORAGE_CGI + character_id,
             success: function (data) {
-                assert(data !=== undefined, 'Undefined data received from server');
+                assert(data !== undefined, 'Undefined data received from server');
                 fill_inputs(data);
                 update_title(character_id);
             }

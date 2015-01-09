@@ -31,11 +31,11 @@ More details [here](http://security.stackexchange.com/a/23439).
 That being said, this WSGI app won't do anything nasty.
 It's a simple key-value store using a SQLite DB (yes, Redis may have been a better fit), developped to allow simple GET/PUT through JSONP.
 
-- The **key** MUST be a string, and the **value** MUST be a JSON dictionary.
-- In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or throw an error
+In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or throw an error
 (calling Javascript 'alert' if using JSONP, else displaying an HTML error page).
-- There are some key/value length limitations currently hardcoded at the top of the Python file.
-- There is also a client & server limitation on the request URI (between 2KB & 8KB usually), that can trigger a 414 error.
+
+There are some key/value length limitations currently hardcoded at the top of the Python file.
+There is also a client & server limitation on the request URI (between 2KB & 8KB usually), that can trigger a 414 error.
 
 ## Setup
 
