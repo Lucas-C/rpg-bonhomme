@@ -36,9 +36,12 @@ def application(env, start_response):
     form = pop_form(env)
     log('Handling request: {} "{}" with query_string: "{}", form: "{}"'.format(method, path, query_string, form))
     try:
-        response = handle_request(method, path, query_string, form)
+        query_params = parse_query_string(query_string)
+        form_params = parse_form(form)
+        callback = query_params.kwargs.pop('callback', None)
+        response = put_or_get(path, query_params, form_params)
         start_response('200 OK', [('Content-Type', 'application/javascript')])
-        return [response]
+        return [callback + '(' + response + ')' if callback else response]
     except Error400 as error:
         log('[ERROR] 400 : {}'.format(error))
         error_response, mime_type = format_error_response(error.message, '404 - Client-side error', bool(callback))
@@ -66,13 +69,6 @@ def pop_form(env):
         keep_blank_values = True
     )
     return form
-
-def handle_request(method, path, query_string, form):
-    query_params = parse_query_string(query_string)
-    form_params = parse_form(form)
-    callback = query_params.kwargs.pop('callback', None)
-    response = put_or_get(path, query_params, form_params)
-    return callback + '(' + response + ')' if callback else response
 
 def format_error_response(error_msg, title, use_jsonp):
     if use_jsonp:

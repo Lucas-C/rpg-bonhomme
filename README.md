@@ -56,7 +56,7 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
 
     sqlite3 jsonp-db.db 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
     chmod ugo+rw jsonp-db.db
-    sudo ln -s jsonp-db-backup.sh /etc/cron.daily/jsonp-db-backup.sh
+    sudo ln -s $PWD/jsonp-db-backup.sh /etc/cron.daily/jsonp-db-backup.sh
 
 ## Testing
 
@@ -67,6 +67,7 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
     curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe?%7Bname%3A%22John%20Doe%22%7D
     curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe&callback=foo
     curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x?%7Ba%3A%7Bb%3Atrue%7D%7D
+    curl -X POST --data-urlencode @tmp.json https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x
 
 Error handling:
 

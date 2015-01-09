@@ -1,7 +1,7 @@
 #!/bin/bash
 set -o pipefail -o errexit -o nounset -o xtrace
 
-DB_DIR=/var/www/lucas/rpg-bonhomme
+DB_DIR=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 cd $DB_DIR
 mkdir -p backup/
 
