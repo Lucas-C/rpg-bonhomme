@@ -1,0 +1,53 @@
+input, textarea {
+  position: absolute;
+  font-family: Tahoma,Geneva,sans-serif;
+  font-size: 150%;
+}
+input#name { top: 108px; left: 190px; width: 260px; }
+input#ethnic-group { top: 108px; left: 620px; width: 200px; }
+input#activity { top: 162px; left: 270px; width: 550px; }
+textarea#apparence { top: 270px; left: 110px; width: 680px; height: 150px; }
+input#player { top: 382px; left: 950px; width: 200px; }
+textarea#personality { top: 430px; left: 300px; width: 840px; height: 110px; }
+input#emblem[type=image] { top: 630px; left: 140px; max-height: 220px; }
+
+input#vivacity.domain[type=number] { top: 660px; left: 610px; width: 52px; }
+input#empathy.domain[type=number] { top: 728px; left: 610px; width: 52px; }
+input#body.domain[type=number] { top: 660px; left: 874px; width: 52px; }
+input#culture.domain[type=number] { top: 728px; left: 874px; width: 52px; }
+input#breath[type=number] { top: 725px; left: 1013px; width: 40px; }
+input#max-breath[type=number] { top: 725px; left: 1077px; width: 40px; }
+
+input#s_l1_c1.skill { top: 872px; left: 120px; width: 320px; }
+input#s_l1_c2.skill { top: 872px; left: 470px; width: 320px; }
+input#s_l1_c3.skill { top: 872px; left: 826px; width: 320px; }
+input#s_l2_c1.skill { top: 932px; left: 120px; width: 320px; }
+input#s_l2_c2.skill { top: 932px; left: 470px; width: 320px; }
+input#s_l2_c3.skill { top: 932px; left: 826px; width: 320px; }
+input#s_l3_c1.skill { top: 991px; left: 120px; width: 320px; }
+input#s_l3_c2.skill { top: 991px; left: 470px; width: 320px; }
+input#s_l3_c3.skill { top: 991px; left: 826px; width: 320px; }
+input#s_l4_c1.skill { top: 1051px; left: 120px; width: 320px; }
+input#s_l4_c2.skill { top: 1051px; left: 470px; width: 320px; }
+input#s_l5_c1.skill { top: 1110px; left: 120px; width: 320px; }
+input#s_l5_c2.skill { top: 1110px; left: 470px; width: 320px; }
+
+input#i_l1.injury { top: 1220px; left: 120px; width: 290px; }
+input#i_l2.injury { top: 1274px; left: 120px; width: 290px; }
+input#_il3.injury { top: 1329px; left: 120px; width: 290px; }
+
+input#p_l1_c1.possession { top: 1274px; left: 480px; width: 320px; }
+input#p_l1_c2.possession { top: 1274px; left: 835px; width: 320px; }
+input#p_l2_c1.possession { top: 1328px; left: 480px; width: 320px; }
+input#p_l2_c2.possession { top: 1328px; left: 835px; width: 320px; }
+input#p_l3_c1.possession { top: 1384px; left: 480px; width: 320px; }
+input#p_l3_c2.possession { top: 1384px; left: 835px; width: 320px; }
+input#p_l4_c1.possession { top: 1438px; left: 480px; width: 320px; }
+input#p_l4_c2.possession { top: 1438px; left: 835px; width: 320px; }
+input#p_l5_c1.possession { top: 1492px; left: 480px; width: 320px; }
+input#p_l5_c2.possession { top: 1492px; left: 835px; width: 320px; }
+input#p_l6_c1.possession { top: 1546px; left: 480px; width: 320px; }
+input#p_l7_c1.possession { top: 1600px; left: 480px; width: 320px; }
+
+input#north_union.dollars { top: 1560px; left: 1010px; width: 80px; }
+input#south_alliance.dollars { top: 1610px; left: 1010px; width: 80px; }

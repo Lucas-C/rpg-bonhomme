@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang='fr'>
+  <head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>RPG Character Sheet</title>
+    <style>
+      #buttons { position: absolute; top: 0; right: 200px; }
+      #buttons input { position: absolute; }
+      #save-to-server-button { top: 10px; left: 10px; }
+      #load-from-server-button { top: 10px; left: 90px; }
+      #download-json-button { top: 80px; left: 10px; }
+      #upload-json-button { top: 80px; left: 90px; }
+    </style>
+  </head>
+  <body>
+    <div id='character-sheet'></div>
+    <div id='buttons'>
+      <input type='image' id='save-to-server-button' onclick='save_character_to_server()' title='Save to remote server' src='icon/cloud_upload.png' alt='-'>
+      <input type='image' id='load-from-server-button' onclick='load_character_from_server()' title='Load from remote server' src='icon/cloud_download.png' alt='-'>
+      <input type='image' id='download-json-button' onclick='download_character_as_json()' title='Download JSON file' src='icon/file_download.png' alt='-'/>
+      <input type='image' id='upload-json-button' onclick='document.getElementById("charactersheet_file_picker").click()' title='Upload JSON file' src='icon/file_upload.png' alt='-'/>
+      <input type="file" id="charactersheet_file_picker" accept="text/plain" style="display:none" onchange="charactersheet_file_picker_change()">
+    </div>
+    <script type='text/javascript'>
+    var SERVER_STORAGE_CGI = 'https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/',
+    throw_error = function () {
+        var msg_array = [];
+        [].slice.call(arguments).forEach(function (arg) {
+            console.log(arg);
+            msg_array.push(JSON.stringify(arg));
+        }),
+        string_message = msg_array.join(' - ');
+        alert(string_message);
+        throw Error(string_message);
+    },
+    assert = function (condition, message) {
+        if (!condition) {
+            message = 'Assert failed' + (typeof message !== 'undefined' ? ': ' + message : '');
+            throw_error.bind(null, message, [].slice.call(arguments, 2))();
+        }
+    },
+    extend = function () {
+        for (var i = 1; i < arguments.length; i++) {
+            for (var key in arguments[i]) { // include inherited properties
+                arguments[0][key] = arguments[i][key];
+            }
+        }
+        return arguments[0];
+    },
+    encode_query_params = function (data) {
+        var params_pairs = [];
+        Object.keys(data).forEach(function(key) {
+            var value = data[key];
+            params_pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+        });
+        return params_pairs.join('&');
+    },
+    get_url_params = function () {
+        var params = {}
+        window.location.search.substr(1).split("&").forEach(function (item) {
+            var pair = item.split("=");
+            params[pair[0]] = pair[1];
+        });
+        return params;
+    },
+    jsonp = function (request) {
+        var script = document.createElement('script'),
+            callback_func_name = 'jsonp_callback_' + jsonp_calls_counter++,
+            callback_param_name = request.callback_param_name || 'callback',
+            data = extend({}, request.data);
+        window[callback_func_name] = function (data) {
+            delete window[callback_func_name];
+            request.success(data);
+        };
+        data[callback_param_name] = callback_func_name;
+        script.src = request.url + '?' + encode_query_params(data);
+        document.body.appendChild(script);
+    },
+    jsonp_calls_counter = 0,
+    get_stylesheet = function (css_name) {
+        var css_name_pattern = new RegExp(css_name + '$'),
+            css_found = null;
+        [].slice.call(document.styleSheets).forEach(function (css) {
+            if (css.href && css.href.match(css_name_pattern)) {
+                css_found = css;
+            }
+        });
+        return css_found;
+    },
+    get_input_ids_from_css_rules = function (css) {
+        var input_ids = {};
+        [].slice.call(css.cssRules).forEach(function (rule) {
+            var match = rule.selectorText.match(/^(input|textarea)#([^.[]+)(\.([^[]+))?(\[type="(.+)"\])?/);
+            if (match) {
+                var tag = match[1],
+                    id = match[2],
+                    className = match[4],
+                    input_type = match[6];
+                input_ids[id] = {tag: tag, className: className, input_type: input_type};
+            }
+        });
+        return input_ids;
+    },
+    get_character_id = function (name) {
+        return params.layout + '_' + (name || document.getElementById('name').value).replace(/\W+/g, '_').toLowerCase();
+    },
+    get_location_search = function (name) {
+        return '?layout=' + params.layout + '&name=' + (name || document.getElementById('name').value).replace(/\W+/g, '_').toLowerCase();
+    },
+    update_title = function (character_id) {
+        document.title = 'RPG Character Sheet - ' + character_id;
+    },
+    fill_inputs = function (inputs_data) {
+        [].forEach.call(document.querySelectorAll('#character-sheet input, textarea'), function(input) {
+            var value = inputs_data[input.id];
+            if (value) {
+                if (input.type === 'image') {
+                    input.src = value;
+                } else {
+                    input.value = value;
+                }
+            }
+        });
+    },
+    scrape_inputs = function () {
+        var inputs_data = {};
+        [].forEach.call(document.querySelectorAll('#character-sheet input, textarea'), function(input) {
+            if (input.type === 'file') { return; }
+            if (input.type === 'image') {
+                inputs_data[input.id] = input.src;
+            } else {
+                inputs_data[input.id] = input.value;
+            }
+        });
+        return inputs_data;
+    },
+    save_character_to_server = function () {
+        var character_id = get_character_id();
+        assert(character_id, 'No character name provided');
+        console.log('Sending character sheet to remote server : ' + character_id);
+        var data = scrape_inputs();
+        data._do = 'put';
+        jsonp({
+            url: SERVER_STORAGE_CGI + character_id,
+            data: data,
+            success: function (data) {
+                console.log('Character sheet successfully saved');
+                console.log(data[character_id]);
+                location.search = get_location_search();
+            }
+        });
+    },
+    load_character_from_server = function (character_name) {
+        var character_id = get_character_id(character_name);
+        assert(character_id, 'No character name provided');
+        console.log('Fetching character sheet content from server : ' + character_id);
+        jsonp({
+            url: SERVER_STORAGE_CGI + character_id,
+            success: function (data) {
+                assert(data && Object.keys(data).length, 'Empty data received from server', data);
+                fill_inputs(data[character_id]);
+                update_title(character_id);
+            }
+        });
+    },
+    download_character_as_json = function () {
+        var character_id = get_character_id(),
+            data = scrape_inputs(),
+            a = document.createElement('a');
+        console.log('Downloading JSON file for character: ' + character_id);
+        a.href = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(data));
+        a.download = character_id + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    },
+    charactersheet_file_picker_change = function () {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var inputs_data = JSON.parse(reader.result);
+            console.log('Uploading character from user-provided file : ' + get_character_id(inputs_data.name));
+            fill_inputs(inputs_data);
+            update_title(character_id);
+        };
+        reader.readAsText(this.files[0]);
+    },
+    params = get_url_params();
+    document.addEventListener('DOMContentLoaded', function() {
+        assert(params.layout, 'No layout specified in the URL');
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'css/' + params.layout + '.css';
+        document.head.appendChild(link);
+        setTimeout(function () {
+            var input_ids = get_input_ids_from_css_rules(get_stylesheet(link.href)),
+                main_div = document.getElementById('character-sheet'),
+                background_img = document.createElement('img');
+            background_img.src = 'img/' + params.layout + '.png';
+            background_img.alt = 'Character sheet image cannot be displayed';
+            main_div.appendChild(background_img);
+            Object.keys(input_ids).forEach(function (input_id) {
+                var input_specs = input_ids[input_id],
+                    input = document.createElement(input_specs.tag);
+                input.id = input_id;
+                if (input_specs.className) {
+                    input.className = input_specs.className;
+                }
+                if (input_specs.tag == 'input') {
+                    input.type = input_specs.input_type || 'text';
+                }
+                main_div.appendChild(input);
+                if (input.type === 'image') {
+                    input.src = 'icon/upload_image.png';
+                    input.onclick = function () {
+                        input.src = prompt("Please enter an URL to the image you want to use", input.src);
+                    };
+                }
+            });
+            if (params.name) {
+                load_character_from_server(params.name);
+            }
+        }, 1000);
+    });
+    </script>
+  </body>
+</html>

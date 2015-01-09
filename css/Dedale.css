@@ -1,0 +1,102 @@
+input, textarea {
+  position: absolute;
+  font-family: Tahoma,Geneva,sans-serif;
+  font-size: 110%;
+}
+.skillpack, .involution {
+  font-size: 80%;
+}
+input#name { top: 100px; left: 170px; width: 220px; }
+input#size { top: 100px; left: 530px; width: 120px; }
+input#weight { top: 100px; left: 760px; width: 120px; }
+input#description { top: 148px; left: 270px; width: 300px; }
+input#avatar[type=image] { top: 135px; left: 590px; max-height: 280px; }
+input#gimmick { top: 416px; left: 800px; width: 160px; }
+
+input#reponse.corpus[type=number] { top: 298px; left: 210px; width: 60px; }
+input#power.corpus[type=number] { top: 335px; left: 210px; width: 60px; }
+input#precision.corpus[type=number] { top: 376px; left: 210px; width: 60px; }
+input#logic.mnemonic[type=number] { top: 414px; left: 180px; width: 60px; }
+input#endopsy.mnemonic[type=number] { top: 460px; left: 180px; width: 60px; }
+input#look.corpus[type=number] { top: 502px; left: 160px; width: 60px; }
+input#radar.corpus[type=number] { top: 554px; left: 160px; width: 60px; }
+input#jacks.corpus[type=number] { top: 604px; left: 160px; width: 60px; }
+input#madra.corpus[type=number] { top: 660px; left: 144px; width: 42px; }
+input#madra-max.corpus[type=number] { top: 660px; left: 210px; width: 42px; }
+input#madra-organic.corpus[type=number] { top: 660px; left: 340px; width: 42px; }
+textarea#malfunctions { top: 745px; left: 25px; width: 380px; height: 100px; }
+
+input#bl_head.armor[type=number] { top: 638px; left: 675px; width: 54px; }
+input#cb_head_1.armor[type=checkbox] { top: 670px; left: 754px; }
+input#cb_head_2.armor[type=checkbox] { top: 670px; left: 775px; }
+input#cb_head_3.armor[type=checkbox] { top: 704px; left: 754px; }
+input#cb_head_4.armor[type=checkbox] { top: 704px; left: 775px; }
+input#bl_thorax.armor[type=number] { top: 693px; left: 635px; width: 54px; }
+input#cb_thorax_1.armor[type=checkbox] { top: 777px; left: 719px; }
+input#cb_thorax_2.armor[type=checkbox] { top: 778px; left: 762px; }
+input#cb_thorax_3.armor[type=checkbox] { top: 779px; left: 805px; }
+input#cb_thorax_4.armor[type=checkbox] { top: 893px; left: 739px; }
+input#cb_thorax_5.armor[type=checkbox] { top: 894px; left: 785px; }
+input#bl_right_arm.armor[type=number] { top: 753px; left: 580px; width: 54px; }
+input#cb_right_arm_1.armor[type=checkbox] { top: 824px; left: 669px; }
+input#cb_right_arm_2.armor[type=checkbox] { top: 885px; left: 650px; }
+input#cb_right_arm_3.armor[type=checkbox] { top: 955px; left: 645px; }
+input#bl_left_arm.armor[type=number] { top: 696px; left: 898px; width: 54px; }
+input#cb_left_arm_1.armor[type=checkbox] { top: 824px; left: 863px; }
+input#cb_left_arm_2.armor[type=checkbox] { top: 886px; left: 882px; }
+input#cb_left_arm_3.armor[type=checkbox] { top: 958px; left: 881px; }
+input#bl_right_leg.armor[type=number] { top: 1042px; left: 616px; width: 54px; }
+input#cb_right_leg_1.armor[type=checkbox] { top: 995px; left: 708px; }
+input#cb_right_leg_2.armor[type=checkbox] { top: 1169px; left: 680px; }
+input#cb_right_leg_3.armor[type=checkbox] { top: 1262px; left: 660px; }
+input#bl_left_leg.armor[type=number] { top: 1164px; left: 758px; width: 54px; }
+input#cb_left_leg_1.armor[type=checkbox] { top: 996px; left: 816px; }
+input#cb_left_leg_2.armor[type=checkbox] { top: 1169px; left: 859px; }
+input#cb_left_leg_3.armor[type=checkbox] { top: 1261px; left: 882px; }
+
+input#s_1.skillpack { top: 1050px; left: 37px; width: 160px; }
+input#sv_1.skillpack[type=checkbox] { top: 1050px; left: 212px; }
+input#s_2.skillpack { top: 1073px; left: 37px; width: 160px; }
+input#sv_2.skillpack[type=checkbox] { top: 1073px; left: 212px; }
+input#s_3.skillpack { top: 1098px; left: 37px; width: 160px; }
+input#sv_3.skillpack[type=checkbox] { top: 1098px; left: 212px; }
+input#s_4.skillpack { top: 1124px; left: 37px; width: 160px; }
+input#sv_4.skillpack[type=checkbox] { top: 1124px; left: 212px; }
+input#s_5.skillpack { top: 1151px; left: 37px; width: 160px; }
+input#sv_5.skillpack[type=checkbox] { top: 1151px; left: 212px; }
+input#s_6.skillpack { top: 1175px; left: 37px; width: 160px; }
+input#sv_6.skillpack[type=checkbox] { top: 1175px; left: 212px; }
+input#s_7.skillpack { top: 1203px; left: 37px; width: 160px; }
+input#sv_7.skillpack[type=checkbox] { top: 1203px; left: 212px; }
+input#s_8.skillpack { top: 1231px; left: 37px; width: 160px; }
+input#sv_8.skillpack[type=checkbox] { top: 1231px; left: 212px; }
+input#s_9.skillpack { top: 1258px; left: 37px; width: 160px; }
+input#sv_9.skillpack[type=checkbox] { top: 1258px; left: 212px; }
+input#s_10.skillpack { top: 1285px; left: 37px; width: 160px; }
+input#sv_10.skillpack[type=checkbox] { top: 1285px; left: 212px; }
+input#s_11.skillpack { top: 1310px; left: 37px; width: 160px; }
+input#sv_11.skillpack[type=checkbox] { top: 1310px; left: 212px; }
+
+input#i_1.involution { top: 1050px; left: 287px; width: 160px; }
+input#iv_1.involution[type=checkbox] { top: 1050px; left: 462px; }
+input#i_2.involution { top: 1073px; left: 287px; width: 160px; }
+input#iv_2.involution[type=checkbox] { top: 1073px; left: 462px; }
+input#i_3.involution { top: 1098px; left: 287px; width: 160px; }
+input#iv_3.involution[type=checkbox] { top: 1098px; left: 462px; }
+input#i_4.involution { top: 1124px; left: 287px; width: 160px; }
+input#iv_4.involution[type=checkbox] { top: 1124px; left: 462px; }
+input#i_5.involution { top: 1151px; left: 287px; width: 160px; }
+input#iv_5.involution[type=checkbox] { top: 1151px; left: 462px; }
+input#i_6.involution { top: 1175px; left: 287px; width: 160px; }
+input#iv_6.involution[type=checkbox] { top: 1175px; left: 462px; }
+input#i_7.involution { top: 1203px; left: 287px; width: 160px; }
+input#iv_7.involution[type=checkbox] { top: 1203px; left: 462px; }
+input#i_8.involution { top: 1231px; left: 287px; width: 160px; }
+input#iv_8.involution[type=checkbox] { top: 1231px; left: 462px; }
+input#i_9.involution { top: 1258px; left: 287px; width: 160px; }
+input#iv_9.involution[type=checkbox] { top: 1258px; left: 462px; }
+input#i_10.involution { top: 1285px; left: 287px; width: 160px; }
+input#iv_10.involution[type=checkbox] { top: 1285px; left: 462px; }
+input#i_11.involution { top: 1310px; left: 287px; width: 160px; }
+input#iv_11.involution[type=checkbox] { top: 1310px; left: 462px; }
+

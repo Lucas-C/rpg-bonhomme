@@ -1,0 +1,42 @@
+input, textarea {
+  position: absolute;
+  font-family: Tahoma,Geneva,sans-serif;
+  font-size: 150%;
+}
+input#name { top: 120px; left: 176px; width: 650px; }
+input#player { top: 120px; left: 942px; width: 160px; }
+input#activity { top: 184px; left: 204px; width: 622px; }
+textarea#apparence { top: 290px; left: 110px; width: 710px; height: 200px; }
+input#weak-point { top: 510px; left: 250px; width: 580px; }
+input#cold-blood[type=number] { top: 520px; left: 1030px; width: 52px; }
+
+input#presence.carac[type=number] { top: 660px; left: 284px; width: 40px; }
+input#empathy.carac[type=number] { top: 722px; left: 284px; width: 40px; }
+input#erudition.carac[type=number] { top: 660px; left: 550px; width: 40px; }
+input#perception.carac[type=number] { top: 722px; left: 550px; width: 40px; }
+input#agility.carac[type=number] { top: 660px; left: 815px; width: 40px; }
+input#vivacity.carac[type=number] { top: 722px; left: 815px; width: 40px; }
+input#force.carac[type=number] { top: 660px; left: 1080px; width: 40px; }
+input#constitution.carac[type=number] { top: 722px; left: 1080px; width: 40px; }
+
+input#t_l1_c1.talent { top: 856px; left: 120px; width: 320px; }
+input#t_l1_c2.talent { top: 856px; left: 470px; width: 320px; }
+input#t_l2_c1.talent { top: 921px; left: 120px; width: 320px; }
+input#t_l2_c2.talent { top: 921px; left: 470px; width: 320px; }
+input#t_l3_c1.talent { top: 986px; left: 120px; width: 320px; }
+input#t_l3_c2.talent { top: 986px; left: 470px; width: 320px; }
+input#t_l4_c1.talent { top: 1052px; left: 120px; width: 320px; }
+input#t_l4_c2.talent { top: 1052px; left: 470px; width: 320px; }
+
+input#i_l1.injury { top: 1182px; left: 100px; width: 310px; }
+input#i_l2.injury { top: 1247px; left: 100px; width: 310px; }
+input#i_l3.injury { top: 1312px; left: 100px; width: 310px; }
+
+input#p1.possession { top: 1182px; left: 484px; width: 664px; }
+input#p2.possession { top: 1247px; left: 484px; width: 664px; }
+input#p3.possession { top: 1312px; left: 484px; width: 664px; }
+input#p4.possession { top: 1377px; left: 484px; width: 664px; }
+input#p5.possession { top: 1442px; left: 484px; width: 664px; }
+input#p6.possession { top: 1507px; left: 484px; width: 664px; }
+input#p7.possession { top: 1572px; left: 484px; width: 664px; }
+
