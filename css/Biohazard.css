@@ -1,0 +1,111 @@
+input, textarea {
+  position: absolute;
+  font-family: Tahoma,Geneva,sans-serif;
+  font-size: 110%;
+}
+input#lastname { top: 325px; left: 165px; width: 185px; }
+input#firstname { top: 362px; left: 195px; width: 156px; }
+input#sexe { top: 430px; left: 164px; width: 187px; }
+input#age { top: 465px; left: 157px; width: 194px; }
+input#size { top: 500px; left: 175px; width: 175px; }
+input#weight { top: 537px; left: 175px; width: 175px; }
+input#Archetype { top: 604px; left: 215px; width: 385px; }
+textarea#appearance{  top: 675px; left: 120px; width: 480px; }
+textarea#mood { top: 780px; left: 120px; width: 480px; }
+textarea#notes { top: 890px; left: 120px; width: 480px; height: 240px; }
+input#avatar[type=image] { top: 280px; left: 360px; max-height: 310px; max-width: 240px; }
+
+input#strenght.trait[type=number] { top: 325px; left: 760px; width: 125px; }
+input#constitution.trait[type=number] { top: 360px; left: 760px; width: 125px; }
+input#agility.trait[type=number] { top: 395px; left: 760px; width: 125px; }
+input#charisma.trait[type=number] { top: 325px; left: 1000px; width: 125px; }
+input#mind.trait[type=number] { top: 360px; left: 1000px; width: 125px; }
+input#perception.trait[type=number] { top: 395px; left: 1000px; width: 125px; }
+
+input#competence_1 { top: 520px; left: 650px; width: 350px; }
+input#competence_value_1[type=number] { top: 520px; left: 1020px; width: 100px; }
+input#competence_2 { top: 555px; left: 650px; width: 350px; }
+input#competence_value_2[type=number] { top: 555px; left: 1020px; width: 100px; }
+input#competence_3 { top: 595px; left: 650px; width: 350px; }
+input#competence_value_3[type=number] { top: 595px; left: 1020px; width: 100px; }
+input#competence_4 { top: 630px; left: 650px; width: 350px; }
+input#competence_value_4[type=number] { top: 630px; left: 1020px; width: 100px; }
+input#competence_5 { top: 665px; left: 650px; width: 350px; }
+input#competence_value_5[type=number] { top: 665px; left: 1020px; width: 100px; }
+input#competence_6 { top: 700px; left: 650px; width: 350px; }
+input#competence_value_6[type=number] { top: 700px; left: 1020px; width: 100px; }
+input#competence_7 { top: 735px; left: 650px; width: 350px; }
+input#competence_value_7[type=number] { top: 735px; left: 1020px; width: 100px; }
+input#competence_8 { top: 770px; left: 650px; width: 350px; }
+input#competence_value_8[type=number] { top: 770px; left: 1020px; width: 100px; }
+input#competence_9 { top: 805px; left: 650px; width: 350px; }
+input#competence_value_9[type=number] { top: 805px; left: 1020px; width: 100px; }
+
+input#current_cooldown[type=number] { top: 875px; left: 935px; width: 75px; height: 35px; }
+input#total_cooldown[type=number]  { top: 875px; left: 1035px; width: 75px; height: 35px; }
+
+input#i1_green.injury[type=checkbox] { top: 1000px; left: 927px; }
+input#i2_green.injury[type=checkbox] { top: 1000px; left: 962px; }
+input#i3_green.injury[type=checkbox] { top: 1000px; left: 997px; }
+input#i4_green.injury[type=checkbox] { top: 1000px; left: 1032px; }
+input#i5_green.injury[type=checkbox] { top: 1000px; left: 1067px; }
+input#i6_green.injury[type=checkbox] { top: 1000px; left: 1102px; }
+input#i1_yellow.injury[type=checkbox] { top: 1035px; left: 927px; }
+input#i2_yellow.injury[type=checkbox] { top: 1035px; left: 962px; }
+input#i3_yellow.injury[type=checkbox] { top: 1035px; left: 997px; }
+input#i4_yellow.injury[type=checkbox] { top: 1035px; left: 1032px; }
+input#i5_yellow.injury[type=checkbox] { top: 1035px; left: 1067px; }
+input#i6_yellow.injury[type=checkbox] { top: 1035px; left: 1102px; }
+input#i1_orange.injury[type=checkbox] { top: 1070px; left: 927px; }
+input#i2_orange.injury[type=checkbox] { top: 1070px; left: 962px; }
+input#i3_orange.injury[type=checkbox] { top: 1070px; left: 997px; }
+input#i4_orange.injury[type=checkbox] { top: 1070px; left: 1032px; }
+input#i5_orange.injury[type=checkbox] { top: 1070px; left: 1067px; }
+input#i6_orange.injury[type=checkbox] { top: 1070px; left: 1102px; }
+input#i1_red.injury[type=checkbox] { top: 1105px; left: 927px; }
+input#i2_red.injury[type=checkbox] { top: 1105px; left: 962px; }
+input#i3_red.injury[type=checkbox] { top: 1105px; left: 997px; }
+input#i4_red.injury[type=checkbox] { top: 1105px; left: 1032px; }
+input#i5_red.injury[type=checkbox] { top: 1105px; left: 1067px; }
+input#i6_red.injury[type=checkbox] { top: 1105px; left: 1102px; }
+
+input#weapon_1 { top: 357px; left: 1175px; width: 160px; }
+input#weapon_damage_1 { top: 357px; left: 1350px; width: 80px; }
+input#weapon_range_1 { top: 357px; left: 1440px; width: 50px; }
+input#weapon_firerate_1 { top: 357px; left: 1500px; width: 65px; }
+input#weapon_capacity_1 { top: 357px; left: 1574px; width: 75px; }
+input#weapon_2 { top: 392px; left: 1175px; width: 160px; }
+input#weapon_damage_2 { top: 392px; left: 1350px; width: 80px; }
+input#weapon_range_2 { top: 392px; left: 1440px; width: 50px; }
+input#weapon_firerate_2 { top: 392px; left: 1500px; width: 65px; }
+input#weapon_capacity_2 { top: 392px; left: 1574px; width: 75px; }
+input#weapon_3 { top: 427px; left: 1175px; width: 160px; }
+input#weapon_damage_3 { top: 427px; left: 1350px; width: 80px; }
+input#weapon_range_3 { top: 427px; left: 1440px; width: 50px; }
+input#weapon_firerate_3 { top: 427px; left: 1500px; width: 65px; }
+input#weapon_capacity_3 { top: 427px; left: 1574px; width: 75px; }
+input#weapon_4 { top: 462px; left: 1175px; width: 160px; }
+input#weapon_damage_4 { top: 462px; left: 1350px; width: 80px; }
+input#weapon_range_4 { top: 462px; left: 1440px; width: 50px; }
+input#weapon_firerate_4 { top: 462px; left: 1500px; width: 65px; }
+input#weapon_capacity_4 { top: 462px; left: 1574px; width: 75px; }
+input#weapon_5 { top: 497px; left: 1175px; width: 160px; }
+input#weapon_damage_5 { top: 497px; left: 1350px; width: 80px; }
+input#weapon_range_5 { top: 497px; left: 1440px; width: 50px; }
+input#weapon_firerate_5 { top: 497px; left: 1500px; width: 65px; }
+input#weapon_capacity_5 { top: 497px; left: 1574px; width: 75px; }
+input#weapon_6 { top: 533px; left: 1175px; width: 160px; }
+input#weapon_damage_6 { top: 533px; left: 1350px; width: 80px; }
+input#weapon_range_6 { top: 533px; left: 1440px; width: 50px; }
+input#weapon_firerate_6 { top: 533px; left: 1500px; width: 65px; }
+input#weapon_capacity_6 { top: 533px; left: 1574px; width: 75px; }
+
+input#curent_armor[type=number] { top: 607px; left: 1460px; width: 75px; height: 35px; }
+input#armor_lifespan[type=number]  { top: 607px; left: 1560px; width: 75px; height: 35px; }
+
+textarea#inventory { top: 710px; left: 1165px; width : 495px; height: 255px; }
+
+input#ribbon[type=number]  { top: 1010px; left: 1560px; width: 75px; height: 35px; }
+input#typewriter[type=number]  { top: 1065px; left: 1560px; width: 75px; height: 35px; }
+input#exp[type=number]  { top: 1120px; left: 1560px; width: 75px; height: 35px; }
+
