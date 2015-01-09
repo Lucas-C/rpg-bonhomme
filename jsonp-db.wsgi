@@ -1,7 +1,6 @@
-import cgi, logging, logging.handlers, os, requests, sqlite3, sys, traceback, urlparse
+import cgi, logging, logging.handlers, os, sqlite3, traceback, urlparse
 from collections import namedtuple
 from contextlib import closing
-from functools import wraps
 from threading import Lock
 
 MAX_TABLE_SIZE = 1000
