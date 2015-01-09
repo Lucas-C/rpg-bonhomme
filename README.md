@@ -12,7 +12,17 @@ which enables you to share it with others simply by providing a unique URL.
 - [Atharès](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
 - [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
 
-# Usage & asumptions
+# Usage
+
+All the interactions are made using the 4 top right buttons and the 'name' inut field.
+
+To load an existing character, simply go to https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout= and type a layout name at the end of URL, then enter your character name and press 'Load from remote server'. Alternatively you can directly enter an URL formatted luke this: '?layout=<layout-name>&name=<character-id>'.
+
+To edit and remote save a new character, simply go to https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout= and type a layout name at the end of the URL, then enter your character name and press the 'Save to remote server' button.
+
+The currently available layouts matches the list of file in the **css/** & **img/** directories of this repository. Note that at the time of writing, some layouts are still 'in-progress' and currently empty.
+
+# Internals & asumptions
 
 - a ?layout= URL parameter must always be provided to _character-sheet.html_.
 - this _layout_ must match the name of a .css file in **css/**, and a .png character sheet image in **img/**.
@@ -25,17 +35,18 @@ non-redefined caracteristics will keep their old value.
 
 # jsonp-db
 
-First, a word of warning: **trusting a 3rd party JSONP API is a big confidence commitment / security risk**.
-More details [here](http://security.stackexchange.com/a/23439).
-
-That being said, this WSGI app won't do anything nasty.
-It's a simple key-value store using a SQLite DB (yes, Redis may have been a better fit), developped to allow simple GET/PUT through JSONP.
+This is a simple key-value store using a SQLite DB, developped to allow simple GET/PUT through JSONP.
 
 In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or throw an error
 (calling Javascript 'alert' if using JSONP, else displaying an HTML error page).
 
 There are some key/value length limitations currently hardcoded at the top of the Python file.
 There is also a client & server limitation on the request URI (between 2KB & 8KB usually), that can trigger a 414 error.
+
+Finally, a word of warning: **trusting a 3rd party JSONP API is a big confidence commitment / security risk**.
+More details [here](http://security.stackexchange.com/a/23439).
+
+That being said, this WSGI app won't do anything nasty.
 
 ## Setup
 
