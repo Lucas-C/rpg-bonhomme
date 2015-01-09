@@ -2,7 +2,7 @@ This project provides the following features:
 - locally load & save your character from JSON files.
 - only require a web browser (and an Internet connection to use the remote storage feature).
 - optionnaly you can save your character on a remote server,
-which enables you to share it with others simply by providing a unique URL.
+which will let you to share it with others simply by providing a unique URL.
 - add character sheets from any game.
 
 # Examples
@@ -49,6 +49,10 @@ More details [here](http://security.stackexchange.com/a/23439).
 That being said, this WSGI app won't do anything nasty.
 
 ## Setup
+
+Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
+
+    WSGIScriptAlias /path/to/jsonp-db /path/to/jsonp-db.wsgi
 
     sqlite3 jsonp-db.db 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
     chmod ugo+rw jsonp-db.db

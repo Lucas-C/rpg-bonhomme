@@ -2,6 +2,11 @@ input, textarea {
   position: absolute;
   font-family: Tahoma,Geneva,sans-serif;
   font-size: 150%;
+  color: #3C3C3C;
+}
+input[type=text], input[type=number], textarea {
+  border-radius: 4px;
+  border:solid 1px lightgrey;
 }
 input#name { top: 120px; left: 176px; width: 650px; }
 input#player { top: 120px; left: 942px; width: 160px; }
