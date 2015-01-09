@@ -37,12 +37,9 @@ def application(env, start_response):
     form = pop_form(env)
     log('Handling request: {} "{}" with query_string: "{}", form: "{}"'.format(method, path, query_string, form))
     try:
-        query_params = parse_query_string(query_string)
-        form_params = parse_form(form)
-        callback = query_params.kwargs.pop('callback', None)
-        response = put_or_get(path, query_params, form_params)
+        response = handle_request(method, path, query_string, form)
         start_response('200 OK', [('Content-Type', 'application/javascript')])
-        return [callback + '(' + response + ')' if callback else response]
+        return [response]
     except Error400 as error:
         log('[ERROR] 400 : {}'.format(error))
         error_response, mime_type = format_error_response(error.message, '404 - Client-side error', bool(callback))
@@ -54,12 +51,6 @@ def application(env, start_response):
         error_response, mime_type = format_error_response(error_msg, '500 - Server-side error', bool(callback))
         start_response('500 Internal Server Error', [('Content-Type', mime_type)])
         return [error_response]
-
-def format_error_response(error_msg, title, use_jsonp):
-    if use_jsonp:
-        return ("alert('{}')".format(error_msg), 'application/javascript')
-    return (('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>{title}</title></head>'
-             '<body><pre>{msg}</pre></body></html>'.format(title=title, msg=cgi.escape(error_msg))), 'text/html')
 
 def pop_form(env):
     """
@@ -76,6 +67,19 @@ def pop_form(env):
         keep_blank_values = True
     )
     return form
+
+def handle_request(method, path, query_string, form):
+    query_params = parse_query_string(query_string)
+    form_params = parse_form(form)
+    callback = query_params.kwargs.pop('callback', None)
+    response = put_or_get(path, query_params, form_params)
+    return callback + '(' + response + ')' if callback else response
+
+def format_error_response(error_msg, title, use_jsonp):
+    if use_jsonp:
+        return ("alert('{}')".format(error_msg), 'application/javascript')
+    return (('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>{title}</title></head>'
+             '<body><pre>{msg}</pre></body></html>'.format(title=title, msg=cgi.escape(error_msg))), 'text/html')
 
 def parse_query_string(query_string):
     qp = dict(urlparse.parse_qsl(query_string, True))
@@ -101,25 +105,29 @@ def put_or_get(path, query_params, form_params):
             + 'query_params={.kwargs} - form_params={.kwargs}').format(query_params, form_params))
     key = path[1:]
     value = None
-    if query_params.args:
-        value = query_params.args[0]
-    elif form_params.args:
+    if form_params.args:
         value = form_params.args[0]
+    elif query_params.args:
+        value = query_params.args[0]
     try:
-        if len(key) > MAX_KEY_LENGTH:
-            raise ValueError('Key length exceeded maximum: {} > {}'.format(len(key), MAX_KEY_LENGTH))
-        if value:
-            log('PUT key="{}":value="{}"'.format(key, value))
-            db_put(key, value)
-        else:
-            log('GET key="{}"'.format(key))
-            value = db_get(key)
-        return value
+        return db_put_or_get(key, value)
     except KeyError:
         return 'undefined'
     except (ValueError, MemoryError) as error:
         raise Error400('{}: {}'.format(error.__class__.__name__, error.message))
 
+def db_put_or_get(key, value):
+    if len(key) > MAX_KEY_LENGTH:
+        raise ValueError('Key length exceeded maximum: {} > {}'.format(len(key), MAX_KEY_LENGTH))
+    if value:
+        if len(value) > MAX_VALUE_LENGTH:
+            raise ValueError('Value length exceeded maximum: {} > {}'.format(len(value), MAX_VALUE_LENGTH))
+        log('PUT key="{}":value="{}"'.format(key, value))
+        db_put(key, value)
+    else:
+        log('GET key="{}"'.format(key))
+        value = db_get(key)
+    return value
 
 def db_get(key):
     with closing(_db.cursor()) as db_cursor:
@@ -132,8 +140,6 @@ def db_get(key):
 def db_put(key, value):
     db_check_table_size()
     with closing(_db.cursor()) as db_cursor:
-        if len(value) > MAX_VALUE_LENGTH:
-            raise ValueError('Value length exceeded maximum: {} > {}'.format(len(value), MAX_VALUE_LENGTH))
         db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, value))
         _db.commit()
 

@@ -14,9 +14,9 @@ which enables you to share it with others simply by providing a unique URL.
 
 # Usage
 
-All the interactions are made using the 4 top right buttons and the 'name' inut field.
+All the interactions are made using the 4 top right buttons and the 'name' input field.
 
-To load an existing character, simply go to https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout= and type a layout name at the end of URL, then enter your character name and press 'Load from remote server'. Alternatively you can directly enter an URL formatted luke this: '?layout=<layout-name>&name=<character-id>'.
+To remote load an existing character, simply go to https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout= and type a layout name at the end of URL, then enter your character name and press 'Load from remote server'. Alternatively you can directly enter an URL formatted like this: '?layout=<layout-name>&name=<character-id>'.
 
 To edit and remote save a new character, simply go to https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout= and type a layout name at the end of the URL, then enter your character name and press the 'Save to remote server' button.
 
