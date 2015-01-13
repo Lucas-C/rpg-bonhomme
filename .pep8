@@ -1,0 +1,7 @@
+[pep8]
+# E302 expected 2 blank lines, found 1
+# E401 multiple imports on one line
+# E701 multiple statements on one line (colon)
+ignore = E302,E401,E701
+max-line-length = 120
+

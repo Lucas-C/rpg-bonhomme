@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='fr'>
+  <head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>RPG Character Sheet</title>
+    <style>
+      #buttons { position: absolute; top: 0; right: 200px; }
+      #buttons input { position: absolute; }
+      #save-to-server-button { top: 10px; left: 10px; }
+      #load-from-server-button { top: 10px; left: 90px; }
+      #download-json-button { top: 80px; left: 10px; }
+      #upload-json-button { top: 80px; left: 90px; }
+    </style>
+  </head>
+  <body>
+    <div id='character-sheet'></div>
+    <div id='buttons'>
+      <input type='image' id='save-to-server-button' onclick='exports.save_character_to_server()'
+        title='Save to remote server' src='icon/cloud_upload.png' alt='-'>
+      <input type='image' id='load-from-server-button' onclick='exports.load_character_from_server()'
+        title='Load from remote server' src='icon/cloud_download.png' alt='-'>
+      <input type='image' id='download-json-button' onclick='exports.download_character_as_json()'
+        title='Download JSON file' src='icon/file_download.png' alt='-'/>
+      <input type='image' id='upload-json-button' onclick='document.getElementById("charactersheet_file_picker").click()'
+        title='Upload JSON file' src='icon/file_upload.png' alt='-'/>
+      <input type="file" id="charactersheet_file_picker" onchange="exports.charactersheet_file_picker_change()"
+        accept="text/plain" style="display:none">
+    </div>
+    <script type='text/javascript'>
+    </script>
+  </body>
+</html>

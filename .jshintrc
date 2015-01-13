@@ -1,0 +1,22 @@
+{
+    // Inspired by airbnb/javascript
+    "indent": 4,
+    "strict": true,
+    "newcap": true,
+    "eqeqeq": true,
+    "latedef": true,
+    "undef": true,
+    "unused": true,
+    // Avoid "Bad line breaking before '+'"
+    "laxbreak": true,
+    // Code complexity control
+    "maxparams": 3,
+    "maxdepth": 2,
+    //"maxcomplexity": 5,
+    // Allow logging to the console & other globals from the libs used
+    "browser": true,
+    "globals": {
+        "console": false
+    }
+}
+

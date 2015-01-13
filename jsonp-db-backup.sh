@@ -11,5 +11,5 @@ cat <<EOF > backup/logrotate.conf
 rotate 30
 $DB_DIR/backup/jsonp-db.db.bak {}
 EOF
-logrotate -v -f -s backup/logstatus backup/logrotate.conf
+/usr/sbin/logrotate -v -f -s backup/logstatus backup/logrotate.conf
 

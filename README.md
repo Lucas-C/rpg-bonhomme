@@ -3,7 +3,7 @@ This project provides the following features:
 - only require a web browser (and an Internet connection to use the remote storage feature).
 - optionnaly you can save your character on a remote server,
 which will let you to share it with others simply by providing a unique URL.
-- add character sheets from any game.
+- add character sheets from any game, simply based on background image
 
 # Examples
 
@@ -52,11 +52,13 @@ That being said, this WSGI app won't do anything nasty.
 
 Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
 
+    sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
+
     WSGIScriptAlias /path/to/jsonp-db /path/to/jsonp-db.wsgi
 
     sqlite3 jsonp-db.db 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
     chmod ugo+rw jsonp-db.db
-    sudo ln -s $PWD/jsonp-db-backup.sh /etc/cron.daily/jsonp-db-backup.sh
+    sudo sed "s/\$USER/$USER/" jsonp-db-backup_cron > /etc/cron.d/jsonp-db-backup_cron
 
 ## Testing
 
@@ -76,6 +78,9 @@ Error handling:
     curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/unset_key # returns {}
     key=$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 101 | tr -d '\n')
     curl -X PUT -d 0=1 https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/$key # raises a ValueError 404
+
+# License
+Tl;dr plain English version: https://tldrlegal.com/license/adaptive-public-license-1.0-%28apl-1.0%29
 
 # Resources
 
