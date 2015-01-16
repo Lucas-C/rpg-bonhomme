@@ -12,26 +12,11 @@ LOG_FORMAT = '%(asctime)s - %(process)s [%(levelname)s] %(filename)s %(lineno)d 
 MAX_KEY_LENGTH = CONFIG.as_int('max_key_length')
 MAX_VALUE_LENGTH = CONFIG.as_int('max_value_length')
 MAX_TABLE_SIZE = CONFIG.as_int('max_table_size')
-MODIFICATION_KEY_SALT = CONFIG['modification_key_salt']  # mandatory
+REQUIRE_MODIFCATION_KEY = CONFIG.as_bool('require_modification_key')
+MODIFICATION_KEY_SALT = CONFIG.get('modification_key_salt')
 
 class Error400(Exception): pass
 class RequestParameters(namedtuple('_RequestParameters', 'args kwargs')): pass
-
-def configure_logger():
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
-    file_handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1024 ** 2, backupCount=10)
-    file_handler.setFormatter(logging.Formatter(LOG_FORMAT))
-    logger.addHandler(file_handler)
-    return logger
-
-def log(msg, lvl=logging.INFO):
-    with _LOGGER_LOCK:
-        _LOGGER.log(lvl, msg)
-
-_LOGGER = configure_logger()
-_LOGGER_LOCK = Lock()
-_DB = sqlite3.connect(DATABASE_FILE, check_same_thread=False)
 
 def application(env, start_response):
     path = env.get('PATH_INFO', '')
@@ -102,7 +87,7 @@ def store_logic(path, query_params, form_params):
         log('-> ' + str(current_value))
         if not new_value:  # => simple RETRIEVE request
             return current_value or 'undefined', 'null'
-        elif CONFIG.as_bool('require_modification_key'):
+        elif REQUIRE_MODIFCATION_KEY:
             if current_value:  # => UPDATE request, we check that the modification-key is valid
                 check_modification_key(modification_key, key)
             else:  # => CREATE request, we generate the modification-key
@@ -174,4 +159,21 @@ def db_check_table_size():
     if MAX_TABLE_SIZE and table_size > MAX_TABLE_SIZE:
         raise MemoryError('Table size exceeded limit: {} > {}'.format(table_size, MAX_TABLE_SIZE))
 
+def configure_logger():
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    file_handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1024 ** 2, backupCount=10)
+    file_handler.setFormatter(logging.Formatter(LOG_FORMAT))
+    logger.addHandler(file_handler)
+    return logger
+
+def log(msg, lvl=logging.INFO):
+    with _LOGGER_LOCK:
+        _LOGGER.log(lvl, msg)
+
+_LOGGER = configure_logger()
+_LOGGER_LOCK = Lock()
+_DB = sqlite3.connect(DATABASE_FILE, check_same_thread=False)
+if REQUIRE_MODIFCATION_KEY and not MODIFICATION_KEY_SALT:
+    raise RuntimeError('A random salt is required when using modification-key based authentication')
 log('Starting : {} keys found in the DB - Config: {}'.format(len(db_list_keys()), CONFIG))

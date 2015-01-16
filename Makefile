@@ -12,8 +12,7 @@ CSS_LAYOUTS := $(wildcard $(CSS_DIR)*.css)
 .PHONY: check check-static check-style check-html check-layouts-css $(CSS_LAYOUTS)
 .PHONY: view-local open-index
 .PHONY: start-local-server restart-local-server kill-local-server list-local-server-processes
-.PHONY: test pre-test post-test test-set-up test-clean-up run-tests
-.PHONY: help
+.PHONY: test help
 
 all: $(OUT_HTML)
 	@:
@@ -70,33 +69,16 @@ start-local-server:
 		--manage-script-name --mount /$(PY_WSGI)=$(PY_WSGI).py --py-autoreload 2 --daemonize uwsgi.log &
 
 restart-local-server:
-	pgrep -f $(PY_WSGI) | xargs kill
+	pgrep -f ^uwsgi | ifne xargs kill
 
 list-local-server-processes:
-	pgrep -f $(PY_WSGI) | xargs ps -fp
+	pgrep -f ^uwsgi | ifne xargs ps -fp
 
 kill-local-server:
-	pgrep -f $(PY_WSGI) | xargs kill -2
+	pgrep -f ^uwsgi | ifne xargs kill -2
 
-# TODO FIXME
-test: | pre-test run-tests post-test
-	@:
-
-pre-test: | test-set-up start-local-server
-	@:
-
-post-test: | kill-local-server test-clean-up
-	@: 
-
-test-set-up:
-	mv $(DB_FILE) $(DB_FILE).bak
-	sqlite3 $(DB_FILE) 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
-
-test-clean-up:
-	mv $(DB_FILE).bak $(DB_FILE)
-
-run-tests:
-	./tests.sh
+test:
+	./jsonp_db-tests.sh
 
 help:
 	# make -n target           # --dry-run : get targets description

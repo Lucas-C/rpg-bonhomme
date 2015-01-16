@@ -52,15 +52,17 @@ That being said, this WSGI app won't do anything nasty.
 
 Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
 
-    sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
-
-    WSGIScriptAlias /path/to/jsonp_db /path/to/jsonp_db.py
-
     echo modification_key_salt = $(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n') >> jsonp_db.ini
     sqlite3 jsonp_db.db 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
     chmod ugo+rw jsonp_db.db
 
+    # Installing the backup cron task
     sudo sed "s/\$USER/$USER/" jsonp_db-backup_cron > /etc/cron.d/jsonp_db-backup_cron
+
+    # For Apache:
+    sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
+    # In the .conf
+    WSGIScriptAlias /path/to/jsonp_db /path/to/jsonp_db.py
 
 ## Testing
 
