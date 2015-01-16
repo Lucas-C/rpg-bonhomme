@@ -1,2 +1,0 @@
-00 03 * * * lucas /var/www/lucas/rpg-bonhomme/jsonp-db-backup.sh >> /var/www/lucas/rpg-bonhomme/jsonp-db-backup.log 2>&1
-

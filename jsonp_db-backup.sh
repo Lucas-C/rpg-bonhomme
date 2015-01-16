@@ -5,11 +5,11 @@ DB_DIR=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 cd $DB_DIR
 mkdir -p backup/
 
-sqlite3 jsonp-db.db .dump > backup/jsonp-db.db.bak
+sqlite3 jsonp_db.db .dump > backup/jsonp_db.db.bak
 
 cat <<EOF > backup/logrotate.conf
 rotate 30
-$DB_DIR/backup/jsonp-db.db.bak {}
+$DB_DIR/backup/jsonp_db.db.bak {}
 EOF
 /usr/sbin/logrotate -v -f -s backup/logstatus backup/logrotate.conf
 

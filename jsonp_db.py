@@ -1,16 +1,18 @@
-import cgi, logging, logging.handlers, os, re, sqlite3, traceback, urlparse
+import base64, cgi, hmac, logging, logging.handlers, os, re, sqlite3, traceback, urlparse
 from configobj import ConfigObj
 from collections import namedtuple
 from contextlib import closing
 from threading import Lock
 
-CONFIG = ConfigObj(os.path.join(os.path.dirname(__file__), re.sub('.wsgi$', '.ini', __file__)))
-DATABASE_FILE = os.path.join(os.path.dirname(__file__), CONFIG.get('db_file'))
-LOG_FILE = os.path.join(os.path.dirname(__file__), CONFIG.get('log_file'))
+SCRIPT_DIR = os.path.dirname(__file__) or '.'
+CONFIG = ConfigObj(os.path.join(SCRIPT_DIR, re.sub('.pyc?$', '.ini', __file__)))
+DATABASE_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('db_file'))
+LOG_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('log_file'))
 LOG_FORMAT = '%(asctime)s - %(process)s [%(levelname)s] %(filename)s %(lineno)d %(message)s'
 MAX_KEY_LENGTH = CONFIG.as_int('max_key_length')
 MAX_VALUE_LENGTH = CONFIG.as_int('max_value_length')
 MAX_TABLE_SIZE = CONFIG.as_int('max_table_size')
+MODIFICATION_KEY_SALT = CONFIG['modification_key_salt']  # mandatory
 
 class Error400(Exception): pass
 class RequestParameters(namedtuple('_RequestParameters', 'args kwargs')): pass
@@ -104,7 +106,7 @@ def store_logic(path, query_params, form_params):
             if current_value:  # => UPDATE request, we check that the modification-key is valid
                 check_modification_key(modification_key, key)
             else:  # => CREATE request, we generate the modification-key
-                modification_key = create_modification_key(key)
+                modification_key = get_modification_key(key)
         # At this point, it's either a CREATE request or a valid UPDATE request
         log('PUT key="{}":value="{}"'.format(key, new_value))
         db_put(key, new_value)
@@ -137,12 +139,12 @@ def check_and_extract_params(path, query_params, form_params):
 def check_modification_key(modification_key, key):
     if not modification_key:
         raise Error400('No modification-key provided, update forbidden')
-    real_modification_key = create_modification_key(key)
+    real_modification_key = get_modification_key(key)
     if real_modification_key != modification_key:
         raise Error400('Invalid modification-key, update forbidden: {}'.format(modification_key))
 
-def create_modification_key(key):
-    return 'hmac:' + key
+def get_modification_key(key):
+    return base64.urlsafe_b64encode(hmac.new(MODIFICATION_KEY_SALT, key).digest())[:10]
 
 def db_get(key):
     with closing(_DB.cursor()) as db_cursor:
@@ -155,7 +157,13 @@ def db_get(key):
 def db_put(key, value):
     db_check_table_size()
     with closing(_DB.cursor()) as db_cursor:
-        db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, value))
+        log(key)
+        log(type(key))
+        log(isinstance(key, unicode))
+        log(value)
+        log(type(value))
+        log(isinstance(value, unicode))
+        db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, buffer(value)))
         _DB.commit()
 
 def db_list_keys():

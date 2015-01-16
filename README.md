@@ -33,7 +33,7 @@ Non-textual fields must be specified as 'input[type=.+]#<name>'
 - (up)loading a new character currently only replace inputs defined in the provided file,
 non-redefined caracteristics will keep their old value.
 
-# jsonp-db
+# jsonp_db
 
 This is a simple key-value store using a SQLite DB, developped to allow simple GET/PUT through JSONP.
 
@@ -54,11 +54,13 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
 
     sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
 
-    WSGIScriptAlias /path/to/jsonp-db /path/to/jsonp-db.wsgi
+    WSGIScriptAlias /path/to/jsonp_db /path/to/jsonp_db.py
 
-    sqlite3 jsonp-db.db 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
-    chmod ugo+rw jsonp-db.db
-    sudo sed "s/\$USER/$USER/" jsonp-db-backup_cron > /etc/cron.d/jsonp-db-backup_cron
+    echo modification_key_salt = $(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n') >> jsonp_db.ini
+    sqlite3 jsonp_db.db 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
+    chmod ugo+rw jsonp_db.db
+
+    sudo sed "s/\$USER/$USER/" jsonp_db-backup_cron > /etc/cron.d/jsonp_db-backup_cron
 
 ## Testing
 
