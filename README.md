@@ -62,22 +62,9 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
 
 ## Testing
 
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x?42
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x
-    curl -X POST -d '{name:"John Doe"}' https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe?%7Bname%3A%22John%20Doe%22%7D
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/john_doe&callback=foo
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x?%7Ba%3A%7Bb%3Atrue%7D%7D
-    curl -X POST --data-urlencode @tmp.json https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/x
+    make check
 
-Error handling:
-
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db # raises a 404
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/a/ # raises a 404
-    curl https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/unset_key # returns {}
-    key=$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 101 | tr -d '\n')
-    curl -X PUT -d 0=1 https://chezsoi.org/lucas/rpg-bonhomme/jsonp-db/$key # raises a ValueError 404
+    make test
 
 # License
 Tl;dr plain English version: https://tldrlegal.com/license/adaptive-public-license-1.0-%28apl-1.0%29
@@ -85,6 +72,7 @@ Tl;dr plain English version: https://tldrlegal.com/license/adaptive-public-licen
 # Resources
 
 Zero dependencies, all coded in vanilla Javascript.
+The banner is from [FreebieVectors](http://www.freebievectors.com/fr/apercu-vecteur/150/rubans-banniere-vecteur-libre-symbole/).
 All icons are from Google Material Design icons set (CC BY 4.0) : https://github.com/google/material-design-icons
 
 # Notes

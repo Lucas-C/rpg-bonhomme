@@ -198,6 +198,9 @@ var exports = (function() {
                 if (input_specs.tag === 'input') {
                     input.type = input_specs.input_type || 'text';
                 }
+                if (!params['modification-key']) {
+                    input.readOnly = true;
+                }
                 main_div.appendChild(input);
                 if (input.type === 'image') {
                     input.src = 'icon/upload_image.png';
@@ -211,6 +214,12 @@ var exports = (function() {
             });
             if (params.name) {
                 exports.load_character_from_server(params.name);
+            }
+            if (!params['modification-key']) {
+                var banner = document.createElement('img');
+                banner.src = 'icon/read_only_banner.png';
+                banner.id = 'read-only-banner';
+                document.body.appendChild(banner);
             }
         }, 1000);
     });

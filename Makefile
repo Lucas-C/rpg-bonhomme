@@ -8,7 +8,7 @@ HTML_CHECKER:= vnu.jar
 CSS_DIR     := css/
 CSS_LAYOUTS := $(wildcard $(CSS_DIR)*.css)
 
-.PHONY: check check-static check-style check-html $(CSS_LAYOUTS)
+.PHONY: check check-static check-style check-html check-layouts-css $(CSS_LAYOUTS)
 .PHONY: view-local open-index
 .PHONY: start-local-server restart-local-server kill-local-server list-local-server-processes
 .PHONY: test pre-test post-test test-set-up test-clean-up run-tests
@@ -35,7 +35,7 @@ check-style: $(JS_SRC_FILE)
 	pep8 $(PY_WSGI).wsgi
 
 check-html: $(OUT_HTML) $(HTML_CHECKER)
-	## Running HTML conformity check
+	## Running HTML validation check
 	grep -vF "http-equiv='X-UA-Compatible'" $(OUT_HTML) | java -jar $(HTML_CHECKER) -
 
 $(HTML_CHECKER):
