@@ -157,12 +157,7 @@ def db_get(key):
 def db_put(key, value):
     db_check_table_size()
     with closing(_DB.cursor()) as db_cursor:
-        log(key)
-        log(type(key))
-        log(isinstance(key, unicode))
-        log(value)
-        log(type(value))
-        log(isinstance(value, unicode))
+        # Without the 'buffer' conversion, SQLite complains: ProgrammingError: You must not use 8-bit bytestrings
         db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, buffer(value)))
         _DB.commit()
 
