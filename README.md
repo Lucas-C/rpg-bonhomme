@@ -60,10 +60,12 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
     sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-backup-cron > /etc/cron.d/jsonp_db-backup-cron
     chmod u+x /etc/cron.d/jsonp_db-backup-cron
 
-For Apache:
+For Apache, simply:
 
     sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
-    # In the httpd.conf:
+
+And the Apache httpd.conf:
+
     WSGIScriptAlias /path/to/jsonp_db /path/to/jsonp_db.py
 
 For Nginx:
@@ -83,7 +85,7 @@ For Nginx:
     EOF
     service rpg-bonhomme start
     
-And the Nginx propper configuration:
+And the Nginx configuration:
 
     location /jsonp_db {
        uwsgi_pass 127.0.0.1:8088;
