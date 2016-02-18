@@ -1,8 +1,8 @@
-import base64, cgi, hmac, logging, logging.handlers, os, re, sqlite3, traceback, urlparse
-from configobj import ConfigObj
+import base64, cgi, hmac, logging, logging.handlers, os, re, requests, sqlite3, traceback, urlparse
 from collections import namedtuple
 from contextlib import closing
 from threading import Lock
+from configobj import ConfigObj
 
 SCRIPT_DIR = os.path.dirname(__file__) or '.'
 CONFIG = ConfigObj(os.path.join(SCRIPT_DIR, re.sub('.pyc?$', '.ini', __file__)))
@@ -14,9 +14,25 @@ MAX_VALUE_LENGTH = CONFIG.as_int('max_value_length')
 MAX_TABLE_SIZE = CONFIG.as_int('max_table_size')
 REQUIRE_MODIFCATION_KEY = CONFIG.as_bool('require_modification_key')
 MODIFICATION_KEY_SALT = CONFIG.get('modification_key_salt')
+HTML_TEMPLATE = """'<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{title}</title>
+  </head>
+  <body
+{body}
+  </body>
+</html>"""
 
-class Error400(Exception): pass
 class RequestParameters(namedtuple('_RequestParameters', 'args kwargs')): pass
+class HTTPError(Exception):
+    def __init__(self, message, code):
+        super(HTTPError, self).__init__(message)
+        self.code = code
+        self.status_string = error_code_to_status_string(code)
+        self.status_line = str(code) + ' ' + self.status_string
+        self.full_msg = '[ERROR] {e.status_line} : {e.message}'.format(e=self)
 
 def application(env, start_response):
     path = env.get('PATH_INFO', '')
@@ -24,24 +40,24 @@ def application(env, start_response):
     query_string = env['QUERY_STRING']
     form = pop_form(env)
     log('Handling request: {} "{}" with query_string: "{}", form: "{}"'.format(method, path, query_string, form))
+    # pylint: disable=broad-except
     try:
-        query_params = parse_query_string(query_string)
-        form_params = parse_form(form)
-        callback = query_params.kwargs.pop('callback', None)
-        return_values = store_logic(path, query_params, form_params)
-        response = callback + '(' + ', '.join(return_values) + ')' if callback else return_values[0]
-        start_response('200 OK', [('Content-Type', 'application/javascript')])
-        return [response]
-    except Error400 as error:
-        log('[ERROR] 400 : {}'.format(error))
-        error_response, mime_type = format_error_response(error.message, '404 - Client-side error', bool(callback))
-        start_response('400 Bad Request', [('Content-Type', mime_type)])
-        return [error_response]
-    except Exception:
-        error_msg = traceback.format_exc()
-        log('[ERROR] 500 : {}'.format(error_msg))
-        error_response, mime_type = format_error_response(error_msg, '500 - Server-side error', bool(callback))
-        start_response('500 Internal Server Error', [('Content-Type', mime_type)])
+        try:
+            query_params = parse_query_string(query_string)
+            form_params = parse_form(form)
+            callback = query_params.kwargs.pop('callback', None)
+            return_values = store_logic(path, query_params, form_params)
+            response = callback + '(' + ', '.join(return_values) + ')' if callback else return_values[0]
+            start_response('200 OK', [('Content-Type', 'application/javascript')])
+            return [response]
+        except HTTPError:
+            raise
+        except Exception:
+            raise HTTPError(traceback.format_exc(), code=500)
+    except HTTPError as error:
+        log(error.full_msg)
+        error_response, mime_type = format_error_response(error, bool(callback))
+        start_response(error.status_line, [('Content-Type', mime_type)])
         return [error_response]
 
 def pop_form(env):
@@ -60,11 +76,16 @@ def pop_form(env):
     )
     return form
 
-def format_error_response(error_msg, title, use_jsonp):
+def error_code_to_status_string(error_code):
+    # pylint: disable=protected-access
+    status_strings = requests.status_codes._codes[error_code]
+    return ' '.join(w.capitalize() for w in status_strings[0].split('_'))
+
+def format_error_response(error, use_jsonp):
     if use_jsonp:
-        return ("alert('{}')".format(error_msg), 'application/javascript')
-    return (('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>{title}</title></head>'
-             '<body><pre>{msg}</pre></body></html>'.format(title=title, msg=cgi.escape(error_msg))), 'text/html')
+        return ("alert('{}')".format(error.full_msg), 'application/javascript')
+    html_body = '    <pre>\n' + cgi.escape(error.full_msg) + '\n    </pre>'
+    return (HTML_TEMPLATE.format(title=error.status_line, body=html_body), 'text/html')
 
 def parse_query_string(query_string):
     qprm = dict(urlparse.parse_qsl(query_string, True))
@@ -97,21 +118,20 @@ def store_logic(path, query_params, form_params):
         db_put(key, new_value)
         return new_value, '"' + modification_key + '"'
     except Exception as error:
-        raise Error400('{}: {}'.format(error.__class__.__name__, error.message))
+        raise HTTPError('{}: {}'.format(error.__class__.__name__, error.message), code=400)
 
 def check_and_extract_params(path, query_params, form_params):
     if not path.startswith('/') or path.count('/') != 1:
-        raise Error400('Incorrect request syntax, expecting /<key> and got: "{}"'.format(path))
+        raise HTTPError('Incorrect request syntax, expecting /<key> and got: "{}"'.format(path), code=400)
     key = path[1:]
     if MAX_KEY_LENGTH and (len(key) > MAX_KEY_LENGTH):
         raise ValueError('Key length exceeded maximum: {} > {}'.format(len(key), MAX_KEY_LENGTH))
     modification_key = query_params.kwargs.pop('modification-key', None)
     if query_params.kwargs or form_params.kwargs:
-        log(('Extra kwargs found:'
-             + 'query_params={.kwargs} - form_params={.kwargs}').format(query_params, form_params))
+        log('Extra kwargs found: query_params={0.kwargs} - form_params={1.kwargs}'.format(query_params, form_params))
     if len(query_params.args) + len(form_params.args) > 1:
-        raise Error400(('Incorrect request syntax, extra args:'
-                        + 'query_params={.args} - form_params={.args}').format(query_params, form_params))
+        raise HTTPError(('Incorrect request syntax, extra args:'
+                         'query_params={0.args} - form_params={1.args}').format(query_params, form_params), code=400)
     new_value = None
     if form_params.args:
         new_value = form_params.args[0]
@@ -123,10 +143,10 @@ def check_and_extract_params(path, query_params, form_params):
 
 def check_modification_key(modification_key, key):
     if not modification_key:
-        raise Error400('No modification-key provided, update forbidden')
+        raise HTTPError('No modification-key provided, update forbidden', code=401)
     real_modification_key = get_modification_key(key)
     if real_modification_key != modification_key:
-        raise Error400('Invalid modification-key, update forbidden: {}'.format(modification_key))
+        raise HTTPError('Invalid modification-key, update forbidden: {}'.format(modification_key), code=401)
 
 def get_modification_key(key):
     return base64.urlsafe_b64encode(hmac.new(MODIFICATION_KEY_SALT, key).digest())[:10]

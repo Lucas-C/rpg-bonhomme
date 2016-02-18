@@ -35,7 +35,7 @@ non-redefined caracteristics will keep their old value.
 
 # jsonp_db
 
-This is a simple key-value store using a SQLite DB, developped to allow simple GET/PUT through JSONP.
+This is a simple key-value store, somehow similar to [etcd](https://coreos.com/using-coreos/etcd/), written in Python and using a SQLite DB, developped to allow simple GET/PUT through JSONP.
 
 In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or throw an error
 (calling Javascript 'alert' if using JSONP, else displaying an HTML error page).
@@ -101,6 +101,8 @@ And the Nginx configuration:
     make test
 
 # License
+Adaptive Public License 1.0 (APL-1.0)
+
 Tl;dr plain English version: https://tldrlegal.com/license/adaptive-public-license-1.0-%28apl-1.0%29
 
 # Resources

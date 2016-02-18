@@ -1,0 +1,6 @@
+[MESSAGES CONTROL]
+disable = import-error, missing-docstring, multiple-imports, multiple-statements, star-args, too-few-public-methods, ungrouped-imports
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length = 120

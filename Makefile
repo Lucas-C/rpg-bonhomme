@@ -27,7 +27,7 @@ check: check-static check-style check-html check-layouts-css
 check-static: $(JS_SRC_FILE)
 	## Running static analysis check
 	jshint $(JS_SRC_FILE)
-	pylint -f colorized $(PY_WSGI).py
+	pylint --rcfile=.pylintrc --reports=no -f colorized $(PY_WSGI).py
 
 check-style: $(JS_SRC_FILE)
 	## Running code style check
@@ -69,13 +69,13 @@ start-local-server:
 		--manage-script-name --mount /$(PY_WSGI)=$(PY_WSGI).py --py-autoreload 2 --daemonize uwsgi.log &
 
 restart-local-server:
-	pgrep -f ^uwsgi | ifne xargs kill
+	@pgrep -f '^[^ ]*uwsgi' | ifne xargs kill
 
 list-local-server-processes:
-	pgrep -f ^uwsgi | ifne xargs ps -fp
+	@pgrep -f '^[^ ]*uwsgi' | ifne xargs ps -fp
 
 kill-local-server:
-	pgrep -f ^uwsgi | ifne xargs kill -2
+	@pgrep -f '^[^ ]*uwsgi' | ifne xargs kill -2
 
 test:
 	./jsonp_db-tests.sh
