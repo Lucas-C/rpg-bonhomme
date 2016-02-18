@@ -1,7 +1,7 @@
 /* exported exports */
 var exports = (function() {
     'use strict';
-    var SERVER_STORAGE_CGI = 'https://chezsoi.org/lucas/rpg-bonhomme/jsonp_db/',
+    var SERVER_STORAGE_CGI = 'jsonp_db/',
     throw_error = function () {
         var msg_array = [];
         [].slice.call(arguments).forEach(function (arg) {
