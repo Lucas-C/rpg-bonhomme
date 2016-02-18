@@ -86,11 +86,12 @@ For Nginx:
 And the Nginx configuration:
 
     location /jsonp_db {
-       uwsgi_pass 127.0.0.1:8088;
-       include uwsgi_params;
+        include uwsgi_params;
+        rewrite ^/jsonp_db(.*)$ $1 break;
+        proxy_pass http://127.0.0.1:8088;
     }
     location /jsonp_db-tests.ini {
-       deny all;
+        deny all;
     }
 
 
