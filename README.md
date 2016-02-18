@@ -60,12 +60,14 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
     sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-backup-cron > /etc/cron.d/jsonp_db-backup-cron
     chmod u+x /etc/cron.d/jsonp_db-backup-cron
 
-    # For Apache:
+For Apache:
+
     sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
     # In the httpd.conf:
     WSGIScriptAlias /path/to/jsonp_db /path/to/jsonp_db.py
 
-    # For Nginx
+For Nginx:
+
     pew new rpg-bonhomme -p python2 -i configobj -i requests -i uwsgi
     
     cat << EOF | sudo tee /etc/init/rpg-bonhomme.conf
@@ -81,7 +83,7 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
     EOF
     service rpg-bonhomme start
     
-Et la conf Nginx a utiliser:
+And the Nginx propper configuration:
 
     location /jsonp_db {
        uwsgi_pass 127.0.0.1:8088;
