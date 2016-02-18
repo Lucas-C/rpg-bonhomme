@@ -50,8 +50,6 @@ That being said, this WSGI app won't do anything nasty.
 
 ## Setup
 
-Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
-
     echo modification_key_salt = $(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n') >> jsonp_db.ini
     sqlite3 jsonp_db.db 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
     chmod ugo+rw jsonp_db.db
@@ -60,7 +58,7 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
     sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-backup-cron > /etc/cron.d/jsonp_db-backup-cron
     chmod u+x /etc/cron.d/jsonp_db-backup-cron
 
-For Apache, simply:
+For Apache with [`mod_wsgi`](https://modwsgi.readthedocs.org), simply:
 
     sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
 
