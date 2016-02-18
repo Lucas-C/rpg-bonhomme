@@ -57,12 +57,40 @@ Deployed with Apache [`mod_wsgi`](https://modwsgi.readthedocs.org) :
     chmod ugo+rw jsonp_db.db
 
     # Installing the backup cron task
-    sudo sed "s/\$USER/$USER/" jsonp_db-backup_cron > /etc/cron.d/jsonp_db-backup_cron
+    sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-backup-cron > /etc/cron.d/jsonp_db-backup-cron
+    chmod u+x /etc/cron.d/jsonp_db-backup-cron
 
     # For Apache:
     sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
-    # In the .conf
+    # In the httpd.conf:
     WSGIScriptAlias /path/to/jsonp_db /path/to/jsonp_db.py
+
+    # For Nginx
+    pew new rpg-bonhomme -p python2 -i configobj -i requests -i uwsgi
+    
+    cat << EOF | sudo tee /etc/init/rpg-bonhomme.conf
+start on startup
+script
+    set -o errexit -o nounset -o xtrace
+    cd $PWD
+    exec >> upstart-stdout.log
+    exec 2>> upstart-stderr.log
+    date
+    pew-in rpg-bonhomme uwsgi --buffer-size 8000 --http :8088 --static-map /=. --manage-script-name --mount /jsonp_db=jsonp_db.py
+end script
+EOF
+    service rpg-bonhomme start
+    
+Et la conf Nginx a utiliser:
+
+    location /jsonp_db {
+       uwsgi_pass 127.0.0.1:8088;
+       include uwsgi_params;
+    }
+    location /jsonp_db-tests.ini {
+       deny all;
+    }
+
 
 ## Testing
 
