@@ -56,7 +56,7 @@ def application(env, start_response):
             raise HTTPError(traceback.format_exc(), code=500)
     except HTTPError as error:
         log(error.full_msg)
-        error_response, mime_type = format_error_response(error, bool(callback))
+        error_response, mime_type = format_error_response(error, callback)
         start_response(error.status_line, [('Content-Type', mime_type)])
         return [error_response]
 
@@ -81,9 +81,9 @@ def error_code_to_status_string(error_code):
     status_strings = requests.status_codes._codes[error_code]
     return ' '.join(w.capitalize() for w in status_strings[0].split('_'))
 
-def format_error_response(error, use_jsonp):
-    if use_jsonp:
-        return ("alert('{}')".format(error.full_msg), 'application/javascript')
+def format_error_response(error, jsonp_callback):
+    if jsonp_callback:
+        return ("{}(new Error('{}'))".format(jsonp_callback, error.full_msg), 'application/javascript')
     html_body = '    <pre>\n' + cgi.escape(error.full_msg) + '\n    </pre>'
     return (HTML_TEMPLATE.format(title=error.status_line, body=html_body), 'text/html')
 
