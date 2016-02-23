@@ -1,4 +1,4 @@
-import base64, cgi, hmac, logging, logging.handlers, os, re, requests, sqlite3, traceback, urlparse
+import base64, cgi, hashlib, hmac, logging, logging.handlers, os, re, requests, sqlite3, traceback, urlparse
 from collections import namedtuple
 from contextlib import closing
 from threading import Lock
@@ -148,8 +148,8 @@ def check_modification_key(modification_key, key):
     if real_modification_key != modification_key:
         raise HTTPError('Invalid modification-key, update forbidden: {}'.format(modification_key), code=401)
 
-def get_modification_key(key):
-    return base64.urlsafe_b64encode(hmac.new(MODIFICATION_KEY_SALT, key).digest())[:10]
+def get_modification_key(key):  # To be extra-safe we could use bcrypt instead of MD5 here (or make this a config option), but YAGNI 
+    return base64.urlsafe_b64encode(hmac.new(MODIFICATION_KEY_SALT, key, digestmod=hashlib.md5).digest())[:10]
 
 def db_get(key):
     with closing(_DB.cursor()) as db_cursor:
