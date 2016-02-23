@@ -37,8 +37,7 @@ non-redefined caracteristics will keep their old value.
 
 This is a simple key-value store, somehow similar to [etcd](https://coreos.com/using-coreos/etcd/), written in Python and using a SQLite DB, developped to allow simple GET/PUT through JSONP.
 
-In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or throw an error
-(calling Javascript 'alert' if using JSONP, else displaying an HTML error page).
+In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or an error (a JS `Error` object if using JSONP, else an HTML error page).
 
 There are some key/value length limitations currently hardcoded at the top of the Python file.
 There is also a client & server limitation on the request URI (between 2KB & 8KB usually), that can trigger a 414 error.
