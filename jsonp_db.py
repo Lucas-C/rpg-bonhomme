@@ -1,8 +1,12 @@
-import base64, cgi, hashlib, hmac, logging, logging.handlers, os, re, requests, sqlite3, traceback, urlparse
+import base64, cgi, hashlib, hmac, logging, logging.handlers, os, re, requests, sqlite3, traceback
 from collections import namedtuple
 from contextlib import closing
 from threading import Lock
 from configobj import ConfigObj
+try:
+    from urlparse import parse_qsl
+except ImportError:
+    from urllib.parse import parse_qsl
 
 SCRIPT_DIR = os.path.dirname(__file__) or '.'
 CONFIG = ConfigObj(os.path.join(SCRIPT_DIR, re.sub('.pyc?$', '.ini', __file__)))
@@ -25,7 +29,7 @@ HTML_TEMPLATE = """'<!DOCTYPE html>
   </body>
 </html>"""
 
-class RequestParameters(namedtuple('_RequestParameters', 'args kwargs')): pass
+RequestParameters = namedtuple('RequestParameters', 'args kwargs')
 class HTTPError(Exception):
     def __init__(self, message, code):
         super(HTTPError, self).__init__(message)
@@ -33,6 +37,12 @@ class HTTPError(Exception):
         self.status_string = error_code_to_status_string(code)
         self.status_line = str(code) + ' ' + self.status_string
         self.full_msg = '[ERROR] {e.status_line} : {e.message}'.format(e=self)
+
+    def format_response(jsonp_callback):
+        if jsonp_callback:
+            return ("{}(new Error('{}'))".format(jsonp_callback, self.full_msg), 'application/javascript')
+        html_body = '    <pre>\n' + cgi.escape(self.full_msg) + '\n    </pre>'
+        return (HTML_TEMPLATE.format(title=self.status_line, body=html_body), 'text/html')
 
 def application(env, start_response):
     path = env.get('PATH_INFO', '')
@@ -55,8 +65,8 @@ def application(env, start_response):
         except Exception:
             raise HTTPError(traceback.format_exc(), code=500)
     except HTTPError as error:
-        log(error.full_msg)
-        error_response, mime_type = format_error_response(error, callback)
+        log(error.full_msg, logging.ERROR)
+        error_response, mime_type = error.format_response(callback)
         start_response(error.status_line, [('Content-Type', mime_type)])
         return [error_response]
 
@@ -81,14 +91,8 @@ def error_code_to_status_string(error_code):
     status_strings = requests.status_codes._codes[error_code]
     return ' '.join(w.capitalize() for w in status_strings[0].split('_'))
 
-def format_error_response(error, jsonp_callback):
-    if jsonp_callback:
-        return ("{}(new Error('{}'))".format(jsonp_callback, error.full_msg), 'application/javascript')
-    html_body = '    <pre>\n' + cgi.escape(error.full_msg) + '\n    </pre>'
-    return (HTML_TEMPLATE.format(title=error.status_line, body=html_body), 'text/html')
-
 def parse_query_string(query_string):
-    qprm = dict(urlparse.parse_qsl(query_string, True))
+    qprm = dict(parse_qsl(query_string, True))
     return RequestParameters(
         [k for k in qprm if qprm[k] == ''],
         {k: qprm[k] for k in qprm if qprm[k] != ''},
@@ -162,8 +166,7 @@ def db_get(key):
 def db_put(key, value):
     db_check_table_size()
     with closing(_DB.cursor()) as db_cursor:
-        # Without the 'buffer' conversion, SQLite complains: ProgrammingError: You must not use 8-bit bytestrings
-        db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, buffer(value)))
+        db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, value))
         _DB.commit()
 
 def db_list_keys():
