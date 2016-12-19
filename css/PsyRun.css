@@ -39,3 +39,8 @@ input#epilogue4[type=checkbox] { top: 567px; left: 650px; }
 input#epilogue5[type=checkbox] { top: 585px; left: 370px; }
 input#epilogue6[type=checkbox] { top: 585px; left: 438px; }
 input#epilogue7[type=checkbox] { top: 585px; left: 625px; }
+
+#read-only-banner {
+    top: 60%;
+    left: 75%;
+}

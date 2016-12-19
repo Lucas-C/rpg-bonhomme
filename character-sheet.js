@@ -78,10 +78,10 @@ var exports = (function() {
         return input_ids;
     },
     get_character_id = function (name) {
-        return params.layout + '_' + (name || document.getElementById('name').value).replace(/\W+/g, '_').toLowerCase();
+        return params.layout + '_' + (name || document.getElementById('name').value).replace(/%/g, '_').toLowerCase();
     },
     get_location_search = function (name) {
-        return '?layout=' + params.layout + '&name=' + (name || document.getElementById('name').value).replace(/\W+/g, '_').toLowerCase();
+        return '?layout=' + params.layout + '&name=' + (name || document.getElementById('name').value);
     },
     update_title = function (character_id) {
         document.title = 'RPG Character Sheet - ' + character_id;
@@ -180,7 +180,7 @@ var exports = (function() {
         link.rel = 'stylesheet';
         link.href = 'css/' + params.layout + '.css';
         document.head.appendChild(link);
-        setTimeout(function () {
+        setTimeout(function () { // we wait for the CSS stylesheet to be loaded
             var input_ids = get_input_ids_from_css_rules(get_stylesheet(link.href)),
                 main_div = document.getElementById('character-sheet'),
                 background_img = document.createElement('img');
@@ -213,7 +213,7 @@ var exports = (function() {
                 }
             });
             if (params.name) {
-                exports.load_character_from_server(params.name);
+                exports.load_character_from_server(decodeURIComponent(params.name));
             }
             if (!params['modification-key']) {
                 var banner = document.createElement('img');
