@@ -12,12 +12,12 @@ SCRIPT_DIR = os.path.dirname(__file__) or '.'
 CONFIG = ConfigObj(os.path.join(SCRIPT_DIR, re.sub('.pyc?$', '.ini', __file__)))
 DATABASE_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('db_file'))
 LOG_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('log_file'))
-LOG_FORMAT = '%(asctime)s - %(process)s [%(levelname)s] %(filename)s %(lineno)d %(message)s'
+LOG_FORMAT = '%(asctime)s - %(process)s [%(levelname)s] %(message)s'
 MAX_KEY_LENGTH = CONFIG.as_int('max_key_length')
 MAX_VALUE_LENGTH = CONFIG.as_int('max_value_length')
 MAX_TABLE_SIZE = CONFIG.as_int('max_table_size')
 REQUIRE_MODIFCATION_KEY = CONFIG.as_bool('require_modification_key')
-MODIFICATION_KEY_SALT = CONFIG.get('modification_key_salt')
+MODIFICATION_KEY_SALT = CONFIG.get('modification_key_salt').encode('utf8')
 HTML_TEMPLATE = """'<!DOCTYPE html>
 <html>
   <head>
@@ -32,11 +32,11 @@ HTML_TEMPLATE = """'<!DOCTYPE html>
 RequestParameters = namedtuple('RequestParameters', 'args kwargs')
 class HTTPError(Exception):
     def __init__(self, message, code):
-        super(HTTPError, self).__init__(message)
+        super().__init__(message)
         self.code = code
         self.status_string = error_code_to_status_string(code)
         self.status_line = str(code) + ' ' + self.status_string
-        self.full_msg = '[ERROR] {e.status_line} : {e}'.format(e=self)
+        self.full_msg = '{e.status_line} : {e}'.format(e=self)
 
     def format_response(self, jsonp_callback):
         if jsonp_callback:
@@ -121,8 +121,8 @@ def store_logic(path, query_params, form_params):
         log('PUT key="{}":value="{}"'.format(key, new_value))
         db_put(key, new_value)
         return new_value, '"' + modification_key + '"'
-    except Exception as error:
-        raise HTTPError('{}: {}'.format(error.__class__.__name__, error), code=400)
+    except Exception:
+        raise HTTPError(traceback.format_exc(), code=400)
 
 def check_and_extract_params(path, query_params, form_params):
     if not path.startswith('/') or path.count('/') != 1:
@@ -154,7 +154,7 @@ def check_modification_key(modification_key, key):
 
 # To be extra-safe we could use bcrypt instead of MD5 here (or make this a config option), but YAGNI
 def get_modification_key(key):
-    return base64.urlsafe_b64encode(hmac.new(MODIFICATION_KEY_SALT, key, digestmod=hashlib.md5).digest())[:10]
+    return base64.urlsafe_b64encode(hmac.new(MODIFICATION_KEY_SALT, key.encode('utf8'), digestmod=hashlib.md5).digest()).decode('utf8')[:10]
 
 def db_get(key):
     with closing(_DB.cursor()) as db_cursor:
