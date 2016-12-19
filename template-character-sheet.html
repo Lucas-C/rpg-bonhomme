@@ -26,8 +26,8 @@
         title='Download JSON file' src='icon/file_download.png' alt='-'/>
       <input type='image' id='upload-json-button' onclick='document.getElementById("charactersheet_file_picker").click()'
         title='Upload JSON file' src='icon/file_upload.png' alt='-'/>
-      <input type="file" id="charactersheet_file_picker" onchange="exports.charactersheet_file_picker_change()"
-        accept="text/plain" style="display:none">
+      <input type="file" id="charactersheet_file_picker" onchange="exports.charactersheet_file_picker_change(this.files)"
+        accept=".json" style="display:none">
     </div>
     <script type='text/javascript'>
     </script>

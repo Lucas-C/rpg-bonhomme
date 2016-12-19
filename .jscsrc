@@ -49,10 +49,6 @@
     "requireSpaceBeforeBinaryOperators": true,
     "requireSpaceBeforeBlockStatements": true,
     "safeContextKeyword": "_this",
-    "validateJSDoc": {
-        "checkParamNames": true,
-        "requireParamTypes": true
-    },
     "validateLineBreaks": "LF",
     "validateQuoteMarks": "'"
 }

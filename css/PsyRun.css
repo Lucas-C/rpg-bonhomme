@@ -1,0 +1,41 @@
+input, textarea {
+  position: absolute;
+  font-family: Tahoma,Geneva,sans-serif;
+  font-size: 110%;
+}
+.injury {
+    transform: scale(2);
+}
+.q {
+    font-size: 70%;
+    overflow:hidden;
+}
+
+input#name { top: 25px; left: 190px; width: 300px; height: 30px; }
+input#age { top: 70px; left: 132px; width: 55px; height: 24px; }
+input#psi-power { top: 85px; left: 210px; width: 585px; height: 31px; }
+textarea#in-the-mirror { top: 150px; left: 15px; width: 380px; height: 150px; }
+
+input#injured.injury[type=checkbox] { top: 328px; left: 267px; }
+input#doubly_injured.injury[type=checkbox] { top: 353px; left: 326px; }
+
+textarea#question_1.q { top: 154px; left: 490px; width: 280px; height: 25px; }
+textarea#answer_1.q { top: 185px; left: 486px; width: 280px; height: 25px; }
+textarea#question_2.q { top: 216px; left: 482px; width: 280px; height: 25px; }
+textarea#answer_2.q { top: 247px; left: 478px; width: 280px; height: 25px; }
+textarea#question_3.q { top: 278px; left: 474px; width: 280px; height: 25px; }
+textarea#answer_3.q { top: 309px; left: 470px; width: 280px; height: 25px; }
+textarea#question_4.q { top: 340px; left: 466px; width: 280px; height: 25px; }
+textarea#answer_4.q { top: 371px; left: 462px; width: 280px; height: 25px; }
+textarea#question_5.q { top: 402px; left: 458px; width: 280px; height: 25px; }
+textarea#answer_5.q { top: 433px; left: 454px; width: 280px; height: 25px; }
+textarea#question_6.q { top: 464px; left: 450px; width: 280px; height: 25px; }
+textarea#answer_6.q { top: 495px; left: 446px; width: 280px; height: 25px; }
+
+input#epilogue1[type=checkbox] { top: 567px; left: 370px; }
+input#epilogue2[type=checkbox] { top: 567px; left: 438px; }
+input#epilogue3[type=checkbox] { top: 567px; left: 560px; }
+input#epilogue4[type=checkbox] { top: 567px; left: 650px; }
+input#epilogue5[type=checkbox] { top: 585px; left: 370px; }
+input#epilogue6[type=checkbox] { top: 585px; left: 438px; }
+input#epilogue7[type=checkbox] { top: 585px; left: 625px; }

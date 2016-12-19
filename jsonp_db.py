@@ -1,4 +1,4 @@
-import base64, cgi, hashlib, hmac, logging, logging.handlers, os, re, requests, sqlite3, traceback
+import base64, cgi, hashlib, hmac, html, logging, logging.handlers, os, re, requests, sqlite3, traceback
 from collections import namedtuple
 from contextlib import closing
 from threading import Lock
@@ -36,13 +36,13 @@ class HTTPError(Exception):
         self.code = code
         self.status_string = error_code_to_status_string(code)
         self.status_line = str(code) + ' ' + self.status_string
-        self.full_msg = '[ERROR] {e.status_line} : {e.message}'.format(e=self)
+        self.full_msg = '[ERROR] {e.status_line} : {e}'.format(e=self)
 
-    def format_response(jsonp_callback):
+    def format_response(self, jsonp_callback):
         if jsonp_callback:
-            return ("{}(new Error('{}'))".format(jsonp_callback, self.full_msg), 'application/javascript')
-        html_body = '    <pre>\n' + cgi.escape(self.full_msg) + '\n    </pre>'
-        return (HTML_TEMPLATE.format(title=self.status_line, body=html_body), 'text/html')
+            return "{}(new Error('{}'))".format(jsonp_callback, self.full_msg), 'application/javascript'
+        html_body = '    <pre>\n' + html.escape(self.full_msg) + '\n    </pre>'
+        return HTML_TEMPLATE.format(title=self.status_line, body=html_body), 'text/html'
 
 def application(env, start_response):
     path = env.get('PATH_INFO', '')
@@ -59,7 +59,7 @@ def application(env, start_response):
             return_values = store_logic(path, query_params, form_params)
             response = callback + '(' + ', '.join(return_values) + ')' if callback else return_values[0]
             start_response('200 OK', [('Content-Type', 'application/javascript')])
-            return [response]
+            yield response.encode('utf-8')
         except HTTPError:
             raise
         except Exception:
@@ -68,7 +68,7 @@ def application(env, start_response):
         log(error.full_msg, logging.ERROR)
         error_response, mime_type = error.format_response(callback)
         start_response(error.status_line, [('Content-Type', mime_type)])
-        return [error_response]
+        yield error_response.encode('utf-8')
 
 def pop_form(env):
     """
@@ -122,7 +122,7 @@ def store_logic(path, query_params, form_params):
         db_put(key, new_value)
         return new_value, '"' + modification_key + '"'
     except Exception as error:
-        raise HTTPError('{}: {}'.format(error.__class__.__name__, error.message), code=400)
+        raise HTTPError('{}: {}'.format(error.__class__.__name__, error), code=400)
 
 def check_and_extract_params(path, query_params, form_params):
     if not path.startswith('/') or path.count('/') != 1:
@@ -152,7 +152,8 @@ def check_modification_key(modification_key, key):
     if real_modification_key != modification_key:
         raise HTTPError('Invalid modification-key, update forbidden: {}'.format(modification_key), code=401)
 
-def get_modification_key(key):  # To be extra-safe we could use bcrypt instead of MD5 here (or make this a config option), but YAGNI 
+# To be extra-safe we could use bcrypt instead of MD5 here (or make this a config option), but YAGNI
+def get_modification_key(key):
     return base64.urlsafe_b64encode(hmac.new(MODIFICATION_KEY_SALT, key, digestmod=hashlib.md5).digest())[:10]
 
 def db_get(key):

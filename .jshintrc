@@ -16,7 +16,9 @@
     // Allow logging to the console & other globals from the libs used
     "browser": true,
     "globals": {
-        "console": false
+        "alert": false,
+        "console": false,
+        "prompt": false
     }
 }
 

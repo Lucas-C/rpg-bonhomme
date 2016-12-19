@@ -25,13 +25,14 @@ var exports = (function() {
         }).join('&');
     },
     get_url_params = function () {
-        var params = {};
+        var urlParams = {};
         window.location.search.substr(1).split('&').forEach(function (item) {
             var pair = item.split('=');
-            params[pair[0]] = pair[1];
+            urlParams[pair[0]] = pair[1];
         });
-        return params;
+        return urlParams;
     },
+    params = get_url_params(),
     jsonp = (function () {
         var jsonp_calls_counter = 0;
         return function (request) {
@@ -114,7 +115,6 @@ var exports = (function() {
         });
         return inputs_data;
     },
-    params = get_url_params(),
     exports = {
         save_character_to_server: function () {
             var character_id = get_character_id(),
@@ -162,7 +162,7 @@ var exports = (function() {
             a.click();
             document.body.removeChild(a);
         },
-        charactersheet_file_picker_change: function () {
+        charactersheet_file_picker_change: function (files) {
             var reader = new FileReader();
             reader.onload = function() {
                 var inputs_data = JSON.parse(reader.result),
@@ -171,7 +171,7 @@ var exports = (function() {
                 fill_inputs(inputs_data);
                 update_title(character_id);
             };
-            reader.readAsText(this.files[0]);
+            reader.readAsText(files[0]);
         },
     };
     document.addEventListener('DOMContentLoaded', function() {
@@ -198,7 +198,7 @@ var exports = (function() {
                 if (input_specs.tag === 'input') {
                     input.type = input_specs.input_type || 'text';
                 }
-                if (!params['modification-key']) {
+                if (!params['modification-key'] && input.id !== 'name') {
                     input.readOnly = true;
                 }
                 main_div.appendChild(input);

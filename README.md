@@ -11,6 +11,7 @@ which will let you to share it with others simply by providing a unique URL.
 - [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=raphaelle_lepercq_se_fait_appeler_lila_), two characters from a 'one-shot' RPG called 'Absence'.
 - [Atharès](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
 - [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
+- Khôlź](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=PsyRun&name=Khôlź), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
 
 # Usage
 
@@ -49,11 +50,20 @@ That being said, this WSGI app won't do anything nasty.
 
 ## Setup
 
+Installing a Python virtualenv and the needed dependencies with [pew](https://github.com/berdario/pew) :
+
+    pew new rpg-bonhomme -p python3
+    pip install -r dev-requirements.txt -r requirements.txt
+    npm install -g csslint jscs # for "make check-style"
+
+Initial configuration & file permissions:
+
     echo modification_key_salt = $(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n') >> jsonp_db.ini
     sqlite3 jsonp_db.db 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
     chmod ugo+rw jsonp_db.db
 
-    # Installing the backup cron task
+Installing the backup cron task:
+
     sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-backup-cron > /etc/cron.d/jsonp_db-backup-cron
     chmod u+x /etc/cron.d/jsonp_db-backup-cron
 
@@ -67,8 +77,6 @@ And the Apache httpd.conf:
 
 For Nginx:
 
-    pew new rpg-bonhomme -p python2 -i configobj -i requests -i uwsgi
-    
     cat << EOF | sudo tee /etc/init/rpg-bonhomme.conf
     start on startup
     script
@@ -81,7 +89,7 @@ For Nginx:
     end script
     EOF
     service rpg-bonhomme start
-    
+
 And the Nginx configuration:
 
     location /jsonp_db {

@@ -21,36 +21,26 @@ $(OUT_HTML): $(JS_SRC_FILE) $(TMPLT_HTML)
 	# Inserting the JS code into the HTML template
 	sed "/<script type='text\/javascript'>/r $(JS_SRC_FILE)" $(TMPLT_HTML) > $(OUT_HTML)
 
-check: check-static check-style check-html check-layouts-css
+check: check-style pre-commit-hooks
 	@:
 
-check-static: $(JS_SRC_FILE)
-	## Running static analysis check
-	jshint $(JS_SRC_FILE)
-	pylint --rcfile=.pylintrc --reports=no -f colorized $(PY_WSGI).py
-
-check-style: $(JS_SRC_FILE)
+check-style: $(JS_SRC_FILE) check-layouts-css
 	## Running code style check
 	jscs $(JS_SRC_FILE)
 	pep8 $(PY_WSGI).py
-
-check-html: $(OUT_HTML) $(HTML_CHECKER)
-	## Running HTML validation check
-	grep -vF "http-equiv='X-UA-Compatible'" $(OUT_HTML) | java -jar $(HTML_CHECKER) -
-
-$(HTML_CHECKER):
-	### Retrieving vnu.jar from github
-	wget https://github.com/validator/validator/releases/download/20141006/vnu-20141013.jar.zip
-	unzip vnu*.jar.zip
-	mv vnu/$(HTML_CHECKER) .
-	rm -r vnu/ vnu*.jar.zip
 
 check-layouts-css: $(CSS_LAYOUTS)
 	## DONE checking the CSS layouts
 
 $(CSS_LAYOUTS): $(CSS_DIR)%.css:
-	@csslint --ignore=ids,overqualified-elements $@
+	@csslint --ignore=ids,order-alphabetical,overqualified-elements $@
 	@grep -q 'input#name' $@ || { echo "No input#name in $@" && false; }
+
+pre-commit-hooks: .git/hooks/pre-commit
+	pre-commit run
+
+.git/hooks/pre-commit:
+	pre-commit install
 
 view-local: open-index start-local-server
 	@:

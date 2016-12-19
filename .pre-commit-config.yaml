@@ -1,11 +1,10 @@
 -   repo: git://github.com/Lucas-C/pre-commit-hooks
-    sha: ce9b7a17959b435456f185adae9a78a1b2e82947
+    sha: v1.0.0
     hooks:
     -   id: remove-crlf
     -   id: remove-tabs
-    -   id: forbid-non-std-html-attributes
 -   repo: git://github.com/pre-commit/pre-commit-hooks
-    sha: 97b88d9610bcc03982ddac33caba98bb2b751f5f
+    sha: v0.6.1
     hooks:
     -   id: trailing-whitespace
         args:
@@ -13,12 +12,27 @@
     -   id: check-json
     -   id: check-yaml
 -   repo: git://github.com/pre-commit/mirrors-pylint
-    sha: 5f61cf964b34b34ff229349c7dfd9171cbf5f1e8
+    sha: v1.6.4
     hooks:
     -   id: pylint
         args:
         - --rcfile=.pylintrc
         - --reports=no
+-   repo: git://github.com/Lucas-C/pre-commit-hooks-safety
+    sha: v1.0.9
+    hooks:
+    -   id: python-safety-dependencies-check
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-html
+    sha: v1.1.0
+    hooks:
+    -   id: validate-html
+# Currently broken under Cygwin due to a bug in nodeenv
+    # -   id: htmlhint
+    # -   id: htmllint
+# -   repo: git://github.com/pre-commit/mirrors-jshint
+    # sha: v2.9.3
+    # hooks:
+    # -   id: jshint
 -   repo: local
     hooks:
     -   id: check-bash-syntax
@@ -26,3 +40,14 @@
         language: system
         entry: bash -n
         files: \.sh$
+    -   id: make-check-style
+        name: make check-style
+        language: system
+        entry: sh -c "make check-style"
+        files: ''
+# Disabled because does not work under Windows
+    # -   id: make-test
+        # name: make test
+        # language: system
+        # entry: sh -c "make test"
+        # files: ''
