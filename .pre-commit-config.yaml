@@ -45,9 +45,8 @@
         language: system
         entry: sh -c "make check-style"
         files: ''
-# Disabled because does not work under Windows
-    # -   id: make-test
-        # name: make test
-        # language: system
-        # entry: sh -c "make test"
-        # files: ''
+    -   id: make-test
+        name: make test
+        language: system
+        entry: sh -c "make test"
+        files: ''

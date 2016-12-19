@@ -7,6 +7,7 @@ PY_WSGI     := jsonp_db
 DB_FILE     := jsonp_db.db
 HTML_CHECKER:= vnu.jar
 CSS_DIR     := css/
+PORT        := 8082
 CSS_LAYOUTS := $(wildcard $(CSS_DIR)*.css)
 
 .PHONY: check check-static check-style check-html check-layouts-css $(CSS_LAYOUTS)
@@ -47,15 +48,15 @@ view-local: open-index start-local-server
 
 open-index: $(LOCAL_HTML)
 	## Opening the website in a browser
-	python -m webbrowser http://localhost:8080/$(LOCAL_HTML)
+	python -m webbrowser http://localhost:$(PORT)/$(LOCAL_HTML)
 
 $(LOCAL_HTML): $(OUT_HTML)
 	### Generating a local HTML file pointing to the WSGI DB running on localhost
-	sed "s/SERVER_STORAGE_CGI = '.*'/SERVER_STORAGE_CGI = 'http:\/\/localhost:8080\/$(PY_WSGI)\/'/" $(OUT_HTML) > $(LOCAL_HTML)
+	sed "s/SERVER_STORAGE_CGI = '.*'/SERVER_STORAGE_CGI = 'http:\/\/localhost:$(PORT)\/$(PY_WSGI)\/'/" $(OUT_HTML) > $(LOCAL_HTML)
 
 start-local-server:
 	## Launching a local server to serve HTML files & WSGI apps
-	uwsgi --buffer-size 8000 --http :8080 --static-map /=. --touch-reload $(OUT_HTML) \
+	uwsgi --buffer-size 8000 --http :$(PORT) --static-map /=. --touch-reload $(OUT_HTML) \
 		--manage-script-name --mount /$(PY_WSGI)=$(PY_WSGI).py --py-autoreload 2 --daemonize uwsgi.log &
 
 restart-local-server:
