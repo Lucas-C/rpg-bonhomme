@@ -154,7 +154,8 @@ def check_modification_key(modification_key, key):
 
 # To be extra-safe we could use bcrypt instead of MD5 here (or make this a config option), but YAGNI
 def get_modification_key(key):
-    return base64.urlsafe_b64encode(hmac.new(MODIFICATION_KEY_SALT, key.encode('utf8'), digestmod=hashlib.md5).digest()).decode('utf8')[:10]
+    secret = hmac.new(MODIFICATION_KEY_SALT, key.encode('utf8'), digestmod=hashlib.md5).digest()
+    return base64.urlsafe_b64encode(secret).decode('utf8')[:10]
 
 def db_get(key):
     with closing(_DB.cursor()) as db_cursor:

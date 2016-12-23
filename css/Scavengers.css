@@ -1,0 +1,85 @@
+input, textarea {
+  position: absolute;
+  font-family: Tahoma,Geneva,sans-serif;
+  font-size: 110%;
+}
+
+textarea {
+  border: #ccc solid 1px;
+  border-radius: 10px;
+}
+
+input#name { top: 105px; left: 580px; width: 500px; height: 30px; }
+input#description { top: 150px; left: 670px; width: 590px; height: 30px; }
+
+input#dur[type=number] { top:310px; left: 510px; width: 50px; height: 30px; }
+input#fin[type=number] { top:310px; left: 645px; width: 50px; height: 30px; }
+input#vif[type=number] { top:310px; left: 780px; width: 50px; height: 30px; }
+
+input#sante2[type=checkbox] { top: 304px; left: 897px; }
+input#sante3[type=checkbox] { top: 326px; left: 897px; }
+input#sante4[type=checkbox] { top: 348px; left: 897px; }
+input#condition1[type=checkbox] { top: 414px; left: 897px; }
+input#condition2[type=checkbox] { top: 435px; left: 897px; }
+input#condition3[type=checkbox] { top: 457px; left: 897px; }
+
+textarea#equipement { top: 122px; left: 1300px; width: 390px; height: 345px; }
+textarea#butin { top: 560px; left: 1300px; width: 390px; height: 278px; }
+textarea#cash { top: 930px; left: 1314px; width: 364px; height: 60px; }
+
+input#retraite1a[type=checkbox] { top: 457px; left: 488px; }
+input#retraite1b[type=checkbox] { top: 457px; left: 506px; }
+input#retraite1c[type=checkbox] { top: 457px; left: 523px; }
+input#retraite1d[type=checkbox] { top: 457px; left: 541px; }
+input#retraite1e[type=checkbox] { top: 457px; left: 558px; }
+
+input#retraite2a[type=checkbox] { top: 479px; left: 488px; }
+input#retraite2b[type=checkbox] { top: 479px; left: 506px; }
+input#retraite2c[type=checkbox] { top: 479px; left: 523px; }
+input#retraite2d[type=checkbox] { top: 479px; left: 541px; }
+input#retraite2e[type=checkbox] { top: 479px; left: 558px; }
+
+input#retraite3a[type=checkbox] { top: 501px; left: 488px; }
+input#retraite3b[type=checkbox] { top: 501px; left: 506px; }
+input#retraite3c[type=checkbox] { top: 501px; left: 523px; }
+input#retraite3d[type=checkbox] { top: 501px; left: 541px; }
+input#retraite3e[type=checkbox] { top: 501px; left: 558px; }
+
+input#retraite4a[type=checkbox] { top: 523px; left: 488px; }
+input#retraite4b[type=checkbox] { top: 523px; left: 506px; }
+input#retraite4c[type=checkbox] { top: 523px; left: 523px; }
+input#retraite4d[type=checkbox] { top: 523px; left: 541px; }
+input#retraite4e[type=checkbox] { top: 523px; left: 558px; }
+
+input#retraite5a[type=checkbox] { top: 544px; left: 488px; }
+input#retraite5b[type=checkbox] { top: 544px; left: 506px; }
+input#retraite5c[type=checkbox] { top: 544px; left: 523px; }
+input#retraite5d[type=checkbox] { top: 544px; left: 541px; }
+input#retraite5e[type=checkbox] { top: 544px; left: 558px; }
+
+input#retraite6a[type=checkbox] { top: 566px; left: 488px; }
+input#retraite6b[type=checkbox] { top: 566px; left: 506px; }
+input#retraite6c[type=checkbox] { top: 566px; left: 523px; }
+input#retraite6d[type=checkbox] { top: 566px; left: 541px; }
+input#retraite6e[type=checkbox] { top: 566px; left: 558px; }
+
+input#retraite7a[type=checkbox] { top: 588px; left: 488px; }
+input#retraite7b[type=checkbox] { top: 588px; left: 506px; }
+input#retraite7c[type=checkbox] { top: 588px; left: 523px; }
+input#retraite7d[type=checkbox] { top: 588px; left: 541px; }
+input#retraite7e[type=checkbox] { top: 588px; left: 558px; }
+
+input#experience_dur[type=checkbox] { top: 588px; left: 897px; }
+input#experience_fin[type=checkbox] { top: 588px; left: 1033px; }
+input#experience_vif[type=checkbox] { top: 588px; left: 1170px; }
+input#experience_attr1[type=checkbox] { top: 610px; left: 897px; }
+input#experience_attr2[type=checkbox] { top: 610px; left: 1033px; }
+input#experience_contact[type=checkbox] { top: 610px; left: 1170px; }
+
+input#contact_armatech[type=checkbox] { top: 741px; left: 488px; }
+input#contact_blackmarket[type=checkbox] { top: 741px; left: 897px; }
+input#contact_caifuxiaoyin[type=checkbox] { top: 894px; left: 488px; }
+input#contact_steinerwilson[type=checkbox] { top: 894px; left: 897px; }
+input#contact_legion[type=checkbox] { top: 1047px; left: 488px; }
+input#contact_transmed[type=checkbox] { top: 1047px; left: 897px; }
+
