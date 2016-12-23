@@ -78,7 +78,7 @@ var exports = (function() {
         return input_ids;
     },
     get_character_id = function (name) {
-        return params.layout + '_' + (name || document.getElementById('name').value).replace(/\W+/g, '_').toLowerCase();
+        return params.layout + '_' + (name || document.getElementById('name').value).replace(/[\s()]+/g, '_').toLowerCase();
     },
     get_location_search = function (name) {
         return '?layout=' + params.layout + '&name=' + (name || document.getElementById('name').value);
