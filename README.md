@@ -108,6 +108,10 @@ And the Nginx configuration:
 
     make test
 
+## Retrieving a modification key
+
+   python -c "from jsonp_db import get_modification_key; print('&modification-key=' + get_modification_key('${layout}_${lowercase_character_name}'))"
+
 # License
 Adaptive Public License 1.0 (APL-1.0)
 
