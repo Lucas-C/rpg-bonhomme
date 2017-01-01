@@ -11,7 +11,7 @@ which will let you to share it with others simply by providing a unique URL.
 - [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=raphaelle_lepercq_se_fait_appeler_lila_), two characters from a 'one-shot' RPG called 'Absence'.
 - [Atharès](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
 - [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
-- [Khôlź](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=PsyRun&name=Khôlź), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
+- [Sylvia](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=PsyRun&name=Sylvia), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
 
 # Usage
 
@@ -110,7 +110,7 @@ And the Nginx configuration:
 
 ## Retrieving a modification key
 
-   python -c "from jsonp_db import get_modification_key; print('&modification-key=' + get_modification_key('${layout}_${lowercase_character_name}'))"
+    python -c "from jsonp_db import get_modification_key; print('&modification-key=' + get_modification_key('${layout}_${lowercase_character_name}'))"
 
 # License
 Adaptive Public License 1.0 (APL-1.0)
