@@ -14,6 +14,7 @@ input, textarea {
 input#name { top: 25px; left: 190px; width: 300px; height: 30px; }
 input#age { top: 70px; left: 132px; width: 55px; height: 24px; }
 input#psi-power { top: 85px; left: 210px; width: 585px; height: 31px; }
+input#avatar[type=image] { top: 10px; left: 830px; max-width: 250px; }
 textarea#in-the-mirror { top: 150px; left: 15px; width: 380px; height: 150px; }
 
 input#injured.injury[type=checkbox] { top: 328px; left: 267px; }
