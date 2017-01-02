@@ -6,7 +6,7 @@ JS_SRC_FILE := character-sheet.js
 PY_WSGI     := jsonp_db
 DB_FILE     := jsonp_db.db
 HTML_CHECKER:= vnu.jar
-CSS_DIR     := css/
+CSS_DIR     := layout/
 PORT        := 8082
 CSS_LAYOUTS := $(wildcard $(CSS_DIR)*.css)
 

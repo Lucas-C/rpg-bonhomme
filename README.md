@@ -21,12 +21,12 @@ To remote load an existing character, simply go to https://chezsoi.org/lucas/rpg
 
 To edit and remote save a new character, simply go to https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout= and type a layout name at the end of the URL, then enter your character name and press the 'Save to remote server' button.
 
-The currently available layouts matches the list of file in the **css/** & **img/** directories of this repository. Note that at the time of writing, some layouts are still 'in-progress' and currently empty.
+The currently available layouts matches the list of file in the **layout/** & **img/** directories of this repository. Note that at the time of writing, some layouts are still 'in-progress' and currently empty.
 
 # Internals & asumptions
 
 - a ?layout= URL parameter must always be provided to _character-sheet.html_.
-- this _layout_ must match the name of a .css file in **css/**, and a .png character sheet image in **img/**.
+- this _layout_ must match the name of a .css file in **layout/**, and a .png character sheet image in **img/**.
 - input (or textarea) fields are defined once and only once by rules starting with 'input#<name>' in the layout.css,
 and they must be the only selectors starting that way in the file.
 Non-textual fields must be specified as 'input[type=.+]#<name>'

@@ -53,8 +53,8 @@ var exports = (function() {
             document.body.appendChild(script);
         };
     })(),
-    get_stylesheet = function (css_name) {
-        var css_name_pattern = new RegExp(css_name + '$'),
+    get_stylesheet = function (layout_name) {
+        var css_name_pattern = new RegExp(layout_name + '$'),
             css_found = null;
         [].slice.call(document.styleSheets).forEach(function (css) {
             if (css.href && css.href.match(css_name_pattern)) {
@@ -178,7 +178,7 @@ var exports = (function() {
         assert(params.layout, 'No layout specified in the URL');
         var link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = 'css/' + params.layout + '.css';
+        link.href = 'layout/' + params.layout + '.css';
         document.head.appendChild(link);
         setTimeout(function () { // we wait for the CSS stylesheet to be loaded
             var input_ids = get_input_ids_from_css_rules(get_stylesheet(link.href)),
