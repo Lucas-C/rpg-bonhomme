@@ -1,3 +1,6 @@
+body {
+  margin: 8px;
+}
 #read-only-banner { top: -10px; left: 150px; }
 input, textarea {
   position: absolute;

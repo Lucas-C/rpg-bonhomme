@@ -1,1 +1,298 @@
-input#name { top: 284px; left: 163px; width: 383px; }
+body {
+  margin: 8px;
+}
+#read-only-banner { top: -10px; left: 150px; }
+input, textarea {
+  position: absolute;
+  font-family: Tahoma,Geneva,sans-serif;
+  font-size: 110%;
+  color: #3C3C3C;
+}
+input[type=text], input[type=number], textarea {
+  border-radius: 4px;
+  border:solid 1px lightgrey;
+}
+input.trait {
+  font-size: 160%;
+}
+input#avatar[type=image] { top: 10px; left: 10px; max-height: 270px; border-radius: 10px; }
+input#name { top: 288px; left: 163px; width: 460px; }
+input#player { top: 288px; left: 882px; width: 262px; }
+input#profession { top: 331px; left: 250px; width: 373px; }
+input#ethnicgroup { top: 331px; left: 882px; width: 274px; }
+
+input#age.physical { top: 374px; left: 160px; width: 32px; }
+input#sex.physical { top: 374px; left: 282px; width: 32px; }
+input#height.physical { top: 374px; left: 426px; width: 50px; }
+input#weight.physical { top: 374px; left: 574px; width: 50px; }
+input#skin.physical { top: 374px; left: 715px; width: 70px; }
+input#hair.physical { top: 374px; left: 914px; width: 70px; }
+input#eyes.pysical { top: 374px; left: 1078px; width: 70px; }
+
+textarea#apparence { top: 446px; left: 94px; width: 1070px; height: 100px; }
+textarea#personnality { top: 590px; left: 94px; width: 810px; height: 130px; }
+textarea#tastes { top: 765px; left: 94px; width: 810px; height: 60px; }
+textarea#beliefs { top: 870px; left: 94px; width: 810px; height: 130px; }
+input#will.trait[type=number] { top: 1025px; left: 798px; width: 60px; }
+textarea#dreams { top: 1080px; left: 94px; width: 1070px; height: 120px; }
+
+input#rel1.relation { top: 1280px; left: 500px; width: 410px; }
+input#red1.indebted[type=number] { top: 1280px; left: 986px; width: 40px; }
+input#inf1.influent[type=number] { top: 1280px; left: 1110px; width: 40px; }
+
+input#rel2.relation { top: 1324px; left: 500px; width: 410px; }
+input#red2.indebted[type=number] { top: 1324px; left: 986px; width: 40px; }
+input#inf2.influent[type=number] { top: 1324px; left: 1110px; width: 40px; }
+
+input#rel3.relation { top: 1368px; left: 500px; width: 410px; }
+input#red3.indebted[type=number] { top: 1368px; left: 986px; width: 40px; }
+input#inf3.influent[type=number] { top: 1368px; left: 1110px; width: 40px; }
+
+input#rel4.relation { top: 1412px; left: 500px; width: 410px; }
+input#red4.indebted[type=number] { top: 1412px; left: 986px; width: 40px; }
+input#inf4.influent[type=number] { top: 1412px; left: 1110px; width: 40px; }
+
+input#rel5.relation { top: 1456px; left: 500px; width: 410px; }
+input#red5.indebted[type=number] { top: 1456px; left: 986px; width: 40px; }
+input#inf5.influent[type=number] { top: 1456px; left: 1110px; width: 40px; }
+
+input#rel6.relation { top: 1500px; left: 500px; width: 410px; }
+input#red6.indebted[type=number] { top: 1500px; left: 986px; width: 40px; }
+input#inf6.influent[type=number] { top: 1500px; left: 1110px; width: 40px; }
+
+input#rel7.relation { top: 1544px; left: 500px; width: 410px; }
+input#red7.indebted[type=number] { top: 1544px; left: 986px; width: 40px; }
+input#inf7.influent[type=number] { top: 1544px; left: 1110px; width: 40px; }
+
+input#rel8.relation { top: 1588px; left: 500px; width: 410px; }
+input#red8.indebted[type=number] { top: 1588px; left: 986px; width: 40px; }
+input#inf8.influent[type=number] { top: 1588px; left: 1110px; width: 40px; }
+
+input#rel9.relation { top: 1632px; left: 500px; width: 410px; }
+input#red9.indebted[type=number] { top: 1632px; left: 986px; width: 40px; }
+input#inf9.influent[type=number] { top: 1632px; left: 1110px; width: 40px; }
+
+input#assurance.trait[type=number] { top: 1923px; left: 518px; width: 36px; color: #5555AB; }
+input#agility.trait[type=number] { top: 2027px; left: 256px; width: 36px; color: #5555AB; }
+input#perception.trait[type=number] { top: 2027px; left: 518px; width: 36px; color: #5555AB; }
+input#dexterity.trait[type=number] { top: 2133px; left: 256px; width: 36px; color: #5555AB; }
+input#vivacity.trait[type=number] { top: 2133px; left: 518px; width: 36px; color: #5555AB; }
+input#force.trait[type=number] { top: 2238px; left: 256px; width: 36px; color: #5555AB; }
+input#constitution.trait[type=number] { top: 2238px; left: 522px; width: 36px; color: #5555AB; }
+input#shadow.trait[type=number] { top: 1914px; left: 826px; width: 60px; }
+input#shawow_sun1[type=checkbox] { top: 1936px; left: 766px; }
+input#shawow_sun2[type=checkbox] { top: 1966px; left: 784px; }
+input#shawow_sun3[type=checkbox] { top: 1984px; left: 814px; }
+input#shawow_sun4[type=checkbox] { top: 1989px; left: 849px; }
+input#shawow_sun5[type=checkbox] { top: 1984px; left: 884px; }
+input#shawow_sun6[type=checkbox] { top: 1966px; left: 914px; }
+input#shawow_sun7[type=checkbox] { top: 1936px; left: 932px; }
+input#soul.trait[type=number] { top: 2025px; left: 650px; width: 60px; color: #8D0000 }
+
+input#i1_light.injury[type=checkbox] { top: 2130px; left: 795px; }
+input#i2_light.injury[type=checkbox] { top: 2130px; left: 827px; }
+input#i3_light.injury[type=checkbox] { top: 2130px; left: 859px; }
+input#i4_light.injury[type=checkbox] { top: 2130px; left: 890px; }
+input#light.injury { top: 2130px; left: 938px; width: 206px; }
+input#i1_serious.injury[type=checkbox] { top: 2183px; left: 795px; }
+input#i2_serious.injury[type=checkbox] { top: 2183px; left: 827px; }
+input#i3_serious.injury[type=checkbox] { top: 2183px; left: 859px; }
+input#serious.injury { top: 2183px; left: 902px; width: 242px; }
+input#i1_critical.injury[type=checkbox] { top: 2237px; left: 795px; }
+input#i2_critical.injury[type=checkbox] { top: 2237px; left: 827px; }
+input#critical.injury { top: 2237px; left: 868px; width: 276px; }
+input#i1_deadly.injury[type=checkbox] { top: 2290px; left: 795px; }
+input#deadly.injury { top: 2290px; left: 830px; width: 314px; }
+
+input#horserider_1.talent[type=checkbox] { top: 2381px; left: 334px; }
+input#horserider_2.talent[type=checkbox] { top: 2381px; left: 358px; }
+input#horserider_3.talent[type=checkbox] { top: 2381px; left: 381px; }
+input#horserider_4.talent[type=checkbox] { top: 2381px; left: 404px; }
+input#empath_1.talent[type=checkbox] { top: 2423px; left: 334px; }
+input#empath_2.talent[type=checkbox] { top: 2423px; left: 358px; }
+input#empath_3.talent[type=checkbox] { top: 2423px; left: 381px; }
+input#empath_4.talent[type=checkbox] { top: 2423px; left: 404px; }
+input#farmer_1.talent[type=checkbox] { top: 2466px; left: 334px; }
+input#farmer_2.talent[type=checkbox] { top: 2466px; left: 358px; }
+input#farmer_3.talent[type=checkbox] { top: 2466px; left: 381px; }
+input#farmer_4.talent[type=checkbox] { top: 2466px; left: 404px; }
+input#furtive_rascal_1.talent[type=checkbox] { top: 2509px; left: 334px; }
+input#furtive_rascal_2.talent[type=checkbox] { top: 2509px; left: 358px; }
+input#furtive_rascal_3.talent[type=checkbox] { top: 2509px; left: 381px; }
+input#furtive_rascal_4.talent[type=checkbox] { top: 2509px; left: 404px; }
+input#gentleman_1.talent[type=checkbox] { top: 2552px; left: 334px; }
+input#gentleman_2.talent[type=checkbox] { top: 2552px; left: 358px; }
+input#gentleman_3.talent[type=checkbox] { top: 2552px; left: 381px; }
+input#gentleman_4.talent[type=checkbox] { top: 2552px; left: 404px; }
+input#guide_1.talent[type=checkbox] { top: 2594px; left: 334px; }
+input#guide_2.talent[type=checkbox] { top: 2594px; left: 358px; }
+input#guide_3.talent[type=checkbox] { top: 2594px; left: 381px; }
+input#guide_4.talent[type=checkbox] { top: 2594px; left: 404px; }
+input#guide_on.talent { top: 2585px; left: 222px; width: 104px; }
+input#merchant_1.talent[type=checkbox] { top: 2637px; left: 334px; }
+input#merchant_2.talent[type=checkbox] { top: 2637px; left: 358px; }
+input#merchant_3.talent[type=checkbox] { top: 2637px; left: 381px; }
+input#merchant_4.talent[type=checkbox] { top: 2637px; left: 404px; }
+input#naassene_1.talent[type=checkbox] { top: 2679px; left: 334px; }
+input#naassene_2.talent[type=checkbox] { top: 2679px; left: 358px; }
+input#naassene_3.talent[type=checkbox] { top: 2679px; left: 381px; }
+input#naassene_4.talent[type=checkbox] { top: 2679px; left: 404px; }
+input#naassene_range.talent { top: 2707px; left: 357px; width: 60px; }
+input#oppressor_1.talent[type=checkbox] { top: 2752px; left: 334px; }
+input#oppressor_2.talent[type=checkbox] { top: 2752px; left: 358px; }
+input#oppressor_3.talent[type=checkbox] { top: 2752px; left: 381px; }
+input#oppressor_4.talent[type=checkbox] { top: 2752px; left: 404px; }
+input#pilot_1.talent[type=checkbox] { top: 2794px; left: 334px; }
+input#pilot_2.talent[type=checkbox] { top: 2794px; left: 358px; }
+input#pilot_3.talent[type=checkbox] { top: 2794px; left: 381px; }
+input#pilot_4.talent[type=checkbox] { top: 2794px; left: 404px; }
+input#seducer_1.talent[type=checkbox] { top: 2837px; left: 334px; }
+input#seducer_2.talent[type=checkbox] { top: 2837px; left: 358px; }
+input#seducer_3.talent[type=checkbox] { top: 2837px; left: 381px; }
+input#seducer_4.talent[type=checkbox] { top: 2837px; left: 404px; }
+input#trapper_1.talent[type=checkbox] { top: 2880px; left: 334px; }
+input#trapper_2.talent[type=checkbox] { top: 2880px; left: 358px; }
+input#trapper_3.talent[type=checkbox] { top: 2880px; left: 381px; }
+input#trapper_4.talent[type=checkbox] { top: 2880px; left: 404px; }
+input#thief_1.talent[type=checkbox] { top: 2922px; left: 334px; }
+input#thief_2.talent[type=checkbox] { top: 2922px; left: 358px; }
+input#thief_3.talent[type=checkbox] { top: 2922px; left: 381px; }
+input#thief_4.talent[type=checkbox] { top: 2922px; left: 404px; }
+input#extra_t1.talent { top: 2958px; left: 128px; width: 200px; }
+input#extra_t1_1.talent[type=checkbox] { top: 2965px; left: 334px; }
+input#extra_t1_2.talent[type=checkbox] { top: 2965px; left: 358px; }
+input#extra_t1_3.talent[type=checkbox] { top: 2965px; left: 381px; }
+input#extra_t1_4.talent[type=checkbox] { top: 2965px; left: 404px; }
+input#extra_t2.talent { top: 3000px; left: 128px; width: 200px; }
+input#extra_t2_1.talent[type=checkbox] { top: 3007px; left: 334px; }
+input#extra_t2_2.talent[type=checkbox] { top: 3007px; left: 358px; }
+input#extra_t2_3.talent[type=checkbox] { top: 3007px; left: 381px; }
+input#extra_t2_4.talent[type=checkbox] { top: 3007px; left: 404px; }
+input#chemist_1.talent[type=checkbox] { top: 3095px; left: 334px; }
+input#chemist_2.talent[type=checkbox] { top: 3095px; left: 358px; }
+input#chemist_3.talent[type=checkbox] { top: 3095px; left: 381px; }
+input#chemist_4.talent[type=checkbox] { top: 3095px; left: 404px; }
+
+input#eletronicsengineer_1.talent[type=checkbox] { top: 2382px; left: 689px; }
+input#eletronicsengineer_2.talent[type=checkbox] { top: 2382px; left: 713px; }
+input#eletronicsengineer_3.talent[type=checkbox] { top: 2382px; left: 736px; }
+input#eletronicsengineer_4.talent[type=checkbox] { top: 2382px; left: 759px; }
+input#magnetismengineer_1.talent[type=checkbox] { top: 2424px; left: 689px; }
+input#magnetismengineer_2.talent[type=checkbox] { top: 2424px; left: 713px; }
+input#magnetismengineer_3.talent[type=checkbox] { top: 2424px; left: 736px; }
+input#magnetismengineer_4.talent[type=checkbox] { top: 2424px; left: 759px; }
+input#soundengineer_1.talent[type=checkbox] { top: 2467px; left: 689px; }
+input#soundengineer_2.talent[type=checkbox] { top: 2467px; left: 713px; }
+input#soundengineer_3.talent[type=checkbox] { top: 2467px; left: 736px; }
+input#soundengineer_4.talent[type=checkbox] { top: 2467px; left: 759px; }
+input#mechanic_1.talent[type=checkbox] { top: 2509px; left: 689px; }
+input#mechanic_2.talent[type=checkbox] { top: 2509px; left: 713px; }
+input#mechanic_3.talent[type=checkbox] { top: 2509px; left: 736px; }
+input#mechanic_4.talent[type=checkbox] { top: 2509px; left: 759px; }
+input#scribe_circles_1.talent[type=checkbox] { top: 2551px; left: 689px; }
+input#scribe_circles_2.talent[type=checkbox] { top: 2551px; left: 713px; }
+input#scribe_circles_3.talent[type=checkbox] { top: 2551px; left: 736px; }
+input#scribe_circles_4.talent[type=checkbox] { top: 2551px; left: 759px; }
+input#scribe_greek_1.talent[type=checkbox] { top: 2594px; left: 689px; }
+input#scribe_greek_2.talent[type=checkbox] { top: 2594px; left: 713px; }
+input#scribe_greek_3.talent[type=checkbox] { top: 2594px; left: 736px; }
+input#scribe_greek_4.talent[type=checkbox] { top: 2594px; left: 759px; }
+input#extra_science_t1.talent { top: 2634px; left: 480px; width: 200px; }
+input#extra_science_t1_1.talent[type=checkbox] { top: 2637px; left: 689px; }
+input#extra_science_t1_2.talent[type=checkbox] { top: 2637px; left: 713px; }
+input#extra_science_t1_3.talent[type=checkbox] { top: 2637px; left: 736px; }
+input#extra_science_t1_4.talent[type=checkbox] { top: 2637px; left: 759px; }
+input#extra_science_t2.talent { top: 2677px; left: 480px; width: 200px; }
+input#extra_science_t2_1.talent[type=checkbox] { top: 2680px; left: 689px; }
+input#extra_science_t2_2.talent[type=checkbox] { top: 2680px; left: 713px; }
+input#extra_science_t2_3.talent[type=checkbox] { top: 2680px; left: 736px; }
+input#extra_science_t2_4.talent[type=checkbox] { top: 2680px; left: 759px; }
+
+input#craftperson_1.talent[type=checkbox] { top: 2768px; left: 689px; }
+input#craftperson_2.talent[type=checkbox] { top: 2768px; left: 713px; }
+input#craftperson_3.talent[type=checkbox] { top: 2768px; left: 736px; }
+input#craftperson_4.talent[type=checkbox] { top: 2768px; left: 759px; }
+input#actor_1.talent[type=checkbox] { top: 2811px; left: 689px; }
+input#actor_2.talent[type=checkbox] { top: 2811px; left: 713px; }
+input#actor_3.talent[type=checkbox] { top: 2811px; left: 736px; }
+input#actor_4.talent[type=checkbox] { top: 2811px; left: 759px; }
+input#player_1.talent[type=checkbox] { top: 2853px; left: 689px; }
+input#player_2.talent[type=checkbox] { top: 2853px; left: 713px; }
+input#player_3.talent[type=checkbox] { top: 2853px; left: 736px; }
+input#player_4.talent[type=checkbox] { top: 2853px; left: 759px; }
+input#musician_1.talent[type=checkbox] { top: 2896px; left: 689px; }
+input#musician_2.talent[type=checkbox] { top: 2896px; left: 713px; }
+input#musician_3.talent[type=checkbox] { top: 2896px; left: 736px; }
+input#musician_4.talent[type=checkbox] { top: 2896px; left: 759px; }
+input#painter_1.talent[type=checkbox] { top: 2939px; left: 689px; }
+input#painter_2.talent[type=checkbox] { top: 2939px; left: 713px; }
+input#painter_3.talent[type=checkbox] { top: 2939px; left: 736px; }
+input#painter_4.talent[type=checkbox] { top: 2939px; left: 759px; }
+input#street_performer_1.talent[type=checkbox] { top: 2981px; left: 689px; }
+input#street_performer_2.talent[type=checkbox] { top: 2981px; left: 713px; }
+input#street_performer_3.talent[type=checkbox] { top: 2981px; left: 736px; }
+input#street_performer_4.talent[type=checkbox] { top: 2981px; left: 759px; }
+input#healer_1.talent[type=checkbox] { top: 3023px; left: 689px; }
+input#healer_2.talent[type=checkbox] { top: 3023px; left: 713px; }
+input#healer_3.talent[type=checkbox] { top: 3023px; left: 736px; }
+input#healer_4.talent[type=checkbox] { top: 3023px; left: 759px; }
+input#extra_art_t1.talent { top: 3063px; left: 480px; width: 200px; }
+input#extra_art_t1_1.talent[type=checkbox] { top: 3065px; left: 689px; }
+input#extra_art_t1_2.talent[type=checkbox] { top: 3065px; left: 713px; }
+input#extra_art_t1_3.talent[type=checkbox] { top: 3065px; left: 736px; }
+input#extra_art_t1_4.talent[type=checkbox] { top: 3065px; left: 759px; }
+input#extra_art_t2.talent { top: 3105px; left: 480px; width: 200px; }
+input#extra_art_t2_1.talent[type=checkbox] { top: 3108px; left: 689px; }
+input#extra_art_t2_2.talent[type=checkbox] { top: 3108px; left: 713px; }
+input#extra_art_t2_3.talent[type=checkbox] { top: 3108px; left: 736px; }
+input#extra_art_t2_4.talent[type=checkbox] { top: 3108px; left: 759px; }
+
+input#archer_1.talent[type=checkbox] { top: 2414px; left: 1045px; }
+input#archer_2.talent[type=checkbox] { top: 2414px; left: 1069px; }
+input#archer_3.talent[type=checkbox] { top: 2414px; left: 1092px; }
+input#archer_4.talent[type=checkbox] { top: 2414px; left: 1115px; }
+input#archer_range.talent { top: 2444px; left: 1070px; width: 60px; }
+input#artilleryman_1.talent[type=checkbox] { top: 2487px; left: 1045px; }
+input#artilleryman_2.talent[type=checkbox] { top: 2487px; left: 1069px; }
+input#artilleryman_3.talent[type=checkbox] { top: 2487px; left: 1092px; }
+input#artilleryman_4.talent[type=checkbox] { top: 2487px; left: 1115px; }
+input#artilleryman_range.talent { top: 2517px; left: 1070px; width: 60px; }
+input#knives_master_1.talent[type=checkbox] { top: 2559px; left: 1045px; }
+input#knives_master_2.talent[type=checkbox] { top: 2559px; left: 1069px; }
+input#knives_master_3.talent[type=checkbox] { top: 2559px; left: 1092px; }
+input#knives_master_4.talent[type=checkbox] { top: 2559px; left: 1115px; }
+input#knives_master_range.talent { top: 2589px; left: 1070px; width: 60px; }
+input#scrapper_1.talent[type=checkbox] { top: 2630px; left: 1045px; }
+input#scrapper_2.talent[type=checkbox] { top: 2630px; left: 1069px; }
+input#scrapper_3.talent[type=checkbox] { top: 2630px; left: 1092px; }
+input#scrapper_4.talent[type=checkbox] { top: 2630px; left: 1115px; }
+input#swordsman_1.talent[type=checkbox] { top: 2673px; left: 1045px; }
+input#swordsman_2.talent[type=checkbox] { top: 2673px; left: 1069px; }
+input#swordsman_3.talent[type=checkbox] { top: 2673px; left: 1092px; }
+input#swordsman_4.talent[type=checkbox] { top: 2673px; left: 1115px; }
+input#fencer_1.talent[type=checkbox] { top: 2716px; left: 1045px; }
+input#fencer_2.talent[type=checkbox] { top: 2716px; left: 1069px; }
+input#fencer_3.talent[type=checkbox] { top: 2716px; left: 1092px; }
+input#fencer_4.talent[type=checkbox] { top: 2716px; left: 1115px; }
+input#gunner_1.talent[type=checkbox] { top: 2759px; left: 1045px; }
+input#gunner_2.talent[type=checkbox] { top: 2759px; left: 1069px; }
+input#gunner_3.talent[type=checkbox] { top: 2759px; left: 1092px; }
+input#gunner_4.talent[type=checkbox] { top: 2759px; left: 1115px; }
+input#gunner_range.talent { top: 2789px; left: 1070px; width: 60px; }
+input#extra_fight_t1.talent { top: 2827px; left: 840px; width: 200px; }
+input#extra_fight_t1_1.talent[type=checkbox] { top: 2830px; left: 1045px; }
+input#extra_fight_t1_2.talent[type=checkbox] { top: 2830px; left: 1069px; }
+input#extra_fight_t1_3.talent[type=checkbox] { top: 2830px; left: 1092px; }
+input#extra_fight_t1_4.talent[type=checkbox] { top: 2830px; left: 1115px; }
+input#extra_fight_t2.talent { top: 2870px; left: 840px; width: 200px; }
+input#extra_fight_t2_1.talent[type=checkbox] { top: 2873px; left: 1045px; }
+input#extra_fight_t2_2.talent[type=checkbox] { top: 2873px; left: 1069px; }
+input#extra_fight_t2_3.talent[type=checkbox] { top: 2873px; left: 1092px; }
+input#extra_fight_t2_4.talent[type=checkbox] { top: 2873px; left: 1115px; }
+
+input#fortune.trait[type=number] { top: 3156px; left: 650px; width: 60px; color: #0008FF }
+input#p1.possession { top: 3240px; left: 90px; width: 760px; }
+input#p2.possession { top: 3280px; left: 90px; width: 760px; }
+input#p3.possession { top: 3320px; left: 90px; width: 760px; }
+input#p4.possession { top: 3360px; left: 90px; width: 760px; }
+input#p5.possession { top: 3400px; left: 90px; width: 760px; }

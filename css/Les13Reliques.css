@@ -1,1 +1,11 @@
-input#name { top: 284px; left: 163px; width: 383px; }
+body {
+  margin: 8px;
+}
+input, textarea {
+  position: absolute;
+  font-family: Tahoma,Geneva,sans-serif;
+}
+
+input#avatar[type=image] { top: 77px; left: 216px; max-width: 398px; max-height: 360px; }
+input#name { top: 504px; left: 163px; width: 166px; }
+

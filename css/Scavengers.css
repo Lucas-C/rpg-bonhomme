@@ -1,3 +1,7 @@
+body {
+  margin: 6px;
+}
+
 input, textarea {
   position: absolute;
   font-family: Tahoma,Geneva,sans-serif;
@@ -83,3 +87,5 @@ input#contact_steinerwilson[type=checkbox] { top: 894px; left: 897px; }
 input#contact_legion[type=checkbox] { top: 1047px; left: 488px; }
 input#contact_transmed[type=checkbox] { top: 1047px; left: 897px; }
 
+input#avatar[type=image] { top: 82px; left: 68px; max-width: 402px; border-radius: 20px; z-index: 1; }
+input#avatar[type=image]:hover { opacity: 0.05; }
