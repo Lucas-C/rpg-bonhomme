@@ -1,10 +1,12 @@
-body {
-  margin: 10px;
-}
 input, textarea {
   position: absolute;
+}
+/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
+input[type=text], input[type=number], textarea {
   font-family: Tahoma,Geneva,sans-serif;
-  font-size: 110%;
+  padding: 2px;
+  border: 1px solid lightgrey;
+  font-size: 24px;
 }
 input#name { top: 325px; left: 165px; width: 185px; }
 input#firstname { top: 362px; left: 195px; width: 156px; }

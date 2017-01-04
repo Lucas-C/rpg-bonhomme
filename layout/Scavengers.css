@@ -1,13 +1,13 @@
-body {
-  margin: 6px;
-}
-
 input, textarea {
   position: absolute;
-  font-family: Tahoma,Geneva,sans-serif;
-  font-size: 110%;
 }
-
+/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
+input[type=text], input[type=number], textarea {
+  font-family: Tahoma,Geneva,sans-serif;
+  padding: 2px;
+  border: 1px solid lightgrey;
+  font-size: 18px;
+}
 textarea {
   border: #ccc solid 1px;
   border-radius: 10px;

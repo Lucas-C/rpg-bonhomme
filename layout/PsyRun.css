@@ -1,17 +1,21 @@
-body {
-  margin: 11px;
-}
 input, textarea {
   position: absolute;
+}
+/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
+input[type=text], textarea {
   font-family: Tahoma,Geneva,sans-serif;
-  font-size: 110%;
+  line-height: 130%;
+  padding: 2px;
+  border: 1px solid lightgray;
+  font-size: 18px;
 }
 .injury {
-    transform: scale(2);
+  transform: scale(2);
 }
 .q {
-    font-size: 70%;
-    overflow:hidden;
+  font-size: 11px;
+  line-height: 12px;
+  overflow:hidden;
 }
 
 input#name { top: 25px; left: 190px; width: 300px; height: 30px; }

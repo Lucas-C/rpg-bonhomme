@@ -1,19 +1,18 @@
-body {
-  margin: 8px;
-}
 #read-only-banner { top: 190px; left: 300px; }
 input, textarea {
   position: absolute;
+}
+/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
+input[type=text], input[type=number], textarea {
   font-family: Tahoma,Geneva,sans-serif;
-  font-size: 110%;
+  font-size: 18px;
+  padding: 2px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
   color: #3C3C3C;
 }
-input[type=text], input[type=number], textarea {
-  border-radius: 4px;
-  border:solid 1px lightgrey;
-}
 .skillpack, .involution {
-  font-size: 80%;
+  font-size: 13px;
 }
 input#name { top: 100px; left: 170px; width: 220px; }
 input#size { top: 100px; left: 530px; width: 120px; }

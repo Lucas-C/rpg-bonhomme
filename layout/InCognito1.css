@@ -1,19 +1,18 @@
-body {
-  margin: 8px;
-}
 #read-only-banner { top: -10px; left: 150px; }
 input, textarea {
   position: absolute;
+}
+/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
+input[type=text], input[type=number], textarea {
   font-family: Tahoma,Geneva,sans-serif;
-  font-size: 110%;
+  font-size: 18px;
+  padding: 2px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
   color: #3C3C3C;
 }
-input[type=text], input[type=number], textarea {
-  border-radius: 4px;
-  border:solid 1px lightgrey;
-}
 input.trait {
-  font-size: 160%;
+  font-size: 26px;
 }
 input#avatar[type=image] { top: 10px; left: 10px; max-height: 270px; border-radius: 10px; }
 input#name { top: 284px; left: 163px; width: 383px; }

@@ -1,15 +1,14 @@
-body {
-  margin: 8px;
-}
 input, textarea {
   position: absolute;
-  font-family: Tahoma,Geneva,sans-serif;
-  font-size: 150%;
-  color: #3C3C3C;
 }
+/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
 input[type=text], input[type=number], textarea {
+  font-family: Tahoma,Geneva,sans-serif;
+  padding: 2px;
+  font-size: 24px;
+  color: #3C3C3C;
   border-radius: 4px;
-  border:solid 1px lightgrey;
+  border: 1px solid lightgrey;
 }
 input#name { top: 108px; left: 190px; width: 260px; }
 input#ethnic-group { top: 108px; left: 620px; width: 200px; }
@@ -19,10 +18,10 @@ input#player { top: 382px; left: 950px; width: 200px; }
 textarea#personality { top: 430px; left: 300px; width: 840px; height: 110px; }
 input#emblem[type=image] { top: 630px; left: 140px; max-height: 220px; }
 
-input#vivacity.domain[type=number] { top: 660px; left: 610px; width: 52px; }
-input#empathy.domain[type=number] { top: 728px; left: 610px; width: 52px; }
-input#body.domain[type=number] { top: 660px; left: 874px; width: 52px; }
-input#culture.domain[type=number] { top: 728px; left: 874px; width: 52px; }
+input#vivacity.domain[type=number] { top: 660px; left: 610px; width: 56px; }
+input#empathy.domain[type=number] { top: 728px; left: 610px; width: 56px; }
+input#body.domain[type=number] { top: 660px; left: 874px; width: 56px; }
+input#culture.domain[type=number] { top: 728px; left: 874px; width: 56px; }
 input#breath[type=number] { top: 725px; left: 1013px; width: 40px; }
 input#max-breath[type=number] { top: 725px; left: 1077px; width: 40px; }
 
