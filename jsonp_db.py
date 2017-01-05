@@ -57,7 +57,11 @@ def application(env, start_response):
             form_params = parse_form(form)
             callback = query_params.kwargs.pop('callback', None)
             return_values = store_logic(path, query_params, form_params)
-            response = callback + '(' + ', '.join(return_values) + ')' if callback else return_values[0]
+            response = ', '.join(return_values)
+            if callback:
+                response = callback + '(' + response + ')'
+            elif len(return_values) > 1:
+                response = '[' + response + ']'
             start_response('200 OK', [('Content-Type', 'application/javascript')])
             yield response.encode('utf-8')
         except HTTPError:
@@ -105,24 +109,23 @@ def parse_form(form):
     )
 
 def store_logic(path, query_params, form_params):
-    try:
-        key, new_value, modification_key = check_and_extract_params(path, query_params, form_params)
-        log('GET key="{}"'.format(key))
-        current_value = db_get(key)
-        log('-> ' + str(current_value))
-        if not new_value:  # => simple RETRIEVE request
-            return current_value or 'undefined', 'null'
-        elif REQUIRE_MODIFCATION_KEY:
-            if current_value:  # => UPDATE request, we check that the modification-key is valid
-                check_modification_key(modification_key, key)
-            else:  # => CREATE request, we generate the modification-key
-                modification_key = get_modification_key(key)
-        # At this point, it's either a CREATE request or a valid UPDATE request
-        log('PUT key="{}":value="{}"'.format(key, new_value))
-        db_put(key, new_value)
-        return new_value, '"' + modification_key + '"'
-    except Exception:
-        raise HTTPError(traceback.format_exc(), code=400)
+    if path.startswith('/list/') and path.count('/') == 2:
+        return (str(db_list_keys_with_prefix(path[6:])),)
+    key, new_value, modification_key = check_and_extract_params(path, query_params, form_params)
+    log('GET key="{}"'.format(key))
+    current_value = db_get(key)
+    log('-> ' + str(current_value))
+    if not new_value:  # => simple RETRIEVE request
+        return (current_value or 'undefined',)
+    elif REQUIRE_MODIFCATION_KEY:
+        if current_value:  # => UPDATE request, we check that the modification-key is valid
+            check_modification_key(modification_key, key)
+        else:  # => CREATE request, we generate the modification-key
+            modification_key = get_modification_key(key)
+    # At this point, it's either a CREATE request or a valid UPDATE request
+    log('PUT key="{}":value="{}"'.format(key, new_value))
+    db_put(key, new_value)
+    return new_value, '"{}"'.format(modification_key)
 
 def check_and_extract_params(path, query_params, form_params):
     if not path.startswith('/') or path.count('/') != 1:
@@ -174,7 +177,12 @@ def db_put(key, value):
 def db_list_keys():
     with closing(_DB.cursor()) as db_cursor:
         db_cursor.execute('SELECT Key FROM KVStore')
-        return db_cursor.fetchall()
+        return [result[0] for result in db_cursor.fetchall()]
+
+def db_list_keys_with_prefix(prefix):
+    with closing(_DB.cursor()) as db_cursor:
+        db_cursor.execute('SELECT Key FROM KVStore WHERE Key LIKE ? || "%"', (prefix,))
+        return [result[0] for result in db_cursor.fetchall()]
 
 def db_check_table_size():
     with closing(_DB.cursor()) as db_cursor:
