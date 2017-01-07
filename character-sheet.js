@@ -1,7 +1,7 @@
-/* exported exports */
 var exports = (function() {
     'use strict';
     var SERVER_STORAGE_CGI = 'jsonp_db/',
+        LAYOUTS = ['Absence', 'Allegoria', 'Biohazard', 'Dedale', 'InCognito1', 'InCognito2', 'PsyRun', 'Scavengers'],
     throw_error = function () {
         var msg_array = [];
         [].slice.call(arguments).forEach(function (arg) {
@@ -32,7 +32,6 @@ var exports = (function() {
         });
         return urlParams;
     },
-    params = get_url_params(),
     jsonp = (function () {
         var jsonp_calls_counter = 0;
         return function (request) {
@@ -77,11 +76,8 @@ var exports = (function() {
         });
         return input_ids;
     },
-    get_character_id = function (name) {
-        return params.layout + '_' + (name || document.getElementById('name').value).replace(/[\s()]+/g, '_').toLowerCase();
-    },
-    get_location_search = function (name) {
-        return '?layout=' + params.layout + '&name=' + (name || document.getElementById('name').value);
+    get_character_id = function (layout, name) {
+        return layout + '_' + name.replace(/[\s()]+/g, '_').toLowerCase();
     },
     update_title = function (character_id) {
         document.title = 'RPG Character Sheet - ' + character_id;
@@ -115,9 +111,89 @@ var exports = (function() {
         });
         return inputs_data;
     },
-    exports = {
+    load_stylesheet = function (layout, stylesheetLoadedCallback) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'layout/' + layout + '.css';
+        document.head.appendChild(link);
+        setTimeout(stylesheetLoadedCallback, 1000, link.href);
+    },
+    load_background_img = function (main_div, layout) {
+        var background_img = document.createElement('img');
+        background_img.src = 'img/' + layout + '.png';
+        main_div.appendChild(background_img);
+    },
+    create_inputs = function (main_div, input_ids, modification_key) {
+        Object.keys(input_ids).forEach(function (input_id) {
+            var input_specs = input_ids[input_id],
+                input = document.createElement(input_specs.tag);
+            input.id = input_id;
+            if (input_specs.className) {
+                input.className = input_specs.className;
+            }
+            if (input_specs.tag === 'input') {
+                input.type = input_specs.input_type || 'text';
+            }
+            if (!modification_key && input.id !== 'name') {
+                input.readOnly = true;
+            }
+            main_div.appendChild(input);
+            if (input.type === 'image') {
+                input.src = 'icon/upload_image.png';
+                input.onclick = function () {
+                    var img_url = prompt('Please enter an URL to the image you want to use', input.src);
+                    if (img_url) {
+                        input.src = img_url;
+                    }
+                };
+            }
+        });
+    },
+    render_character_sheet = function (main_div, layout, name, modification_key) {
+        load_background_img(main_div, layout);
+        document.getElementsByClassName('buttons')[0].style.display = 'block';
+        load_stylesheet(layout, function (stylesheetUrl) { // we wait for the CSS stylesheet to be loaded
+            var input_ids = get_input_ids_from_css_rules(get_stylesheet(stylesheetUrl));
+            assert(input_ids.name, 'The <layout>.css does not define any #name input, which is required.');
+            create_inputs(main_div, input_ids, modification_key);
+            if (name) {
+                exports.load_character_from_server(decodeURIComponent(name));
+                if (!modification_key) {
+                    var banner = document.createElement('img');
+                    banner.src = 'icon/read_only_banner.png';
+                    banner.className = 'read-only-banner';
+                    document.body.appendChild(banner);
+                }
+            }
+        });
+    },
+    create_layout_column = function (layoutsParentUl, layout) {
+        console.log('layout', layout);
+    },
+    create_character_miniature = function (charactersParentUl, character_name) {
+        console.log('character_name', character_name);
+    },
+    render_home_page = function (main_div) {
+        document.getElementsByClassName('header')[0].style.display = 'block';
+        document.getElementsByClassName('gallery')[0].style.display = 'block';
+        var layoutsParentUl = document.getElementsByClassName('layouts')[0];
+        LAYOUTS.forEach(function (layout) {
+            var charactersParentUl = create_layout_column(layoutsParentUl, layout);
+            jsonp({
+                url: SERVER_STORAGE_CGI + 'list_by_prefix/' + layout + '_',
+                success: function (character_names) {
+                    character_names.forEach(function (character_name) {
+                        create_character_miniature(charactersParentUl, character_name);
+                    });
+                }
+            });
+        });
+    },
+    exports = { // functions that must be callable by buttons in the HTML page
         save_character_to_server: function () {
-            var character_id = get_character_id(),
+            var params = get_url_params(),
+                character_name = document.getElementById('name').value,
+                character_id = get_character_id(params.layout, character_name),
                 modification_key = params['modification-key'];
             assert(character_id, 'No character name provided');
             console.log('Sending character sheet to remote server : ' + character_id);
@@ -130,12 +206,13 @@ var exports = (function() {
                     console.log('Character sheet ' + character_id + ' successfully saved', data);
                     assert(!modification_key || modification_key === new_modification_key,
                             'Modifcation-keys do not match', modification_key, new_modification_key);
-                    location.search = get_location_search() + '&modification-key=' + new_modification_key;
+                    location.search = '?layout=' + params.layout + '&name=' + character_name + '&modification-key=' + new_modification_key;
                 }
             });
         },
         load_character_from_server: function (character_name) {
-            var character_id = get_character_id(character_name);
+            var params = get_url_params(),
+                character_id = get_character_id(params.layout, character_name);
             assert(character_id, 'No character name provided');
             console.log('Fetching character sheet content from server : ' + character_id);
             jsonp({
@@ -152,7 +229,8 @@ var exports = (function() {
             });
         },
         download_character_as_json: function () {
-            var character_id = get_character_id(),
+            var params = get_url_params(),
+                character_id = get_character_id(params.layout, document.getElementById('name').value),
                 data = scrape_inputs(),
                 a = document.createElement('a');
             console.log('Downloading JSON file for character: ' + character_id);
@@ -163,65 +241,26 @@ var exports = (function() {
             document.body.removeChild(a);
         },
         charactersheet_file_picker_change: function (files) {
-            var reader = new FileReader();
+            var params = get_url_params(),
+                reader = new FileReader();
             reader.onload = function() {
                 var inputs_data = JSON.parse(reader.result),
-                    character_id = get_character_id(inputs_data.name);
+                    character_id = get_character_id(params.layout, inputs_data.name);
                 console.log('Uploading character from user-provided file : ' + character_id);
                 fill_inputs(inputs_data);
                 update_title(character_id);
             };
             reader.readAsText(files[0]);
-        },
+        }
     };
     document.addEventListener('DOMContentLoaded', function() {
-        assert(params.layout, 'No layout specified in the URL');
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'layout/' + params.layout + '.css';
-        document.head.appendChild(link);
-        setTimeout(function () { // we wait for the CSS stylesheet to be loaded
-            var input_ids = get_input_ids_from_css_rules(get_stylesheet(link.href)),
-                main_div = document.getElementById('character-sheet'),
-                background_img = document.createElement('img');
-            background_img.src = 'img/' + params.layout + '.png';
-            background_img.alt = 'Character sheet image cannot be displayed';
-            main_div.appendChild(background_img);
-            assert(input_ids.name, 'The <layout>.css does not define any #name input, which is required.');
-            Object.keys(input_ids).forEach(function (input_id) {
-                var input_specs = input_ids[input_id],
-                    input = document.createElement(input_specs.tag);
-                input.id = input_id;
-                if (input_specs.className) {
-                    input.className = input_specs.className;
-                }
-                if (input_specs.tag === 'input') {
-                    input.type = input_specs.input_type || 'text';
-                }
-                if (!params['modification-key'] && input.id !== 'name') {
-                    input.readOnly = true;
-                }
-                main_div.appendChild(input);
-                if (input.type === 'image') {
-                    input.src = 'icon/upload_image.png';
-                    input.onclick = function () {
-                        var img_url = prompt('Please enter an URL to the image you want to use', input.src);
-                        if (img_url) {
-                            input.src = img_url;
-                        }
-                    };
-                }
-            });
-            if (params.name) {
-                exports.load_character_from_server(decodeURIComponent(params.name));
-            }
-            if (!params['modification-key']) {
-                var banner = document.createElement('img');
-                banner.src = 'icon/read_only_banner.png';
-                banner.id = 'read-only-banner';
-                document.body.appendChild(banner);
-            }
-        }, 1000);
+        var main_div = document.getElementById('character-sheet'),
+            params = get_url_params();
+        if (params.layout) {
+            render_character_sheet(main_div, params.layout, params.name, params['modification-key']);
+        } else {
+            render_home_page(main_div);
+        }
     });
     return exports;
 })();

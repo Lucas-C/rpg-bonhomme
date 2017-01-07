@@ -38,7 +38,7 @@ curl -s http://localhost:$PORT/jsonp_db/K?V2 | grep '401 Unauthorized : No modif
 curl -s http://localhost:$PORT/jsonp_db/a_1?1
 curl -s http://localhost:$PORT/jsonp_db/a_2?2
 curl -s http://localhost:$PORT/jsonp_db/a_3?3
-curl -s http://localhost:$PORT/jsonp_db/list/a_ | grep "^\['a_1', 'a_2', 'a_3'\]\$"
+curl -s http://localhost:$PORT/jsonp_db/list_by_prefix/a_ | grep "^\['1', '2', '3'\]\$"
 
 make kill-local-server
 test -e $DB_FILE.bak && mv $DB_FILE.bak $DB_FILE || true

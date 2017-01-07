@@ -109,8 +109,8 @@ def parse_form(form):
     )
 
 def store_logic(path, query_params, form_params):
-    if path.startswith('/list/') and path.count('/') == 2:
-        return (str(db_list_keys_with_prefix(path[6:])),)
+    if path.startswith('/list_by_prefix/') and path.count('/') == 2:
+        return (str(db_list_keys_with_prefix(path[16:])),)
     key, new_value, modification_key = check_and_extract_params(path, query_params, form_params)
     log('GET key="{}"'.format(key))
     current_value = db_get(key)
@@ -182,7 +182,7 @@ def db_list_keys():
 def db_list_keys_with_prefix(prefix):
     with closing(_DB.cursor()) as db_cursor:
         db_cursor.execute('SELECT Key FROM KVStore WHERE Key LIKE ? || "%"', (prefix,))
-        return [result[0] for result in db_cursor.fetchall()]
+        return [result[0][len(prefix):] for result in db_cursor.fetchall()]
 
 def db_check_table_size():
     with closing(_DB.cursor()) as db_cursor:

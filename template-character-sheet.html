@@ -6,18 +6,33 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>RPG Character Sheet</title>
     <style>
-      #buttons { position: absolute; top: 0; right: 200px; }
-      #buttons input { position: absolute; }
-      #save-to-server-button { top: 10px; left: 10px; }
-      #load-from-server-button { top: 10px; left: 90px; }
-      #download-json-button { top: 80px; left: 10px; }
-      #upload-json-button { top: 80px; left: 90px; }
-      #read-only-banner { position: absolute; top: -30px; left: -40px; }
+      body { font-family: Helvetica, Arial, sans-serif; }
+      .header { background-color: #FFF; padding: 1px 0 0 0; margin-bottom: 1rem; }
+      .innerheader { max-width: 80%; margin: 0px auto; text-align: center; }
+      .title { margin: 0; padding-top: 3rem; font-style: italic; color: #CC2027; }
+      .subtitle { padding: 2rem 0; }
+      .gallery { max-width: 80%; margin: 0px auto; }
+      .layouts { list-style: none; padding: 0; }
+      .buttons { position: absolute; top: 0; right: 200px; }
+      #save-to-server-button { position: absolute; top: 10px; left: 10px; }
+      #load-from-server-button { position: absolute; top: 10px; left: 90px; }
+      #download-json-button { position: absolute; top: 80px; left: 10px; }
+      #upload-json-button { position: absolute; top: 80px; left: 90px; }
+      .read-only-banner { position: absolute; top: -30px; left: -40px; }
     </style>
   </head>
   <body>
+    <header class="header" role="banner" style="display: none">
+        <div class="innerheader">
+            <h1 class="title">rpg-bonhomme</h1>
+            <aside class="subtitle">Tabletop RPG character sheet editor/viewer, cf. <a href="https://github.com/Lucas-C/rpg-bonhomme">https://github.com/Lucas-C/rpg-bonhomme</a></aside>
+        </div>
+    </header>
+    <div class="gallery" style="display: none">
+        <ul class="layouts"></ul>
+    </div>
     <div id='character-sheet'></div>
-    <div id='buttons'>
+    <div class='buttons' style="display: none">
       <input type='image' id='save-to-server-button' onclick='exports.save_character_to_server()'
         title='Save to remote server' src='icon/cloud_upload.png' alt='-'>
       <input type='image' id='load-from-server-button' onclick='exports.load_character_from_server()'
