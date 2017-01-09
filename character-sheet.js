@@ -80,7 +80,7 @@ var exports = (function() {
         return layout + '_' + name.replace(/[\s()]+/g, '_').toLowerCase();
     },
     update_title = function (character_id) {
-        document.title = 'RPG Character Sheet - ' + character_id;
+        document.title = 'RPG character sheet - ' + character_id;
     },
     fill_inputs = function (inputs_data) {
         [].forEach.call(document.querySelectorAll('#character-sheet input, textarea'), function(input) {
@@ -150,8 +150,10 @@ var exports = (function() {
         });
     },
     render_character_sheet = function (main_div, layout, name, modification_key, avatar) {
-        load_background_img(main_div, layout);
+        document.getElementsByClassName('header')[0].style.display = 'none';
+        document.getElementsByClassName('gallery')[0].style.display = 'none';
         document.getElementsByClassName('buttons')[0].style.display = 'block';
+        load_background_img(main_div, layout);
         load_stylesheet(layout, function (stylesheetUrl) { // we wait for the CSS stylesheet to be loaded
             var input_ids = get_input_ids_from_css_rules(get_stylesheet(stylesheetUrl));
             assert(input_ids.name, 'The <layout>.css does not define any #name input, which is required.');
@@ -166,10 +168,6 @@ var exports = (function() {
                 }
             }
         });
-    },
-    render_home_page = function (main_div) {
-        document.getElementsByClassName('header')[0].style.display = 'block';
-        document.getElementsByClassName('gallery')[0].style.display = 'block';
     },
     exports = { // functions that must be callable by buttons in the HTML page
         save_character_to_server: function () {
@@ -240,8 +238,6 @@ var exports = (function() {
             params = get_url_params();
         if (params.layout) {
             render_character_sheet(main_div, params.layout, params.name, params['modification-key']);
-        } else {
-            render_home_page(main_div);
         }
     });
     return exports;

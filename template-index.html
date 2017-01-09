@@ -4,26 +4,27 @@
     <meta charset='UTF-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>RPG Character Sheet</title>
+    <title>RPG character sheet viewer/editor</title>
     <style>
 {% include 'character-sheet.css' %}
     </style>
   </head>
   <body>
-    <header class="header" role="banner" style="display: none">
+    <header class="header" role="banner">
         <div class="innerheader">
             <h1 class="title">rpg-bonhomme</h1>
             <aside class="subtitle">Tabletop RPG character sheet editor/viewer, cf. <a href="https://github.com/Lucas-C/rpg-bonhomme">https://github.com/Lucas-C/rpg-bonhomme</a></aside>
         </div>
     </header>
-    <div class="gallery" style="display: none">
+    <div class="gallery">
         <ul class="layouts">
             {% for layout in characters_per_layout.keys()|sort %}
-            <li class="layout" data-layout="{{layout}}">
+            <li class="layout">
+                <a href="?layout={{layout}}" class="layout-name">{{layout}}</a>
                 <ul class="characters">
                     {% for character in characters_per_layout[layout]|sort(attribute='character_name') %}
-                    <li class="character" data-character="{{character.character_name}}">
-                        <a href="?layout={{layout}}&name={{character.character_name}}">
+                    <li class="character">
+                        <a href="?layout={{layout}}&name={{character.character_name}}" title="{{character.name}}">
                             <img class="avatar" src="{{character.avatar or 'img/default-avatar.jpg'}}" alt="Character avatar">
                         </a>
                     </li>
@@ -35,15 +36,15 @@
     </div>
     <div id='character-sheet'></div>
     <div class='buttons' style="display: none">
-      <input type='image' id='save-to-server-button' onclick='exports.save_character_to_server()'
+      <input type='image' class='button--save-to-server' onclick='exports.save_character_to_server()'
         title='Save to remote server' src='img/cloud_upload.png' alt='-'>
-      <input type='image' id='load-from-server-button' onclick='exports.load_character_from_server()'
+      <input type='image' class='button--load-from-server' onclick='exports.load_character_from_server()'
         title='Load from remote server' src='img/cloud_download.png' alt='-'>
-      <input type='image' id='download-json-button' onclick='exports.download_character_as_json()'
+      <input type='image' class='button--download-json' onclick='exports.download_character_as_json()'
         title='Download JSON file' src='img/file_download.png' alt='-'/>
-      <input type='image' id='upload-json-button' onclick='document.getElementById("charactersheet_file_picker").click()'
+      <input type='image' class='button--upload-json' onclick='document.getElementById("charactersheet_file_picker").click()'
         title='Upload JSON file' src='img/file_upload.png' alt='-'/>
-      <input type="file" id="charactersheet_file_picker" onchange="exports.charactersheet_file_picker_change(this.files)"
+      <input type="file" onchange="exports.charactersheet_file_picker_change(this.files)"
         accept=".json" style="display:none">
     </div>
     <script type='text/javascript'>

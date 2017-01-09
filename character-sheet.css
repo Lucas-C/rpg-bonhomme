@@ -1,24 +1,23 @@
 body { font-family: Helvetica, Arial, sans-serif; }
 .header { background-color: #FFF; padding: 1px 0 0 0; margin-bottom: 1rem; }
-.innerheader { max-width: 80%; margin: 0px auto; text-align: center; }
+.innerheader { max-width: 90%; margin: 0 auto; text-align: center; }
 .title { margin: 0; padding-top: 3rem; font-style: italic; color: #CC2027; }
 .subtitle { padding: 2rem 0; }
-.gallery { max-width: 80%; margin: 0px auto; }
-.layouts { display: flex; list-style: none; padding: 0; margin: 0; }
-.layout { width: 24%; }
-@media (max-width: 1000px) { .layout { width: 32%;  } }
-@media (max-width: 800px)  { .layout { width: 48%;  } }
-@media (max-width: 450px)  { .layout { width: 100%; } }
+.gallery { max-width: 80%; margin: 0 auto; }
+.layouts { display: flex; flex-wrap: wrap; list-style: none; padding: 0; margin: 0; }
+.layouts:after { content: ""; flex: auto; } /* align last columns to grid */
+.layout { margin: 0 auto; flex-shrink: 0; flex-basis: 24%; }
+.layout-name { display: block; text-align: center; font-family: "courier new", courier, monospace; color: #CC2027; font-weight: bold; font-size: 1.5rem; text-shadow: 3px 3px 2px #ccc; text-decoration: none; }
+@media (max-width: 1000px) { .layout { flex-basis: 32%; } }
+@media (max-width: 800px)  { .layout { flex-basis: 48%;  } }
+@media (max-width: 450px)  { .layout { flex-basis: 100%; } }
 .characters { list-style: none; padding: 0; margin: 0; }
-.character { margin: 5%; border-radius: 5px; box-shadow: 0px 0px 2px -1px #000; height: 24%; }
-@media (max-width: 1000px) { .character { height: 32%;  } }
-@media (max-width: 800px)  { .character { height: 48%;  } }
-@media (max-width: 450px)  { .character { height: 100%; } }
-.avatar { width: 100%; border-radius: 5px; }
+.character { margin: 5%; }
+.avatar { width: 100%; box-shadow: 0 0 2px -1px #000; border-radius: 5px; }
 .buttons { position: absolute; top: 0; right: 200px; }
-#save-to-server-button { position: absolute; top: 10px; left: 10px; }
-#load-from-server-button { position: absolute; top: 10px; left: 90px; }
-#download-json-button { position: absolute; top: 80px; left: 10px; }
-#upload-json-button { position: absolute; top: 80px; left: 90px; }
+.button--save-to-server { position: absolute; top: 10px; left: 10px; }
+.button--load-from-server { position: absolute; top: 1px; left: 90px; }
+.button--download-json { position: absolute; top: 80px; left: 10px; }
+.button--upload-json { position: absolute; top: 80px; left: 90px; }
 .read-only-banner { position: absolute; top: -30px; left: -40px; }
 

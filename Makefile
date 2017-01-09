@@ -11,7 +11,7 @@ CSS_DIR     := layout/
 PORT        := 8082
 CSS_LAYOUTS := $(wildcard $(CSS_DIR)*.css)
 
-.PHONY: check check-static check-style check-html check-layouts-css $(CSS_LAYOUTS)
+.PHONY: check check-style check-layouts-css $(CSS_LAYOUTS)
 .PHONY: view-local open-index
 .PHONY: start-local-server restart-local-server kill-local-server list-local-server-processes
 .PHONY: test help
@@ -30,8 +30,11 @@ check-style: $(JS_SRC_FILE) check-layouts-css
 	jscs $(JS_SRC_FILE)
 	pep8 $(PY_WSGI).py
 
-check-layouts-css: $(CSS_LAYOUTS)
+check-layouts-css: $(CSS_LAYOUTS) $(CSS_SRC_FILE)
 	## DONE checking the CSS layouts
+
+$(CSS_SRC_FILE):
+	@csslint --ignore=order-alphabetical $@
 
 $(CSS_LAYOUTS): $(CSS_DIR)%.css:
 	@csslint --ignore=ids,order-alphabetical,overqualified-elements $@

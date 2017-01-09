@@ -40,7 +40,7 @@ class HTTPError(Exception):
         super().__init__(message)
         self.code = code
         self.status_string = HTTP_ERROR_STATUS[code]
-        self.status_line = str(code) + ' ' + self.status_string
+        self.status_line = '{} {}'.format(code, self.status_string)
         self.full_msg = '{e.status_line} : {e}'.format(e=self)
 
     def format_response(self, jsonp_callback):
@@ -54,10 +54,11 @@ def application(env, start_response):
     method = env['REQUEST_METHOD']
     query_string = env['QUERY_STRING']
     form = pop_form(env)
-    log('Handling request: {} "{}" with query_string: "{}", form: "{}"'.format(method, path, query_string, form))
+    log('Handling request: %s "%s" with query_string: "%s", form: "%s"', method, path, query_string, form)
     # pylint: disable=broad-except
     try:
         try:
+            path = path.encode('latin1').decode('utf8')
             query_params = parse_query_string(query_string)
             form_params = parse_form(form)
             callback = query_params.kwargs.pop('callback', None)
@@ -110,11 +111,11 @@ def parse_form(form):
 
 def store_logic(path, query_params, form_params):
     if path.startswith('/list_by_prefix/') and path.count('/') == 2:
-        return (str(db_list_keys_with_prefix(path[16:])),)
+        return (str(db_list_keys_with_prefix(path[16:])),)  # `str` is used to serialize the array
     key, new_value, modification_key = check_and_extract_params(path, query_params, form_params)
-    log('GET key="{}"'.format(key))
+    log('GET key="%s"', key)
     current_value = db_get(key)
-    log('-> ' + str(current_value))
+    log('-> %s', current_value)
     if not new_value:  # => simple RETRIEVE request
         return (current_value or 'undefined',)
     elif REQUIRE_MODIFCATION_KEY:
@@ -123,7 +124,7 @@ def store_logic(path, query_params, form_params):
         else:  # => CREATE request, we generate the modification-key
             modification_key = get_modification_key(key)
     # At this point, it's either a CREATE request or a valid UPDATE request
-    log('PUT key="{}":value="{}"'.format(key, new_value))
+    log('PUT key="%s":value="%s"', key, new_value)
     db_put(key, new_value)
     return new_value, '"{}"'.format(modification_key)
 
@@ -135,7 +136,7 @@ def check_and_extract_params(path, query_params, form_params):
         raise ValueError('Key length exceeded maximum: {} > {}'.format(len(key), MAX_KEY_LENGTH))
     modification_key = query_params.kwargs.pop('modification-key', None)
     if query_params.kwargs or form_params.kwargs:
-        log('Extra kwargs found: query_params={0.kwargs} - form_params={1.kwargs}'.format(query_params, form_params))
+        log('Extra kwargs found: query_params=%s - form_params=%s', query_params.kwargs, form_params.kwargs)
     if len(query_params.args) + len(form_params.args) > 1:
         raise HTTPError(('Incorrect request syntax, extra args:'
                          'query_params={0.args} - form_params={1.args}').format(query_params, form_params), code=400)
@@ -166,7 +167,7 @@ def db_get(key):
         query_result = db_cursor.fetchone()
     if not query_result or len(query_result) != 1:
         return None
-    return str(query_result[0])
+    return query_result[0]
 
 def db_put(key, value):
     db_check_table_size()
@@ -200,13 +201,13 @@ def configure_logger():
     logger.addHandler(file_handler)
     return logger
 
-def log(msg, lvl=logging.INFO):
+def log(msg, *args, lvl=logging.INFO):
     with _LOGGER_LOCK:
-        _LOGGER.log(lvl, msg)
+        _LOGGER.log(lvl, msg, *args)
 
 _LOGGER = configure_logger()
 _LOGGER_LOCK = Lock()
 _DB = sqlite3.connect(DATABASE_FILE, check_same_thread=False)
 if REQUIRE_MODIFCATION_KEY and not MODIFICATION_KEY_SALT:
     raise RuntimeError('A random salt is required when using modification-key based authentication')
-log('Starting : {} keys found in the DB - Config: {}'.format(len(db_list_keys()), CONFIG))
+log('Starting : %s keys found in the DB - Config: %s', len(db_list_keys()), CONFIG)

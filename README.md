@@ -5,7 +5,9 @@ This project provides the following features:
 which will let you to share it with others simply by providing a unique URL.
 - add character sheets from any game, simply based on background image
 
-# Examples
+# Demo
+
+[Homepage](https://chezsoi.org/lucas/rpg-bonhomme)
 
 - [Lythes](https://chezsoi.org/lucas/rpg-bonhomme?layout=Dedale&name=lythes), an android from the French RPG [Dédale](http://lab00.free.fr/sommaire/home.htm).
 - [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme?layout=Absence&name=raphaelle_lepercq_se_fait_appeler_lila_), two characters from a 'one-shot' RPG called 'Absence'.
@@ -36,7 +38,7 @@ non-redefined caracteristics will keep their old value.
 
 # jsonp_db
 
-This is a simple key-value store, somehow similar to [etcd](https://coreos.com/using-coreos/etcd/), written in Python and using a SQLite DB, developped to allow simple GET/PUT through JSONP.
+This is a simple key-value store, written in Python and using a SQLite DB, developped to allow simple GET/PUT through JSONP.
 
 In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or an error (a JS `Error` object if using JSONP, else an HTML error page).
 
@@ -108,9 +110,23 @@ And the Nginx configuration:
 
     make test
 
-## Retrieving a modification key
+## Ops
 
-    python -c "from jsonp_db import get_modification_key; print('&modification-key=' + get_modification_key('${layout}_${lowercase_character_name}'))"
+### Retrieving a modification key
+
+    function () {
+        local layout="${1?}"
+        local char_name="${2?}"
+        python -c "from jsonp_db import get_modification_key;print('&modification-key='+get_modification_key('${layout}_'+'${char_name}'.lower()))"
+    }
+
+### Changing an avatar
+
+    function avatar_chg () {
+        local key="${1?}"
+        local img="${2?}"
+        python -c "import json;from jsonp_db import db_get,db_put;k='$key';v=json.loads(db_get(k));v['avatar']='$img';db_put(k, json.dumps(v))"
+    }
 
 # License
 Adaptive Public License 1.0 (APL-1.0)
@@ -119,9 +135,10 @@ Tl;dr plain English version: https://tldrlegal.com/license/adaptive-public-licen
 
 # Resources
 
-Zero dependencies, all coded in vanilla Javascript.
+Zero JavascriptS dependencies, only 3 Python requirements..
 The banner is from [FreebieVectors](http://www.freebievectors.com/fr/apercu-vecteur/150/rubans-banniere-vecteur-libre-symbole/).
 All icons are from Google Material Design icons set (CC BY 4.0) : https://github.com/google/material-design-icons
+The default avatar image was made by [NoHoDamon](https://www.flickr.com/photos/nohodamon/6485519491/in/photolist-7HSNkN-rzqCWQ-7HSNxA-5JtRYh-apeuDG-6MdYX2-aT6YZz-dRq1jf-dbRcxi-6igHjz-PHJD6-dN5YT-79V2QG-5ShoNL-FAQmN-4mU9vu-9rBg5B-9rBg8M-5ShoaN-5Z7D5b-EMUuT-78gz6Q-Gn5u9-GRGtNs) (CC BY-NC-ND)
 
 # Notes
 
