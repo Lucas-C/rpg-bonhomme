@@ -1,0 +1,3 @@
+00 03 * * * $USER $PWD/jsonp_db-backup.sh >> $PWD/jsonp_db-backup.log 2>&1
+*/5 * * * * $USER $PWD/jsonp_db-regenerate-index.sh >> $PWD/jsonp_db-regenerate-index.log 2>&1
+

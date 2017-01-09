@@ -1,2 +1,0 @@
-00 03 * * * $USER $PWD/jsonp_db-backup.sh >> $PWD/jsonp_db-backup.log 2>&1
-

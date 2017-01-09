@@ -26,6 +26,7 @@
     sha: v1.1.0
     hooks:
     -   id: validate-html
+        args: [--remove-mustaches, "--ignore=Text not allowed in element \"ul\" in this context."]
 # Currently broken under Cygwin due to a bug in nodeenv
     # -   id: htmlhint
     # -   id: htmllint

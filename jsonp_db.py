@@ -1,4 +1,4 @@
-import base64, cgi, hashlib, hmac, html, logging, logging.handlers, os, re, requests, sqlite3, traceback
+import base64, cgi, hashlib, hmac, html, logging, logging.handlers, os, re, sqlite3, traceback
 from collections import namedtuple
 from contextlib import closing
 from threading import Lock
@@ -29,12 +29,17 @@ HTML_TEMPLATE = """'<!DOCTYPE html>
   </body>
 </html>"""
 
+HTTP_ERROR_STATUS = {
+    400: 'Bad Request',
+    401: 'Unauthorized',
+    500: 'Internal Server Error'
+}
 RequestParameters = namedtuple('RequestParameters', 'args kwargs')
 class HTTPError(Exception):
     def __init__(self, message, code):
         super().__init__(message)
         self.code = code
-        self.status_string = error_code_to_status_string(code)
+        self.status_string = HTTP_ERROR_STATUS[code]
         self.status_line = str(code) + ' ' + self.status_string
         self.full_msg = '{e.status_line} : {e}'.format(e=self)
 
@@ -89,11 +94,6 @@ def pop_form(env):
         keep_blank_values=True
     )
     return form
-
-def error_code_to_status_string(error_code):
-    # pylint: disable=protected-access
-    status_strings = requests.status_codes._codes[error_code]
-    return ' '.join(w.capitalize() for w in status_strings[0].split('_'))
 
 def parse_query_string(query_string):
     qprm = dict(parse_qsl(query_string, True))

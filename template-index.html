@@ -6,19 +6,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>RPG Character Sheet</title>
     <style>
-      body { font-family: Helvetica, Arial, sans-serif; }
-      .header { background-color: #FFF; padding: 1px 0 0 0; margin-bottom: 1rem; }
-      .innerheader { max-width: 80%; margin: 0px auto; text-align: center; }
-      .title { margin: 0; padding-top: 3rem; font-style: italic; color: #CC2027; }
-      .subtitle { padding: 2rem 0; }
-      .gallery { max-width: 80%; margin: 0px auto; }
-      .layouts { list-style: none; padding: 0; }
-      .buttons { position: absolute; top: 0; right: 200px; }
-      #save-to-server-button { position: absolute; top: 10px; left: 10px; }
-      #load-from-server-button { position: absolute; top: 10px; left: 90px; }
-      #download-json-button { position: absolute; top: 80px; left: 10px; }
-      #upload-json-button { position: absolute; top: 80px; left: 90px; }
-      .read-only-banner { position: absolute; top: -30px; left: -40px; }
+{% include 'character-sheet.css' %}
     </style>
   </head>
   <body>
@@ -29,22 +17,37 @@
         </div>
     </header>
     <div class="gallery" style="display: none">
-        <ul class="layouts"></ul>
+        <ul class="layouts">
+            {% for layout in characters_per_layout.keys()|sort %}
+            <li class="layout" data-layout="{{layout}}">
+                <ul class="characters">
+                    {% for character in characters_per_layout[layout]|sort(attribute='character_name') %}
+                    <li class="character" data-character="{{character.character_name}}">
+                        <a href="?layout={{layout}}&name={{character.character_name}}">
+                            <img class="avatar" src="{{character.avatar or 'img/default-avatar.jpg'}}" alt="Character avatar">
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
     <div id='character-sheet'></div>
     <div class='buttons' style="display: none">
       <input type='image' id='save-to-server-button' onclick='exports.save_character_to_server()'
-        title='Save to remote server' src='icon/cloud_upload.png' alt='-'>
+        title='Save to remote server' src='img/cloud_upload.png' alt='-'>
       <input type='image' id='load-from-server-button' onclick='exports.load_character_from_server()'
-        title='Load from remote server' src='icon/cloud_download.png' alt='-'>
+        title='Load from remote server' src='img/cloud_download.png' alt='-'>
       <input type='image' id='download-json-button' onclick='exports.download_character_as_json()'
-        title='Download JSON file' src='icon/file_download.png' alt='-'/>
+        title='Download JSON file' src='img/file_download.png' alt='-'/>
       <input type='image' id='upload-json-button' onclick='document.getElementById("charactersheet_file_picker").click()'
-        title='Upload JSON file' src='icon/file_upload.png' alt='-'/>
+        title='Upload JSON file' src='img/file_upload.png' alt='-'/>
       <input type="file" id="charactersheet_file_picker" onchange="exports.charactersheet_file_picker_change(this.files)"
         accept=".json" style="display:none">
     </div>
     <script type='text/javascript'>
+{% include 'character-sheet.js' %}
     </script>
   </body>
 </html>

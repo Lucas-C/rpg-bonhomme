@@ -1,7 +1,8 @@
 # BEWARE ! Makefiles require the use of hard tabs
-OUT_HTML    := character-sheet.html
+OUT_HTML    := index.html
 LOCAL_HTML  := local-character-sheet.html
-TMPLT_HTML  := template-character-sheet.html
+TMPLT_HTML  := template-index.html
+CSS_SRC_FILE:= character-sheet.css
 JS_SRC_FILE := character-sheet.js
 PY_WSGI     := jsonp_db
 DB_FILE     := jsonp_db.db
@@ -18,9 +19,8 @@ CSS_LAYOUTS := $(wildcard $(CSS_DIR)*.css)
 all: $(OUT_HTML)
 	@:
 
-$(OUT_HTML): $(JS_SRC_FILE) $(TMPLT_HTML)
-	# Inserting the JS code into the HTML template
-	sed "/<script type='text\/javascript'>/r $(JS_SRC_FILE)" $(TMPLT_HTML) > $(OUT_HTML)
+$(OUT_HTML): $(TMPLT_HTML) $(JS_SRC_FILE) $(CSS_SRC_FILE) $(DB_FILE)
+	./index_generator.py --db-filepath $(DB_FILE) --html-template $(TMPLT_HTML) > $(OUT_HTML)
 
 check: check-style pre-commit-hooks
 	@:

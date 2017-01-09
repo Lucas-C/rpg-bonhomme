@@ -1,0 +1,24 @@
+body { font-family: Helvetica, Arial, sans-serif; }
+.header { background-color: #FFF; padding: 1px 0 0 0; margin-bottom: 1rem; }
+.innerheader { max-width: 80%; margin: 0px auto; text-align: center; }
+.title { margin: 0; padding-top: 3rem; font-style: italic; color: #CC2027; }
+.subtitle { padding: 2rem 0; }
+.gallery { max-width: 80%; margin: 0px auto; }
+.layouts { display: flex; list-style: none; padding: 0; margin: 0; }
+.layout { width: 24%; }
+@media (max-width: 1000px) { .layout { width: 32%;  } }
+@media (max-width: 800px)  { .layout { width: 48%;  } }
+@media (max-width: 450px)  { .layout { width: 100%; } }
+.characters { list-style: none; padding: 0; margin: 0; }
+.character { margin: 5%; border-radius: 5px; box-shadow: 0px 0px 2px -1px #000; height: 24%; }
+@media (max-width: 1000px) { .character { height: 32%;  } }
+@media (max-width: 800px)  { .character { height: 48%;  } }
+@media (max-width: 450px)  { .character { height: 100%; } }
+.avatar { width: 100%; border-radius: 5px; }
+.buttons { position: absolute; top: 0; right: 200px; }
+#save-to-server-button { position: absolute; top: 10px; left: 10px; }
+#load-from-server-button { position: absolute; top: 10px; left: 90px; }
+#download-json-button { position: absolute; top: 80px; left: 10px; }
+#upload-json-button { position: absolute; top: 80px; left: 90px; }
+.read-only-banner { position: absolute; top: -30px; left: -40px; }
+

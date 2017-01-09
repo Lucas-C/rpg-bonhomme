@@ -7,26 +7,26 @@ which will let you to share it with others simply by providing a unique URL.
 
 # Examples
 
-- [Lythes](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Dedale&name=lythes), an android from the French RPG [Dédale](http://lab00.free.fr/sommaire/home.htm).
-- [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Absence&name=raphaelle_lepercq_se_fait_appeler_lila_), two characters from a 'one-shot' RPG called 'Absence'.
-- [Atharès](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
-- [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
-- [Sylvia](https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout=PsyRun&name=Sylvia), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
+- [Lythes](https://chezsoi.org/lucas/rpg-bonhomme?layout=Dedale&name=lythes), an android from the French RPG [Dédale](http://lab00.free.fr/sommaire/home.htm).
+- [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme?layout=Absence&name=raphaelle_lepercq_se_fait_appeler_lila_), two characters from a 'one-shot' RPG called 'Absence'.
+- [Atharès](https://chezsoi.org/lucas/rpg-bonhomme?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
+- [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
+- [Sylvia](https://chezsoi.org/lucas/rpg-bonhomme?layout=PsyRun&name=Sylvia), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
 
 # Usage
 
 All the interactions are made using the 4 top right buttons and the 'name' input field.
 
-To remote load an existing character, simply go to https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout= and type a layout name at the end of URL, then enter your character name and press 'Load from remote server'. Alternatively you can directly enter an URL formatted like this: '?layout=<layout-name>&name=<character-id>'.
+To remote load an existing character, simply go to https://chezsoi.org/lucas/rpg-bonhomme?layout= and type a layout name at the end of URL, then enter your character name and press 'Load from remote server'. Alternatively you can directly enter an URL formatted like this: '?layout=<layout-name>&name=<character-id>'.
 
-To edit and remote save a new character, simply go to https://chezsoi.org/lucas/rpg-bonhomme/character-sheet.html?layout= and type a layout name at the end of the URL, then enter your character name and press the 'Save to remote server' button.
+To edit and remote save a new character, simply go to https://chezsoi.org/lucas/rpg-bonhomme?layout= and type a layout name at the end of the URL, then enter your character name and press the 'Save to remote server' button.
 
-The currently available layouts matches the list of file in the **layout/** & **img/** directories of this repository. Note that at the time of writing, some layouts are still 'in-progress' and currently empty.
+The currently available layouts matches the list of file in the **layout/** & **background/** directories of this repository. Note that at the time of writing, some layouts are still 'in-progress' and currently empty.
 
 # Internals & asumptions
 
-- a ?layout= URL parameter must always be provided to _character-sheet.html_.
-- this _layout_ must match the name of a .css file in **layout/**, and a .png character sheet image in **img/**.
+- a ?layout= URL parameter must always be provided to _index.html_.
+- this _layout_ must match the name of a .css file in **layout/**, and a .png character sheet image in **background/**.
 - input (or textarea) fields are defined once and only once by rules starting with 'input#<name>' in the layout.css,
 and they must be the only selectors starting that way in the file.
 Non-textual fields must be specified as 'input[type=.+]#<name>'
@@ -64,8 +64,8 @@ Initial configuration & file permissions:
 
 Installing the backup cron task:
 
-    sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-backup-cron > /etc/cron.d/jsonp_db-backup-cron
-    chmod u+x /etc/cron.d/jsonp_db-backup-cron
+    sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-crons > /etc/cron.d/jsonp_db-crons
+    chmod u+x /etc/cron.d/jsonp_db-crons
 
 For Apache with [`mod_wsgi`](https://modwsgi.readthedocs.org), simply:
 
