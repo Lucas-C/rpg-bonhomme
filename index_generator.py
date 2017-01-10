@@ -13,7 +13,8 @@ def generate_html_index(argv=sys.argv[1:]):
     args = parse_args(argv)
     characters = sorted(get_characters(args.db_filepath), key=lambda c: c['layout'])
     characters_per_layout = {l: list(c) for l, c in groupby(characters, lambda c: c['layout'])}
-    env = Environment(loader=FileSystemLoader(THIS_SCRIPT_PARENT_DIR), trim_blocks=True, lstrip_blocks=True)
+    env = Environment(loader=FileSystemLoader(THIS_SCRIPT_PARENT_DIR),
+                      autoescape=True, trim_blocks=True, lstrip_blocks=True)
     template = env.get_template(args.html_template)
     print(template.render(characters_per_layout=characters_per_layout))
 
