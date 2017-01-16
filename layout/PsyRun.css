@@ -1,12 +1,5 @@
-input, textarea {
-  position: absolute;
-}
-/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
 input[type=text], textarea {
-  font-family: Tahoma,Geneva,sans-serif;
   line-height: 130%;
-  padding: 2px;
-  border: 1px solid lightgray;
   font-size: 18px;
 }
 .injury {
@@ -48,7 +41,7 @@ input#epilogue5[type=checkbox] { top: 585px; left: 370px; }
 input#epilogue6[type=checkbox] { top: 585px; left: 438px; }
 input#epilogue7[type=checkbox] { top: 585px; left: 625px; }
 
-#read-only-banner {
+.read-only-banner {
     top: 60%;
     left: 75%;
 }

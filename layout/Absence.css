@@ -1,12 +1,5 @@
-input, textarea {
-  position: absolute;
-}
-/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
 input[type=text], input[type=number], textarea {
-  font-family: Tahoma,Geneva,sans-serif;
   font-size: 24px;
-  padding: 2px;
-  border: 1px solid lightgrey;
   border-radius: 4px;
   color: #3C3C3C;
 }

@@ -21,3 +21,12 @@ body { font-family: Helvetica, Arial, sans-serif; }
 .button--upload-json { position: absolute; top: 80px; left: 90px; }
 .read-only-banner { position: absolute; top: -30px; left: -40px; }
 
+/* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */
+input[type=text], input[type=number], textarea {
+  font-family: Tahoma,Geneva,sans-serif;
+  padding: 2px;
+  border: 1px solid lightgrey;
+}
+input, textarea {
+  position: absolute;
+}
