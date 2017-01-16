@@ -1,6 +1,5 @@
 import base64, cgi, hashlib, hmac, html, logging, logging.handlers, os, re, sqlite3, traceback
 from collections import namedtuple
-from contextlib import closing
 from threading import Lock
 from configobj import ConfigObj
 try:
@@ -162,33 +161,24 @@ def get_modification_key(key):
     return base64.urlsafe_b64encode(secret).decode('utf8')[:10]
 
 def db_get(key):
-    with closing(_DB.cursor()) as db_cursor:
-        db_cursor.execute('SELECT Value FROM KVStore WHERE Key=?', (key,))
-        query_result = db_cursor.fetchone()
+    query_result = _DB.execute('SELECT Value FROM KVStore WHERE Key=?', (key,)).fetchone()
     if not query_result or len(query_result) != 1:
         return None
     return query_result[0]
 
 def db_put(key, value):
     db_check_table_size()
-    with closing(_DB.cursor()) as db_cursor:
-        db_cursor.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, value))
-        _DB.commit()
+    _DB.execute('INSERT OR REPLACE INTO KVStore VALUES (?, ?)', (key, value))
 
 def db_list_keys():
-    with closing(_DB.cursor()) as db_cursor:
-        db_cursor.execute('SELECT Key FROM KVStore')
-        return [result[0] for result in db_cursor.fetchall()]
+    return [result[0] for result in _DB.execute('SELECT Key FROM KVStore').fetchall()]
 
 def db_list_keys_with_prefix(prefix):
-    with closing(_DB.cursor()) as db_cursor:
-        db_cursor.execute('SELECT Key FROM KVStore WHERE Key LIKE ? || "%"', (prefix,))
-        return [result[0][len(prefix):] for result in db_cursor.fetchall()]
+    query = 'SELECT Key FROM KVStore WHERE Key LIKE ? || "%"'
+    return [result[0][len(prefix):] for result in _DB.execute(query, (prefix,)).fetchall()]
 
 def db_check_table_size():
-    with closing(_DB.cursor()) as db_cursor:
-        db_cursor.execute('SELECT COUNT(*) FROM KVStore')
-        query_result = db_cursor.fetchone()
+    query_result = _DB.execute('SELECT COUNT(*) FROM KVStore').fetchone()
     table_size = int(query_result[0])
     if MAX_TABLE_SIZE and table_size > MAX_TABLE_SIZE:
         raise MemoryError('Table size exceeded limit: {} > {}'.format(table_size, MAX_TABLE_SIZE))
@@ -208,6 +198,7 @@ def log(msg, *args, lvl=logging.INFO):
 _LOGGER = configure_logger()
 _LOGGER_LOCK = Lock()
 _DB = sqlite3.connect(DATABASE_FILE, check_same_thread=False)
+_DB.isolation_level = None  # autocommit mode
 if REQUIRE_MODIFCATION_KEY and not MODIFICATION_KEY_SALT:
     raise RuntimeError('A random salt is required when using modification-key based authentication')
 log('Starting : %s keys found in the DB - Config: %s', len(db_list_keys()), CONFIG)
