@@ -5,6 +5,9 @@ textarea {
   border: #ccc solid 1px;
   border-radius: 10px;
 }
+body {
+  margin: 5px;
+}
 
 input#name { top: 105px; left: 580px; width: 500px; height: 30px; }
 input#description { top: 150px; left: 670px; width: 590px; height: 30px; }
@@ -66,6 +69,16 @@ input#retraite7c[type=checkbox] { top: 588px; left: 523px; }
 input#retraite7d[type=checkbox] { top: 588px; left: 541px; }
 input#retraite7e[type=checkbox] { top: 588px; left: 558px; }
 
+input#xp_fail1[type=checkbox] { top: 545px; left: 1096px; }
+input#xp_fail2[type=checkbox] { top: 545px; left: 1114px; }
+input#xp_fail3[type=checkbox] { top: 545px; left: 1132px; }
+input#xp_fail4[type=checkbox] { top: 545px; left: 1150px; }
+input#xp_fail5[type=checkbox] { top: 545px; left: 1167px; }
+input#xp_fail6[type=checkbox] { top: 545px; left: 1185px; }
+input#xp_fail7[type=checkbox] { top: 545px; left: 1203px; }
+input#xp_fail8[type=checkbox] { top: 545px; left: 1220px; }
+input#xp_fail9[type=checkbox] { top: 545px; left: 1238px; }
+input#xp_fail10[type=checkbox] { top: 545px; left: 1256px; }
 input#experience_dur[type=checkbox] { top: 588px; left: 897px; }
 input#experience_fin[type=checkbox] { top: 588px; left: 1033px; }
 input#experience_vif[type=checkbox] { top: 588px; left: 1170px; }
