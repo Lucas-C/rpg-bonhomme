@@ -40,6 +40,6 @@ curl -s http://localhost:$PORT/jsonp_db/a_2?2
 curl -s http://localhost:$PORT/jsonp_db/a_3?3
 curl -s http://localhost:$PORT/jsonp_db/list_by_prefix/a_ | grep "^\['1', '2', '3'\]\$"
 
-make kill-local-server
+make kill-local-server || true
 test -e $DB_FILE.bak && mv $DB_FILE.bak $DB_FILE || true
 

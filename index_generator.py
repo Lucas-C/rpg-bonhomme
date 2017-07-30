@@ -41,7 +41,8 @@ def get_layouts():
 
 def db_list_all(db_filepath):
     chars_db = sqlite3.connect(db_filepath, check_same_thread=False)
-    with closing(chars_db.cursor()) as db_cursor:  # pylint: disable=no-member
+    # pylint: disable=no-member
+    with closing(chars_db.cursor()) as db_cursor:
         db_cursor.execute('SELECT Key, Value FROM KVStore')
         return db_cursor.fetchall()
 
