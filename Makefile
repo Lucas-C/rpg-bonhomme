@@ -12,10 +12,10 @@ CSS_DIR     := layout/
 PORT        := 8082
 CSS_LAYOUTS := $(wildcard $(CSS_DIR)*.css)
 
+.PHONY: all clean test help
 .PHONY: check check-style check-layouts-css $(CSS_LAYOUTS)
 .PHONY: view-local open-index
 .PHONY: start-local-server restart-local-server kill-local-server list-local-server-processes
-.PHONY: test help
 
 all: $(OUT_HTML)
 	@:
@@ -80,3 +80,5 @@ help:
 	# make -B target           # --always-make : force execution of targets commands, even if dependencies are satisfied
 	# make --debug[=abijmv]    # enable variants of make verbose output
 
+clean:
+	@rm -f $(LOCAL_HTML) $(OUT_HTML)

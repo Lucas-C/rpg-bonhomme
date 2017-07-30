@@ -9,7 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 THIS_SCRIPT_PARENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
-def generate_html_index(argv=sys.argv[1:]):
+def generate_html_index(argv=None):
     args = parse_args(argv)
     characters = sorted(get_characters(args.db_filepath), key=lambda c: c['layout'])
     characters_per_layout = {l: list(c) for l, c in groupby(characters, lambda c: c['layout'])}
@@ -41,7 +41,7 @@ def get_layouts():
 
 def db_list_all(db_filepath):
     chars_db = sqlite3.connect(db_filepath, check_same_thread=False)
-    with closing(chars_db.cursor()) as db_cursor:
+    with closing(chars_db.cursor()) as db_cursor:  # pylint: disable=no-member
         db_cursor.execute('SELECT Key, Value FROM KVStore')
         return db_cursor.fetchall()
 
