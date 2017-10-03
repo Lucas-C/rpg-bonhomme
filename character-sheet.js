@@ -1,7 +1,7 @@
 var exports = (function() {
     'use strict';
     var SERVER_STORAGE_CGI = 'jsonp_db/',
-        LAYOUTS = ['Absence', 'Allegoria', 'Biohazard', 'Dedale', 'InCognito1', 'InCognito2', 'PsyRun', 'Scavengers'],
+        LAYOUTS = ['Absence', 'Allegoria', 'Biohazard', 'Dedale', 'InCognito1', 'InCognito2', 'PsiRun', 'Scavengers'],
     throw_error = function () {
         var msg_array = [];
         [].slice.call(arguments).forEach(function (arg) {
