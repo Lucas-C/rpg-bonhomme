@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang='fr'>
+<html lang="fr">
   <head>
-    <meta charset='UTF-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RPG character sheet viewer/editor</title>
     <style>
 {% include 'character-sheet.css' %}
@@ -34,20 +34,20 @@
             {% endfor %}
         </ul>
     </div>
-    <div id='character-sheet'></div>
-    <div class='buttons' style="display: none">
-      <input type='image' class='button--save-to-server' onclick='exports.save_character_to_server()'
-        title='Save to remote server' src='img/cloud_upload.png' alt='-'>
-      <input type='image' class='button--load-from-server' onclick='exports.load_character_from_server()'
-        title='Load from remote server' src='img/cloud_download.png' alt='-'>
-      <input type='image' class='button--download-json' onclick='exports.download_character_as_json()'
-        title='Download JSON file' src='img/file_download.png' alt='-'/>
-      <input type='image' class='button--upload-json' onclick='document.getElementById("charactersheet_file_picker").click()'
-        title='Upload JSON file' src='img/file_upload.png' alt='-'/>
-      <input type="file" onchange="exports.charactersheet_file_picker_change(this.files)"
+    <div id="character-sheet"></div>
+    <div class="buttons" style="display: none">
+      <input type="image" class="button--save-to-server" onclick="rpg_bonhomme.save_character_to_server()"
+        title="Save to remote server" src="img/cloud_upload.png" alt="-">
+      <input type="image" class="button--load-from-server" onclick="rpg_bonhomme.load_character_from_server()"
+        title="Load from remote server" src="img/cloud_download.png" alt="-">
+      <input type="image" class="button--download-json" onclick="rpg_bonhomme.download_character_as_json()"
+        title="Download JSON file" src="img/file_download.png" alt="-"/>
+      <input type="image" class="button--upload-json" onclick="document.getElementById('charactersheet_file_picker').click()"
+        title="Upload JSON file" src="img/file_upload.png" alt="-"/>
+      <input type="file" onchange="rpg_bonhomme.charactersheet_file_picker_change(this.files)"
         accept=".json" style="display:none">
     </div>
-    <script type='text/javascript'>
+    <script type="text/javascript">
 {% include 'character-sheet.js' %}
     </script>
   </body>

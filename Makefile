@@ -26,10 +26,15 @@ $(OUT_HTML): $(INDEX_MAKER) $(TMPLT_HTML) $(JS_SRC_FILE) $(CSS_SRC_FILE) $(DB_FI
 check: check-style pre-commit-hooks
 	@:
 
-check-style: $(JS_SRC_FILE) check-layouts-css
+check-style: $(TMPLT_HTML) $(JS_SRC_FILE) check-layouts-css
 	## Running code style check
 	jscs $(JS_SRC_FILE)
+	jshint $(JS_SRC_FILE)
 	pep8 $(PY_WSGI).py
+    ## Parsing the template so that we do not have to generate $(OUT_HTML) which required a valid .db
+	htmlhint $(TMPLT_HTML)
+    ## Parsing the template for the same reason + because of this bug: https://github.com/htmllint/htmllint/issues/216
+	htmllint $(TMPLT_HTML)
 
 check-layouts-css: $(CSS_LAYOUTS) $(CSS_SRC_FILE)
 	## DONE checking the CSS layouts
@@ -81,4 +86,4 @@ help:
 	# make --debug[=abijmv]    # enable variants of make verbose output
 
 clean:
-	@rm -f $(LOCAL_HTML) $(OUT_HTML)
+	@$(RM) $(LOCAL_HTML) $(OUT_HTML)

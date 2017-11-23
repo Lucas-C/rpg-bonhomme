@@ -8,15 +8,19 @@ except ImportError:
     from urllib.parse import parse_qsl
 
 SCRIPT_DIR = os.path.dirname(__file__) or '.'
+
 CONFIG = ConfigObj(os.path.join(SCRIPT_DIR, re.sub('.pyc?$', '.ini', __file__)))
-DATABASE_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('db_file'))
-LOG_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('log_file'))
-LOG_FORMAT = '%(asctime)s - %(process)s [%(levelname)s] %(message)s'
 MAX_KEY_LENGTH = CONFIG.as_int('max_key_length')
 MAX_VALUE_LENGTH = CONFIG.as_int('max_value_length')
 MAX_TABLE_SIZE = CONFIG.as_int('max_table_size')
 REQUIRE_MODIFCATION_KEY = CONFIG.as_bool('require_modification_key')
 MODIFICATION_KEY_SALT = CONFIG.get('modification_key_salt').encode('utf8')
+
+LOG_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('log_file'))
+LOG_FORMAT = '%(asctime)s - %(process)s [%(levelname)s] %(message)s'
+
+DATABASE_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('db_file'))
+
 HTML_TEMPLATE = """'<!DOCTYPE html>
 <html>
   <head>
@@ -74,7 +78,7 @@ def application(env, start_response):
         except Exception:
             raise HTTPError(traceback.format_exc(), code=500)
     except HTTPError as error:
-        log(error.full_msg, logging.ERROR)
+        log(error.full_msg, lvl=logging.ERROR)
         error_response, mime_type = error.format_response(callback)
         start_response(error.status_line, [('Content-Type', mime_type)])
         yield error_response.encode('utf-8')

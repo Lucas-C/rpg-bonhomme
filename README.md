@@ -55,8 +55,8 @@ That being said, this WSGI app won't do anything nasty.
 Installing a Python virtualenv and the needed dependencies with [pew](https://github.com/berdario/pew) :
 
     pew new rpg-bonhomme -p python3
-    pip install -r requirements.txt -r dev-requirements.txt
-    npm install -g csslint jscs # for "make check-style"
+    pip install -r dev-requirements.txt
+    npm install -g csslint htmlhint htmllint-cli jscs jshint # for "make check-style"
 
 Initial configuration & file permissions:
 

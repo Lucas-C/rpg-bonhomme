@@ -1,14 +1,11 @@
+repos:
 -   repo: git://github.com/Lucas-C/pre-commit-hooks
-    sha: v1.0.1
+    sha: v1.1.4
     hooks:
     -   id: remove-crlf
     -   id: remove-tabs
--   repo: https://github.com/Lucas-C/pre-commit-hooks-go
-    sha: v1.0.0
-    hooks:
-    -   id: checkmake
 -   repo: git://github.com/pre-commit/pre-commit-hooks
-    sha: v0.9.1
+    sha: v1.1.1
     hooks:
     -   id: trailing-whitespace
         args:
@@ -17,7 +14,7 @@
         exclude: .jshintrc
     -   id: check-yaml
 -   repo: git://github.com/pre-commit/mirrors-pylint
-    sha: v1.7.2
+    sha: v1.7.4
     hooks:
     -   id: pylint
         args:
@@ -27,18 +24,11 @@
     sha: v1.1.0
     hooks:
     -   id: python-safety-dependencies-check
--   repo: https://github.com/Lucas-C/pre-commit-hooks-html
-    sha: v1.2.1
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-java
+    sha: v1.3.6
     hooks:
     -   id: validate-html
         args: [--remove-mustaches, "--ignore=Text not allowed in element \"ul\" in this context."]
-# Currently broken under Cygwin due to a bug in nodeenv
-    # -   id: htmlhint
-    # -   id: htmllint
-# -   repo: git://github.com/pre-commit/mirrors-jshint
-    # sha: v2.9.3
-    # hooks:
-    # -   id: jshint
 -   repo: local
     hooks:
     -   id: check-bash-syntax

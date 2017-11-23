@@ -1,7 +1,6 @@
-var exports = (function() {
+window.rpg_bonhomme = (function() {
     'use strict';
     var SERVER_STORAGE_CGI = 'jsonp_db/',
-        LAYOUTS = ['Absence', 'Allegoria', 'Biohazard', 'Dedale', 'InCognito1', 'InCognito2', 'PsiRun', 'Scavengers'],
     throw_error = function () {
         var msg_array = [];
         [].slice.call(arguments).forEach(function (arg) {
@@ -149,26 +148,6 @@ var exports = (function() {
             }
         });
     },
-    render_character_sheet = function (main_div, layout, name, modification_key, avatar) {
-        document.getElementsByClassName('header')[0].style.display = 'none';
-        document.getElementsByClassName('gallery')[0].style.display = 'none';
-        document.getElementsByClassName('buttons')[0].style.display = 'block';
-        load_background_img(main_div, layout);
-        load_stylesheet(layout, function (stylesheetUrl) { // we wait for the CSS stylesheet to be loaded
-            var input_ids = get_input_ids_from_css_rules(get_stylesheet(stylesheetUrl));
-            assert(input_ids.name, 'The <layout>.css does not define any #name input, which is required.');
-            create_inputs(main_div, input_ids, modification_key);
-            if (name) {
-                exports.load_character_from_server(decodeURIComponent(name));
-                if (!modification_key) {
-                    var banner = document.createElement('img');
-                    banner.src = 'img/read_only_banner.png';
-                    banner.className = 'read-only-banner';
-                    document.body.appendChild(banner);
-                }
-            }
-        });
-    },
     exports = { // functions that must be callable by buttons in the HTML page
         save_character_to_server: function () {
             var params = get_url_params(),
@@ -232,12 +211,32 @@ var exports = (function() {
             };
             reader.readAsText(files[0]);
         }
+    },
+    render_character_sheet = function (layout, name, modification_key) {
+        document.getElementsByClassName('header')[0].style.display = 'none';
+        document.getElementsByClassName('gallery')[0].style.display = 'none';
+        document.getElementsByClassName('buttons')[0].style.display = 'block';
+        var main_div = document.getElementById('character-sheet');
+        load_background_img(main_div, layout);
+        load_stylesheet(layout, function (stylesheetUrl) { // we wait for the CSS stylesheet to be loaded
+            var input_ids = get_input_ids_from_css_rules(get_stylesheet(stylesheetUrl));
+            assert(input_ids.name, 'The <layout>.css does not define any #name input, which is required.');
+            create_inputs(main_div, input_ids, modification_key);
+            if (name) {
+                exports.load_character_from_server(decodeURIComponent(name));
+                if (!modification_key) {
+                    var banner = document.createElement('img');
+                    banner.src = 'img/read_only_banner.png';
+                    banner.className = 'read-only-banner';
+                    document.body.appendChild(banner);
+                }
+            }
+        });
     };
     document.addEventListener('DOMContentLoaded', function() {
-        var main_div = document.getElementById('character-sheet'),
-            params = get_url_params();
+        var params = get_url_params();
         if (params.layout) {
-            render_character_sheet(main_div, params.layout, params.name, params['modification-key']);
+            render_character_sheet(params.layout, params.name, params['modification-key']);
         }
     });
     return exports;
