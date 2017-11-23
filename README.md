@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Lucas-C/rpg-bonhomme.svg?branch=master)](https://travis-ci.org/Lucas-C/rpg-bonhomme)
+
 This project provides the following features:
 - locally load & save your character from JSON files.
 - only require a web browser (and an Internet connection to use the remote storage feature).
