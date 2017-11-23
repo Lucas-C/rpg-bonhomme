@@ -10,9 +10,6 @@ repos:
     -   id: trailing-whitespace
         args:
         - --no-markdown-linebreak-ext
-    -   id: check-json
-        exclude: .jshintrc
-    -   id: check-yaml
 -   repo: git://github.com/pre-commit/mirrors-pylint
     sha: v1.7.4
     hooks:
