@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import base64, cgi, hashlib, hmac, html, logging, logging.handlers, os, re, sqlite3, traceback
 from collections import namedtuple
 from threading import Lock
@@ -206,3 +207,24 @@ _DB.isolation_level = None  # autocommit mode
 if REQUIRE_MODIFCATION_KEY and not MODIFICATION_KEY_SALT:
     raise RuntimeError('A random salt is required when using modification-key based authentication')
 log('Starting : %s keys found in the DB - Config: %s', len(db_list_keys()), CONFIG)
+
+if __name__ == '__main__':
+    def app(env, start_response):
+        path = env.get('PATH_INFO', '').encode('latin1').decode('utf8')
+        filename = path[1:] if path else ''
+        if filename and os.path.exists(filename):
+            filetype = 'text'
+            ext = filename.split('.')[-1]
+            if ext in ('jpg', 'png'):
+                if 'HTTP_IF_NONE_MATCH' in env:  # enabling image caching
+                    start_response('304 Not Modified', [])
+                    return []
+                filetype = 'image'
+            start_response('200 OK', [('Content-Type', filetype + '/' + ext), ('Etag', filename)])
+            with open(filename, 'rb') as file_obj:
+                return [file_obj.read()]
+        if env['PATH_INFO'].startswith('/jsonp_db/'):  # match SERVER_STORAGE_CGI in character-sheet.js
+            env['PATH_INFO'] = env['PATH_INFO'].replace('/jsonp_db/', '/')
+        return application(env, start_response)
+    from wsgiref.simple_server import make_server
+    make_server('localhost', 80, app).serve_forever()

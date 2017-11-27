@@ -5,9 +5,7 @@ python:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y moreutils
-install:
-  - npm install -g csslint htmlhint htmllint-cli jscs jshint
-  - pip install -r dev-requirements.txt
+install: make install
 script:
-- pre-commit install
-- pre-commit run --all-files
+  - make check
+  - make test

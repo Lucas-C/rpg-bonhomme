@@ -33,13 +33,3 @@ repos:
         language: system
         entry: bash -n
         files: \.sh$
-    -   id: make-check-style
-        name: make check-style
-        language: system
-        entry: sh -c "make check-style"
-        files: ''
-    -   id: make-test
-        name: make test
-        language: system
-        entry: sh -c "make test"
-        files: ''

@@ -52,13 +52,14 @@ More details [here](http://security.stackexchange.com/a/23439).
 
 That being said, this WSGI app won't do anything nasty.
 
-## Setup
+## Environment setup
 
 Installing a Python virtualenv and the needed dependencies with [pew](https://github.com/berdario/pew) :
 
     pew new rpg-bonhomme -p python3
-    pip install -r dev-requirements.txt
-    npm install -g csslint htmlhint htmllint-cli jscs jshint # for "make check-style"
+    make install
+
+## Deployment
 
 Initial configuration & file permissions:
 
@@ -71,7 +72,9 @@ Installing the backup cron task:
     sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-crons > /etc/cron.d/jsonp_db-crons
     chmod u+x /etc/cron.d/jsonp_db-crons
 
-For Apache with [`mod_wsgi`](https://modwsgi.readthedocs.org), simply:
+### For Apache
+
+With [`mod_wsgi`](https://modwsgi.readthedocs.org), simply:
 
     sudo -u www-data bash -c "source /var/www/apache-python-venv/bin/activate && pip install configobj requests"
 
@@ -79,7 +82,7 @@ And the Apache httpd.conf:
 
     WSGIScriptAlias /path/to/jsonp_db /path/to/jsonp_db.py
 
-For Nginx:
+### For Nginx
 
     cat << EOF | sudo tee /etc/init/rpg-bonhomme.conf
     start on startup
@@ -106,17 +109,23 @@ And the Nginx configuration:
     }
 
 
-## Testing
+## Validating
 
     make check
-
     make test
+
+## Developping
+
+Require a `jsonp_db.db`:
+
+    make
+    make run-server
 
 ## Ops
 
 ### Retrieving a modification key
 
-    function () {
+    function get_mod_key () {
         local layout="${1?}"
         local char_name="${2?}"
         python -c "from jsonp_db import get_modification_key;print('&modification-key='+get_modification_key('${layout}_'+'${char_name}'.lower()))"

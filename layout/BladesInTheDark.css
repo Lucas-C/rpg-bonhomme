@@ -1,0 +1,293 @@
+input[type=text], textarea {
+  font-size: 18px;
+}
+textarea {
+  border: #ccc solid 1px;
+  border-radius: 10px;
+}
+body {
+  margin: 5px;
+}
+
+input#name { top: 152px; left: 80px; width: 430px; height: 30px; }
+input#crew { top: 95px; left: 530px; width: 260px; height: 30px; }
+input#alias { top: 152px; left: 530px; width: 260px; height: 30px; }
+input#look { top: 213px; left: 80px; width: 710px; height: 30px; }
+
+input#akoros.heritage[type=checkbox] { top: 316px; left: 240px; }
+input#dagger-isles.heritage[type=checkbox] { top: 316px; left: 434px; }
+input#iruvia.heritage[type=checkbox] { top: 334px; left: 132px; }
+input#severos.heritage[type=checkbox] { top: 334px; left: 216px; }
+input#skovlan.heritage[type=checkbox] { top: 334px; left: 305px; }
+input#tycheros.heritage[type=checkbox] { top: 334px; left: 403px; }
+
+input#academic.background[type=checkbox] { top: 316px; left: 664px; }
+input#labor.background[type=checkbox] { top: 316px; left: 737px; }
+input#law.background[type=checkbox] { top: 316px; left: 790px; }
+input#trade.background[type=checkbox] { top: 334px; left: 504px; }
+input#military.background[type=checkbox] { top: 334px; left: 596px; }
+input#noble.background[type=checkbox] { top: 334px; left: 664px; }
+input#underworld.background[type=checkbox] { top: 334px; left: 790px; }
+
+input#faith.vice[type=checkbox] { top: 403px; left: 265px; }
+input#gambling.vice[type=checkbox] { top: 403px; left: 364px; }
+input#luxury.vice[type=checkbox] { top: 403px; left: 442px; }
+input#obligation.vice[type=checkbox] { top: 403px; left: 553px; }
+input#pleasure.vice[type=checkbox] { top: 403px; left: 646px; }
+input#stupor.vice[type=checkbox] { top: 403px; left: 723px; }
+input#weird.vice[type=checkbox] { top: 403px; left: 790px; }
+
+input#stress-1.stress[type=checkbox] { top: 456px; left: 145px; }
+input#stress-2.stress[type=checkbox] { top: 456px; left: 165px; }
+input#stress-3.stress[type=checkbox] { top: 456px; left: 186px; }
+input#stress-4.stress[type=checkbox] { top: 456px; left: 206px; }
+input#stress-5.stress[type=checkbox] { top: 456px; left: 226px; }
+input#stress-6.stress[type=checkbox] { top: 456px; left: 246px; }
+input#stress-7.stress[type=checkbox] { top: 456px; left: 267px; }
+input#stress-8.stress[type=checkbox] { top: 456px; left: 287px; }
+input#stress-9.stress[type=checkbox] { top: 456px; left: 307px; }
+
+input#trauma-1.stress[type=checkbox] { top: 456px; left: 339px; }
+input#trauma-2.stress[type=checkbox] { top: 456px; left: 360px; }
+input#trauma-3.stress[type=checkbox] { top: 456px; left: 380px; }
+input#trauma-4.stress[type=checkbox] { top: 456px; left: 401px; }
+
+input#cold.trauma[type=checkbox] { top: 444px; left: 472px; }
+input#haunted.trauma[type=checkbox] { top: 444px; left: 576px; }
+input#obsessed.trauma[type=checkbox] { top: 444px; left: 681px; }
+input#paranoid.trauma[type=checkbox] { top: 444px; left: 790px; }
+input#reckless.trauma[type=checkbox] { top: 463px; left: 515px; }
+input#soft.trauma[type=checkbox] { top: 463px; left: 581px; }
+input#unstable.trauma[type=checkbox] { top: 463px; left: 695px; }
+input#vicious.trauma[type=checkbox] { top: 463px; left: 790px; }
+
+input#harm-3.harm { top: 511px; left: 98px; width: 502px; height: 38px; }
+input#harm-2a.harm { top: 555px; left: 98px; width: 248px; height: 38px; }
+input#harm-2b.harm { top: 555px; left: 352px; width: 248px; height: 38px; }
+input#harm-3a.harm { top: 599px; left: 98px; width: 248px; height: 38px; }
+input#harm-3b.harm { top: 599px; left: 352px; width: 248px; height: 38px; }
+
+input#healing-1.healing[type=checkbox] { top: 498px; left: 752px; }
+input#healing-2.healing[type=checkbox] { top: 498px; left: 768px; }
+input#healing-3.healing[type=checkbox] { top: 514px; left: 752px; }
+input#healing-4.healing[type=checkbox] { top: 514px; left: 768px; }
+
+input#armor.armor-uses[type=checkbox] { top: 573px; left: 774px; }
+input#heavy.armor-uses[type=checkbox] { top: 599px; left: 774px; }
+input#special.armor-uses[type=checkbox] { top: 626px; left: 774px; }
+
+textarea#notes { top: 670px; left: 80px; width: 715px; height: 540px; }
+
+input#avatar[type=image] { top: 670px; left: 80px; max-width: 715px; max-height: 550px; border-radius: 20px; z-index: 1; }
+input#avatar[type=image]:hover { opacity: 0.05; }
+
+input#stash-1.stash[type=checkbox] { top: 78px; left: 1417px; }
+input#stash-2.stash[type=checkbox] { top: 78px; left: 1433px; }
+input#stash-3.stash[type=checkbox] { top: 78px; left: 1449px; }
+input#stash-4.stash[type=checkbox] { top: 78px; left: 1465px; }
+input#stash-5.stash[type=checkbox] { top: 78px; left: 1481px; }
+input#stash-6.stash[type=checkbox] { top: 78px; left: 1498px; }
+input#stash-7.stash[type=checkbox] { top: 78px; left: 1514px; }
+input#stash-8.stash[type=checkbox] { top: 78px; left: 1530px; }
+input#stash-9.stash[type=checkbox] { top: 78px; left: 1546px; }
+input#stash-10.stash[type=checkbox] { top: 78px; left: 1563px; }
+input#stash-11.stash[type=checkbox] { top: 97px; left: 1417px; }
+input#stash-12.stash[type=checkbox] { top: 97px; left: 1433px; }
+input#stash-13.stash[type=checkbox] { top: 97px; left: 1449px; }
+input#stash-14.stash[type=checkbox] { top: 97px; left: 1465px; }
+input#stash-15.stash[type=checkbox] { top: 97px; left: 1481px; }
+input#stash-16.stash[type=checkbox] { top: 97px; left: 1498px; }
+input#stash-17.stash[type=checkbox] { top: 97px; left: 1514px; }
+input#stash-18.stash[type=checkbox] { top: 97px; left: 1530px; }
+input#stash-19.stash[type=checkbox] { top: 97px; left: 1546px; }
+input#stash-20.stash[type=checkbox] { top: 97px; left: 1563px; }
+input#stash-21.stash[type=checkbox] { top: 116px; left: 1417px; }
+input#stash-22.stash[type=checkbox] { top: 116px; left: 1433px; }
+input#stash-23.stash[type=checkbox] { top: 116px; left: 1449px; }
+input#stash-24.stash[type=checkbox] { top: 116px; left: 1465px; }
+input#stash-25.stash[type=checkbox] { top: 116px; left: 1481px; }
+input#stash-26.stash[type=checkbox] { top: 116px; left: 1498px; }
+input#stash-27.stash[type=checkbox] { top: 116px; left: 1514px; }
+input#stash-28.stash[type=checkbox] { top: 116px; left: 1530px; }
+input#stash-29.stash[type=checkbox] { top: 116px; left: 1546px; }
+input#stash-30.stash[type=checkbox] { top: 116px; left: 1563px; }
+input#stash-31.stash[type=checkbox] { top: 135px; left: 1417px; }
+input#stash-32.stash[type=checkbox] { top: 135px; left: 1433px; }
+input#stash-33.stash[type=checkbox] { top: 135px; left: 1449px; }
+input#stash-34.stash[type=checkbox] { top: 135px; left: 1465px; }
+input#stash-35.stash[type=checkbox] { top: 135px; left: 1481px; }
+input#stash-36.stash[type=checkbox] { top: 135px; left: 1498px; }
+input#stash-37.stash[type=checkbox] { top: 135px; left: 1514px; }
+input#stash-38.stash[type=checkbox] { top: 135px; left: 1530px; }
+input#stash-39.stash[type=checkbox] { top: 135px; left: 1546px; }
+input#stash-40.stash[type=checkbox] { top: 135px; left: 1563px; }
+
+input#coin-1.coin[type=checkbox] { top: 115px; left: 1371px; }
+input#coin-2.coin[type=checkbox] { top: 115px; left: 1390px; }
+input#coin-3.coin[type=checkbox] { top: 134px; left: 1371px; }
+input#coin-4.coin[type=checkbox] { top: 134px; left: 1390px; }
+
+input#special-ability-1.abilities { top: 186px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-2.abilities { top: 221px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-3.abilities { top: 256px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-4.abilities { top: 291px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-5.abilities { top: 326px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-6.abilities { top: 361px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-7.abilities { top: 396px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-8.abilities { top: 431px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-9.abilities { top: 466px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-10.abilities { top: 501px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-11.abilities { top: 536px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-12.abilities { top: 571px; left: 830px; width: 500px; height: 30px; }
+input#special-ability-13.abilities { top: 606px; left: 830px; width: 500px; height: 30px; }
+
+input#playbook-1.playbook[type=checkbox] { top: 164px; left: 1474px; }
+input#playbook-2.playbook[type=checkbox] { top: 164px; left: 1487px; }
+input#playbook-3.playbook[type=checkbox] { top: 164px; left: 1500px; }
+input#playbook-4.playbook[type=checkbox] { top: 164px; left: 1513px; }
+input#playbook-5.playbook[type=checkbox] { top: 164px; left: 1526px; }
+input#playbook-6.playbook[type=checkbox] { top: 164px; left: 1539px; }
+input#playbook-7.playbook[type=checkbox] { top: 164px; left: 1552px; }
+input#playbook-8.playbook[type=checkbox] { top: 164px; left: 1565px; }
+
+input#insight-1.attribute[type=checkbox] { top: 210px; left: 1500px; }
+input#insight-2.attribute[type=checkbox] { top: 210px; left: 1513px; }
+input#insight-3.attribute[type=checkbox] { top: 210px; left: 1526px; }
+input#insight-4.attribute[type=checkbox] { top: 210px; left: 1539px; }
+input#insight-5.attribute[type=checkbox] { top: 210px; left: 1552px; }
+input#insight-6.attribute[type=checkbox] { top: 210px; left: 1565px; }
+input#hunt-1.insight[type=checkbox] { top: 239px; left: 1374px; }
+input#hunt-2.insight[type=checkbox] { top: 239px; left: 1394px; }
+input#hunt-3.insight[type=checkbox] { top: 239px; left: 1414px; }
+input#hunt-4.insight[type=checkbox] { top: 239px; left: 1434px; }
+input#study-1.insight[type=checkbox] { top: 261px; left: 1374px; }
+input#study-2.insight[type=checkbox] { top: 261px; left: 1394px; }
+input#study-3.insight[type=checkbox] { top: 261px; left: 1414px; }
+input#study-4.insight[type=checkbox] { top: 261px; left: 1434px; }
+input#survey-1.insight[type=checkbox] { top: 283px; left: 1374px; }
+input#survey-2.insight[type=checkbox] { top: 283px; left: 1394px; }
+input#survey-3.insight[type=checkbox] { top: 283px; left: 1414px; }
+input#survey-4.insight[type=checkbox] { top: 283px; left: 1434px; }
+input#tinker-1.insight[type=checkbox] { top: 305px; left: 1374px; }
+input#tinker-2.insight[type=checkbox] { top: 305px; left: 1394px; }
+input#tinker-3.insight[type=checkbox] { top: 305px; left: 1414px; }
+input#tinker-4.insight[type=checkbox] { top: 305px; left: 1434px; }
+
+input#prowess-1.attribute[type=checkbox] { top: 331px; left: 1500px; }
+input#prowess-2.attribute[type=checkbox] { top: 331px; left: 1513px; }
+input#prowess-3.attribute[type=checkbox] { top: 331px; left: 1526px; }
+input#prowess-4.attribute[type=checkbox] { top: 331px; left: 1539px; }
+input#prowess-5.attribute[type=checkbox] { top: 331px; left: 1552px; }
+input#prowess-6.attribute[type=checkbox] { top: 331px; left: 1565px; }
+input#finesse-1.prowess[type=checkbox] { top: 361px; left: 1374px; }
+input#finesse-2.prowess[type=checkbox] { top: 361px; left: 1394px; }
+input#finesse-3.prowess[type=checkbox] { top: 361px; left: 1414px; }
+input#finesse-4.prowess[type=checkbox] { top: 361px; left: 1434px; }
+input#prowl-1.prowess[type=checkbox] { top: 383px; left: 1374px; }
+input#prowl-2.prowess[type=checkbox] { top: 383px; left: 1394px; }
+input#prowl-3.prowess[type=checkbox] { top: 383px; left: 1414px; }
+input#prowl-4.prowess[type=checkbox] { top: 383px; left: 1434px; }
+input#skirmish-1.prowess[type=checkbox] { top: 405px; left: 1374px; }
+input#skirmish-2.prowess[type=checkbox] { top: 405px; left: 1394px; }
+input#skirmish-3.prowess[type=checkbox] { top: 405px; left: 1414px; }
+input#skirmish-4.prowess[type=checkbox] { top: 405px; left: 1434px; }
+input#wreck-1.prowess[type=checkbox] { top: 427px; left: 1374px; }
+input#wreck-2.prowess[type=checkbox] { top: 427px; left: 1394px; }
+input#wreck-3.prowess[type=checkbox] { top: 427px; left: 1414px; }
+input#wreck-4.prowess[type=checkbox] { top: 427px; left: 1434px; }
+
+input#resolve-1.attribute[type=checkbox] { top: 453px; left: 1500px; }
+input#resolve-2.attribute[type=checkbox] { top: 453px; left: 1513px; }
+input#resolve-3.attribute[type=checkbox] { top: 453px; left: 1526px; }
+input#resolve-4.attribute[type=checkbox] { top: 453px; left: 1539px; }
+input#resolve-5.attribute[type=checkbox] { top: 453px; left: 1552px; }
+input#resolve-6.attribute[type=checkbox] { top: 453px; left: 1565px; }
+input#attune-1.resolve[type=checkbox] { top: 483px; left: 1374px; }
+input#attune-2.resolve[type=checkbox] { top: 483px; left: 1394px; }
+input#attune-3.resolve[type=checkbox] { top: 483px; left: 1414px; }
+input#attune-4.resolve[type=checkbox] { top: 483px; left: 1434px; }
+input#command-1.resolve[type=checkbox] { top: 505px; left: 1374px; }
+input#command-2.resolve[type=checkbox] { top: 505px; left: 1394px; }
+input#command-3.resolve[type=checkbox] { top: 505px; left: 1414px; }
+input#command-4.resolve[type=checkbox] { top: 505px; left: 1434px; }
+input#consort-1.resolve[type=checkbox] { top: 527px; left: 1374px; }
+input#consort-2.resolve[type=checkbox] { top: 527px; left: 1394px; }
+input#consort-3.resolve[type=checkbox] { top: 527px; left: 1414px; }
+input#consort-4.resolve[type=checkbox] { top: 527px; left: 1434px; }
+input#sway-1.resolve[type=checkbox] { top: 549px; left: 1374px; }
+input#sway-2.resolve[type=checkbox] { top: 549px; left: 1394px; }
+input#sway-3.resolve[type=checkbox] { top: 549px; left: 1414px; }
+input#sway-4.resolve[type=checkbox] { top: 549px; left: 1434px; }
+
+input#load-3.load[type=checkbox] { top: 681px; left: 1372px; }
+input#load-5.load[type=checkbox] { top: 681px; left: 1433px; }
+input#load-6.load[type=checkbox] { top: 681px; left: 1513px; }
+
+input#friend-1-nice.friend-status[type=checkbox] { top: 708px; left: 827px; }
+input#friend-1-bad.friend-status[type=checkbox] { top: 710px; left: 848px; }
+input#friend-1.friend-name { top: 704px; left: 874px; width: 192px; height: 22px; }
+input#friend-2-nice.friend-status[type=checkbox] { top: 739px; left: 827px; }
+input#friend-2-bad.friend-status[type=checkbox] { top: 741px; left: 848px; }
+input#friend-2.friend-name { top: 735px; left: 874px; width: 192px; height: 22px; }
+input#friend-3-nice.friend-status[type=checkbox] { top: 771px; left: 827px; }
+input#friend-3-bad.friend-status[type=checkbox] { top: 773px; left: 848px; }
+input#friend-3.friend-name { top: 767px; left: 874px; width: 192px; height: 22px; }
+input#friend-4-nice.friend-status[type=checkbox] { top: 802px; left: 827px; }
+input#friend-4-bad.friend-status[type=checkbox] { top: 804px; left: 848px; }
+input#friend-4.friend-name { top: 798px; left: 874px; width: 192px; height: 22px; }
+input#friend-5-nice.friend-status[type=checkbox] { top: 834px; left: 827px; }
+input#friend-5-bad.friend-status[type=checkbox] { top: 836px; left: 848px; }
+input#friend-5.friend-name { top: 830px; left: 874px; width: 192px; height: 22px; }
+
+input#item-1-load-1.item-load[type=checkbox] { top: 709px; left: 1090px; }
+input#item-1-load-2.item-load[type=checkbox] { top: 709px; left: 1111px; }
+input#item-1.item { top: 700px; left: 1135px; width: 200px; height: 21px; }
+input#item-2-load-1.item-load[type=checkbox] { top: 734px; left: 1090px; }
+input#item-2-load-2.item-load[type=checkbox] { top: 734px; left: 1111px; }
+input#item-2.item { top: 725px; left: 1135px; width: 200px; height: 21px; }
+input#item-3-load-1.item-load[type=checkbox] { top: 759px; left: 1090px; }
+input#item-3-load-2.item-load[type=checkbox] { top: 759px; left: 1111px; }
+input#item-3.item { top: 750px; left: 1135px; width: 200px; height: 21px; }
+input#item-4-load-1.item-load[type=checkbox] { top: 784px; left: 1090px; }
+input#item-4-load-2.item-load[type=checkbox] { top: 784px; left: 1111px; }
+input#item-4.item { top: 775px; left: 1135px; width: 200px; height: 21px; }
+input#item-5-load-1.item-load[type=checkbox] { top: 809px; left: 1090px; }
+input#item-5-load-2.item-load[type=checkbox] { top: 809px; left: 1111px; }
+input#item-5.item { top: 800px; left: 1135px; width: 200px; height: 21px; }
+input#item-6-load-1.item-load[type=checkbox] { top: 834px; left: 1090px; }
+input#item-6-load-2.item-load[type=checkbox] { top: 834px; left: 1111px; }
+input#item-6.item { top: 825px; left: 1135px; width: 200px; height: 21px; }
+
+input#item-7-load-1.item-load[type=checkbox] { top: 707px; left: 1373px; }
+input#item-7-load-2.item-load[type=checkbox] { top: 707px; left: 1394px; }
+input#item-7.item { top: 699px; left: 1412px; width: 160px; height: 21px; }
+input#item-8-load-1.item-load[type=checkbox] { top: 737px; left: 1373px; }
+input#item-8-load-2.item-load[type=checkbox] { top: 737px; left: 1394px; }
+input#item-8.item { top: 729px; left: 1412px; width: 160px; height: 21px; }
+input#item-9-load-1.item-load[type=checkbox] { top: 767px; left: 1373px; }
+input#item-9-load-2.item-load[type=checkbox] { top: 767px; left: 1394px; }
+input#item-9.item { top: 759px; left: 1412px; width: 160px; height: 21px; }
+input#item-10-load-1.item-load[type=checkbox] { top: 798px; left: 1373px; }
+input#item-10-load-2.item-load[type=checkbox] { top: 798px; left: 1394px; }
+input#item-10.item { top: 790px; left: 1412px; width: 160px; height: 21px; }
+input#item-11-load-1.item-load[type=checkbox] { top: 828px; left: 1373px; }
+input#item-11-load-2.item-load[type=checkbox] { top: 828px; left: 1394px; }
+input#item-11.item { top: 820px; left: 1412px; width: 160px; height: 21px; }
+input#item-12-load-1.item-load[type=checkbox] { top: 859px; left: 1373px; }
+input#item-12-load-2.item-load[type=checkbox] { top: 859px; left: 1394px; }
+input#item-12.item { top: 851px; left: 1412px; width: 160px; height: 21px; }
+input#item-13-load-1.item-load[type=checkbox] { top: 889px; left: 1373px; }
+input#item-13-load-2.item-load[type=checkbox] { top: 889px; left: 1394px; }
+input#item-13.item { top: 881px; left: 1412px; width: 160px; height: 21px; }
+input#item-14-load-1.item-load[type=checkbox] { top: 920px; left: 1373px; }
+input#item-14-load-2.item-load[type=checkbox] { top: 920px; left: 1394px; }
+input#item-14.item { top: 912px; left: 1412px; width: 160px; height: 21px; }
+input#item-15-load-1.item-load[type=checkbox] { top: 950px; left: 1373px; }
+input#item-15-load-2.item-load[type=checkbox] { top: 950px; left: 1394px; }
+input#item-15.item { top: 942px; left: 1412px; width: 160px; height: 21px; }
+input#item-16-load-1.item-load[type=checkbox] { top: 980px; left: 1373px; }
+input#item-16-load-2.item-load[type=checkbox] { top: 980px; left: 1394px; }
+input#item-16.item { top: 972px; left: 1412px; width: 160px; height: 21px; }
+input#item-17-load-1.item-load[type=checkbox] { top: 1011px; left: 1373px; }
+input#item-17-load-2.item-load[type=checkbox] { top: 1011px; left: 1394px; }
+input#item-17.item { top: 1003px; left: 1412px; width: 160px; height: 21px; }

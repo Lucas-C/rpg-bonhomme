@@ -164,7 +164,7 @@ window.rpg_bonhomme = (function() {
                 success: function (data, new_modification_key) {
                     console.log('Character sheet ' + character_id + ' successfully saved', data);
                     assert(!modification_key || modification_key === new_modification_key,
-                            'Modifcation-keys do not match', modification_key, new_modification_key);
+                            'Modification-key returned does not match initial one', modification_key, new_modification_key);
                     location.search = '?layout=' + params.layout + '&name=' + character_name + '&modification-key=' + new_modification_key;
                 }
             });
@@ -212,7 +212,7 @@ window.rpg_bonhomme = (function() {
             reader.readAsText(files[0]);
         }
     },
-    render_character_sheet = function (layout, name, modification_key) {
+    render_character_sheet = function (layout, character_name, modification_key) {
         document.getElementsByClassName('header')[0].style.display = 'none';
         document.getElementsByClassName('gallery')[0].style.display = 'none';
         document.getElementsByClassName('buttons')[0].style.display = 'block';
@@ -222,8 +222,8 @@ window.rpg_bonhomme = (function() {
             var input_ids = get_input_ids_from_css_rules(get_stylesheet(stylesheetUrl));
             assert(input_ids.name, 'The <layout>.css does not define any #name input, which is required.');
             create_inputs(main_div, input_ids, modification_key);
-            if (name) {
-                exports.load_character_from_server(decodeURIComponent(name));
+            if (character_name) {
+                exports.load_character_from_server(decodeURIComponent(character_name));
                 if (!modification_key) {
                     var banner = document.createElement('img');
                     banner.src = 'img/read_only_banner.png';
