@@ -9,6 +9,7 @@ sqlite3 $DB_FILE 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
 ./jsonp_db.py 8082 &
 WSGI_PID=$!
 WSGI_URL=http://localhost:8082
+sleep 2
 
 curl -s $WSGI_URL/the_answer?42 | grep '^\[42,'
 curl -s $WSGI_URL/the_answer | grep '^42$'

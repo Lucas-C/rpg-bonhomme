@@ -228,6 +228,6 @@ if __name__ == '__main__':
             env['PATH_INFO'] = env['PATH_INFO'].replace('/jsonp_db/', '/')
         return application(env, start_response)
     import sys
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 80
+    PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 80
     from wsgiref.simple_server import make_server
-    make_server('localhost', port, app).serve_forever()
+    make_server('localhost', PORT, app).serve_forever()
