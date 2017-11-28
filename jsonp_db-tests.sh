@@ -2,14 +2,13 @@
 RANDOM_101CHAR_KEY=$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 101 | tr -d '\n')
 set -o pipefail -o errexit -o nounset -o xtrace
 
-WSGI_URL=http://localhost
 DB_FILE=jsonp_db.db
-
 test -e $DB_FILE && mv $DB_FILE $DB_FILE.bak
 sqlite3 $DB_FILE 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
-./jsonp_db.py &
+
+./jsonp_db.py 8082 &
 WSGI_PID=$!
-sleep 2
+WSGI_URL=http://localhost:8082
 
 curl -s $WSGI_URL/the_answer?42 | grep '^\[42,'
 curl -s $WSGI_URL/the_answer | grep '^42$'

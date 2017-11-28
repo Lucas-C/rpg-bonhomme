@@ -3,6 +3,7 @@ OUT_HTML    := index.html
 TMPLT_HTML  := template-index.html
 CSS_SRC_FILE:= character-sheet.css
 JS_SRC_FILE := character-sheet.js
+PY_INDEX_GEN:= index_generator.py
 PY_WSGI     := jsonp_db.py
 DB_FILE     := jsonp_db.db
 CSS_DIR     := layout/
@@ -18,13 +19,14 @@ install: dev-requirements.txt
 	npm install -g csslint htmlhint htmllint-cli jscs jshint
 	pre-commit install
 
-$(OUT_HTML): index_generator.py $(DB_FILE) $(TMPLT_HTML) $(JS_SRC_FILE) $(CSS_SRC_FILE)
+$(OUT_HTML): $(PY_INDEX_GEN) $(DB_FILE) $(TMPLT_HTML) $(JS_SRC_FILE) $(CSS_SRC_FILE)
 	./$< --db-filepath $(DB_FILE) --html-template $(TMPLT_HTML) >$(OUT_HTML)
 
-check: $(CSS_LAYOUTS) $(CSS_SRC_FILE) $(JS_SRC_FILE) $(PY_WSGI) $(TMPLT_HTML)
+check: $(CSS_LAYOUTS) $(CSS_SRC_FILE) $(JS_SRC_FILE) $(PY_INDEX_GEN) $(PY_WSGI) $(TMPLT_HTML)
 	csslint --ignore=order-alphabetical $(CSS_SRC_FILE)
 	jscs $(JS_SRC_FILE)
 	jshint $(JS_SRC_FILE)
+	pycodestyle $(PY_INDEX_GEN)
 	pycodestyle $(PY_WSGI)
 	## Parsing the template so that we do not have to generate $(OUT_HTML) which required a valid .db
 	htmlhint $(TMPLT_HTML)

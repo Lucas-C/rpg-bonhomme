@@ -200,6 +200,7 @@ def log(msg, *args, lvl=logging.INFO):
     with _LOGGER_LOCK:
         _LOGGER.log(lvl, msg, *args)
 
+
 _LOGGER = configure_logger()
 _LOGGER_LOCK = Lock()
 _DB = sqlite3.connect(DATABASE_FILE, check_same_thread=False)
@@ -226,5 +227,7 @@ if __name__ == '__main__':
         if env['PATH_INFO'].startswith('/jsonp_db/'):  # match SERVER_STORAGE_CGI in character-sheet.js
             env['PATH_INFO'] = env['PATH_INFO'].replace('/jsonp_db/', '/')
         return application(env, start_response)
+    import sys
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 80
     from wsgiref.simple_server import make_server
-    make_server('localhost', 80, app).serve_forever()
+    make_server('localhost', port, app).serve_forever()

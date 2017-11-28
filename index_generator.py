@@ -32,7 +32,7 @@ def get_characters(db_filepath):
         layout = matching_layouts[0]
         character = json.loads(value)
         character['layout'] = layout
-        character['character_name'] = key[len(layout)+1:]
+        character['character_name'] = key[len(layout) + 1:]
         print(layout, character['character_name'], file=sys.stderr)
         yield character
 
@@ -45,6 +45,7 @@ def db_list_all(db_filepath):
     with closing(chars_db.cursor()) as db_cursor:
         db_cursor.execute('SELECT Key, Value FROM KVStore')
         return db_cursor.fetchall()
+
 
 if __name__ == '__main__':
     generate_html_index()
