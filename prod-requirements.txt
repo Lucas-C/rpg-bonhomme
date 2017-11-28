@@ -1,0 +1,3 @@
+-r requirements.txt
+# not needed for local server, only for deploying:
+uwsgi

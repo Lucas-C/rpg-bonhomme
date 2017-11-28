@@ -16,7 +16,7 @@ which will let you share it with others simply by providing its unique URL
 - [Atharès](https://chezsoi.org/lucas/rpg-bonhomme?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
 - [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
 - [Sylvia](https://chezsoi.org/lucas/rpg-bonhomme?layout=PsiRun&name=Sylvia), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
-- [Yuri Pashlov](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Scavengers&name=yuri_pashlov), a character for Greg Pogorzelski game [Scavengers](http://awarestudios.blogspot.fr/2014/01/scavengers.html) 
+- [Yuri Pashlov](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Scavengers&name=yuri_pashlov), a character for Greg Pogorzelski game [Scavengers](http://awarestudios.blogspot.fr/2014/01/scavengers.html)
 - no characters yet, but the [Biohazard layout](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Biohazard), for Yno's [Resident-Evil rpg game](http://www.misterfrankenstein.com/wordpress/?page_id=3), and [Blades In The Dark layout](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=BladesInTheDark), are also available
 
 # Usage
@@ -44,12 +44,12 @@ non-redefined caracteristics will keep their old value.
 
 This is a simple key-value store, written in Python and using a SQLite DB, developped to allow simple GET/PUT through JSONP.
 
-In case of a lookup error, the return value will be 'undefined', else it will returns 'value' or an error (a JS `Error` object if using JSONP, else an HTML error page).
+If the key is not found, the returned value will be `undefined`. Else the API will returns the matching value or an error if anything wrong happens (a JS `Error` object if using JSONP, else an HTML error page).
 
-There are some key/value length limitations currently hardcoded at the top of the Python file.
-There is also a client & server limitation on the request URI (between 2KB & 8KB usually), that can trigger a 414 error.
+There are some key/value length limitations currently hardcoded at the top of the Python file. `uwsgi` `--buffer-size` parameter also limits the URI length, and hence the value size.
+Beware of your server limitation on the request URI (between 2KB & 8KB usually), that can e.g. trigger a 414 error with Apache.
 
-Finally, a word of warning: **trusting a 3rd party JSONP API is a big confidence commitment / security risk**.
+Finally, a word of warning: trusting a 3rd party JSONP API is a big confidence commitment / security risk.
 More details [here](http://security.stackexchange.com/a/23439).
 
 That being said, this WSGI app won't do anything nasty.
@@ -73,6 +73,10 @@ Installing the backup cron task:
 
     sudo sed -e "s~\$USER~$USER~" -e "s~\$PWD~$PWD~g" jsonp_db-crons > /etc/cron.d/jsonp_db-crons
     chmod u+x /etc/cron.d/jsonp_db-crons
+
+Installing `uwsgi`:
+
+    pew-in rpg-bonhomme pip install -r prod-requirements.txt
 
 ### For Apache
 
@@ -123,7 +127,7 @@ Require a `jsonp_db.db`:
     make
     make run-server
 
-## Ops
+## CLI ops
 
 ### Retrieving a modification key
 
@@ -148,13 +152,12 @@ Tl;dr plain English version: https://tldrlegal.com/license/adaptive-public-licen
 
 # Resources
 
-Zero JavascriptS dependencies, only 3 Python requirements..
-The banner is from [FreebieVectors](http://www.freebievectors.com/fr/apercu-vecteur/150/rubans-banniere-vecteur-libre-symbole/).
-All icons are from Google Material Design icons set (CC BY 4.0) : https://github.com/google/material-design-icons
-The default avatar image was made by [NoHoDamon](https://www.flickr.com/photos/nohodamon/6485519491/in/photolist-7HSNkN-rzqCWQ-7HSNxA-5JtRYh-apeuDG-6MdYX2-aT6YZz-dRq1jf-dbRcxi-6igHjz-PHJD6-dN5YT-79V2QG-5ShoNL-FAQmN-4mU9vu-9rBg5B-9rBg8M-5ShoaN-5Z7D5b-EMUuT-78gz6Q-Gn5u9-GRGtNs) (CC BY-NC-ND)
+- zero Javascript dependencies, only 2 Python requirements
+- the banner is from [FreebieVectors](http://www.freebievectors.com/fr/apercu-vecteur/150/rubans-banniere-vecteur-libre-symbole/)
+- all icons are from Google Material Design icons set (CC BY 4.0) : https://github.com/google/material-design-icons
+- the default avatar image was made by [NoHoDamon](https://www.flickr.com/photos/nohodamon/6485519491/in/photolist-7HSNkN-rzqCWQ-7HSNxA-5JtRYh-apeuDG-6MdYX2-aT6YZz-dRq1jf-dbRcxi-6igHjz-PHJD6-dN5YT-79V2QG-5ShoNL-FAQmN-4mU9vu-9rBg5B-9rBg8M-5ShoaN-5Z7D5b-EMUuT-78gz6Q-Gn5u9-GRGtNs) (CC BY-NC-ND)
 
 # Notes
 
 - why this project name ? It's a reference to the line "T'as tué mon bonhomme !" from the video "Tom et ses chums! Farador D&D" : http://youtu.be/T9FMURHhgzc?t=4m40s
 - in case you want to add a character sheet in PDF format, you can use `pdftoppm` then ImageMagick `convert` to get a PNG image file.
-

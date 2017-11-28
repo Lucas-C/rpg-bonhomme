@@ -6,7 +6,7 @@ DB_FILE=jsonp_db.db
 test -e $DB_FILE && mv $DB_FILE $DB_FILE.bak
 sqlite3 $DB_FILE 'CREATE TABLE KVStore(Key TEXT PRIMARY KEY, Value TEXT);'
 
-./jsonp_db.py 8082 &
+./jsonp_db.py 8082 &  # TravisCI does not allow to use port 80
 WSGI_PID=$!
 WSGI_URL=http://localhost:8082
 sleep 2

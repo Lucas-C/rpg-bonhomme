@@ -1,3 +1,2 @@
 configobj
 jinja2
-uwsgi
