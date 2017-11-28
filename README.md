@@ -7,7 +7,7 @@ Features:
 which will let you share it with others simply by providing its unique URL
 - can support character sheets from any game, simply by adding a new background image and matching CSS stylesheet
 
-# Demo
+# Online website & examples
 
 [Homepage](https://chezsoi.org/lucas/rpg-bonhomme)
 
@@ -16,6 +16,7 @@ which will let you share it with others simply by providing its unique URL
 - [Atharès](https://chezsoi.org/lucas/rpg-bonhomme?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
 - [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
 - [Sylvia](https://chezsoi.org/lucas/rpg-bonhomme?layout=PsiRun&name=Sylvia), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
+- [Yuri Pashlov](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Scavengers&name=yuri_pashlov), a character for Greg Pogorzelski game [Scavengers](http://awarestudios.blogspot.fr/2014/01/scavengers.html) 
 
 # Usage
 
@@ -25,7 +26,7 @@ To remote load an existing character, simply go to https://chezsoi.org/lucas/rpg
 
 To edit and remote save a new character, simply go to https://chezsoi.org/lucas/rpg-bonhomme?layout= and type a layout name at the end of the URL, then enter your character name and press the 'Save to remote server' button.
 
-The currently available layouts matches the list of file in the **layout/** & **background/** directories of this repository. Note that at the time of writing, some layouts are still 'in-progress' and currently empty.
+The currently available layouts matches the list of file in the **layout/** & **background/** directories of this repository.
 
 # Internals & asumptions
 
