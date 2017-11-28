@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/Lucas-C/rpg-bonhomme.svg?branch=master)](https://travis-ci.org/Lucas-C/rpg-bonhomme)
 
-This project provides the following features:
-- locally load & save your character from JSON files.
-- only require a web browser (and an Internet connection to use the remote storage feature).
-- optionnaly you can save your character on a remote server,
-which will let you to share it with others simply by providing a unique URL.
-- add character sheets from any game, simply based on background image
+Features:
+- purely web-based : only require a web browser for end users
+- easily deployable WSGI Python app, also usable locally without Internet connexion
+- locally load & save your character from JSON files, or save your character on a remote server,
+which will let you share it with others simply by providing its unique URL
+- can support character sheets from any game, simply by adding a new background image and matching CSS stylesheet
 
 # Demo
 
