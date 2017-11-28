@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 import base64, cgi, hashlib, hmac, html, logging, logging.handlers, os, re, sqlite3, traceback
 from collections import namedtuple
 from threading import Lock

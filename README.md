@@ -92,7 +92,7 @@ And the Apache httpd.conf:
         exec >> upstart-stdout.log
         exec 2>> upstart-stderr.log
         date
-        pew-in rpg-bonhomme uwsgi --buffer-size 8000 --http :8088 --static-map /=. --manage-script-name --mount /jsonp_db=jsonp_db.py
+        pew-in rpg-bonhomme uwsgi --buffer-size 64000 --http :8088 --static-map /=. --manage-script-name --mount /jsonp_db=jsonp_db.py
     end script
     EOF
     service rpg-bonhomme start

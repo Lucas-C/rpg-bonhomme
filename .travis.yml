@@ -7,5 +7,8 @@ before_install:
   - sudo apt-get install -y moreutils
 install: make install
 script:
+  - /usr/bin/python3 --version
+  - /usr/bin/env python --version
+  - type -a python
   - make check
   - make test

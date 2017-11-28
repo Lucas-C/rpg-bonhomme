@@ -25,7 +25,7 @@ check: $(CSS_LAYOUTS) $(CSS_SRC_FILE) $(JS_SRC_FILE) $(PY_WSGI) $(TMPLT_HTML)
 	csslint --ignore=order-alphabetical $(CSS_SRC_FILE)
 	jscs $(JS_SRC_FILE)
 	jshint $(JS_SRC_FILE)
-	pep8 $(PY_WSGI)
+	pycodestyle $(PY_WSGI)
 	## Parsing the template so that we do not have to generate $(OUT_HTML) which required a valid .db
 	htmlhint $(TMPLT_HTML)
 	## Parsing the template for the same reason + because of this bug: https://github.com/htmllint/htmllint/issues/216

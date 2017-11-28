@@ -1,4 +1,4 @@
 -r requirements.txt
-pep8
+pycodestyle
 pre-commit
 pylint
