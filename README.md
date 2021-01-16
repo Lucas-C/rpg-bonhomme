@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Lucas-C/rpg-bonhomme.svg?branch=master)](https://travis-ci.org/Lucas-C/rpg-bonhomme)
+[![Build Status](https://travis-ci.com/Lucas-C/rpg-bonhomme.svg?branch=master)](https://travis-ci.com/Lucas-C/rpg-bonhomme)
 [![Known Vulnerabilities](https://snyk.io/test/github/lucas-c/rpg-bonhomme/badge.svg)](https://snyk.io/test/github/lucas-c/rpg-bonhomme)
 
 Features:
