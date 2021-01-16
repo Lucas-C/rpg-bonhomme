@@ -76,8 +76,8 @@ def application(env, start_response):
             yield response.encode('utf-8')
         except HTTPError:
             raise
-        except Exception:
-            raise HTTPError(traceback.format_exc(), code=500)
+        except Exception as exception:
+            raise HTTPError(traceback.format_exc(), code=500) from exception
     except HTTPError as error:
         log(error.full_msg, lvl=logging.ERROR)
         error_response, mime_type = error.format_response(callback)
@@ -122,7 +122,7 @@ def store_logic(path, query_params, form_params):
     log('-> %s', current_value)
     if not new_value:  # => simple RETRIEVE request
         return (current_value or 'undefined',)
-    elif REQUIRE_MODIFCATION_KEY:
+    if REQUIRE_MODIFCATION_KEY:
         if current_value:  # => UPDATE request, we check that the modification-key is valid
             check_modification_key(modification_key, key)
         else:  # => CREATE request, we generate the modification-key
