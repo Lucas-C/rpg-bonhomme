@@ -1,3 +1,8 @@
+<!-- template-index.html potential improvements:
++ dynamic, JS-based list of characters on home page (aka get rid of --db-filepath argument of index_generator.py)
+=> would also avoid to repeatedly download homepage images while viewing/editing characters
+-->
+
 [![Build Status](https://travis-ci.com/Lucas-C/rpg-bonhomme.svg?branch=master)](https://travis-ci.com/Lucas-C/rpg-bonhomme)
 [![Known Vulnerabilities](https://snyk.io/test/github/lucas-c/rpg-bonhomme/badge.svg)](https://snyk.io/test/github/lucas-c/rpg-bonhomme)
 
@@ -114,6 +119,11 @@ And the Nginx configuration:
     location /jsonp_db-tests.ini {
         deny all;
     }
+
+Note that nginx has built-in limits on the HTTP headers length,
+that may cause `rpg-bonhomme` to malfunction.
+Try increasing [`http2_max_field_size`](http://nginx.org/en/docs/http/ngx_http_v2_module.html#http2_max_field_size) value
+if you get empty replies or EOF from your server.
 
 
 ## Validating

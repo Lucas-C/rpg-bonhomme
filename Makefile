@@ -8,6 +8,7 @@ PY_WSGI     := jsonp_db.py
 DB_FILE     := jsonp_db.db
 CSS_DIR     := layout/
 CSS_LAYOUTS := $(wildcard $(CSS_DIR)*.css)
+PORT        := 8080
 
 .PHONY: all install check $(CSS_LAYOUTS) test run-server help clean
 
@@ -20,7 +21,7 @@ install: dev-requirements.txt
 	pre-commit install
 
 $(OUT_HTML): $(PY_INDEX_GEN) $(DB_FILE) $(TMPLT_HTML) $(JS_SRC_FILE) $(CSS_SRC_FILE)
-	./$< --db-filepath $(DB_FILE) --html-template $(TMPLT_HTML) >$(OUT_HTML)
+	./$< $(TMPLT_HTML) --db-filepath $(DB_FILE) >$(OUT_HTML)
 
 check: $(CSS_LAYOUTS) $(CSS_SRC_FILE) $(JS_SRC_FILE) $(PY_INDEX_GEN) $(PY_WSGI) $(TMPLT_HTML)
 	csslint --ignore=order-alphabetical $(CSS_SRC_FILE)
@@ -40,8 +41,8 @@ $(CSS_LAYOUTS): $(CSS_DIR)%.css:
 
 run-server: $(PY_WSGI) $(DB_FILE)
 	## Launching a local server to serve HTML files & WSGI apps
-	python -m webbrowser http://localhost/$(OUT_HTML)
-	./$(PY_WSGI)
+	python -m webbrowser http://localhost:$(PORT)/$(OUT_HTML)
+	./$(PY_WSGI) $(PORT)
 
 test: $(PY_WSGI)
 	./jsonp_db-tests.sh

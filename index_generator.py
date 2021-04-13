@@ -11,8 +11,11 @@ THIS_SCRIPT_PARENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def generate_html_index(argv=None):
     args = parse_args(argv)
-    characters = sorted(get_characters(args.db_filepath), key=lambda c: c['layout'])
-    characters_per_layout = {l: list(c) for l, c in groupby(characters, lambda c: c['layout'])}
+    if args.db_filepath:
+        characters = sorted(get_characters(args.db_filepath), key=lambda c: c['layout'])
+        characters_per_layout = {l: list(c) for l, c in groupby(characters, lambda c: c['layout'])}
+    else:
+        characters_per_layout = {layout: [] for layout in get_layouts()}
     env = Environment(loader=FileSystemLoader(THIS_SCRIPT_PARENT_DIR),
                       autoescape=True, trim_blocks=True, lstrip_blocks=True)
     template = env.get_template(args.html_template)
@@ -20,8 +23,8 @@ def generate_html_index(argv=None):
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(description='Generates an HTML index with a galery of all rpg-bonhomme characters')
-    parser.add_argument('--db-filepath', required=True)
-    parser.add_argument('--html-template', required=True)
+    parser.add_argument('html_template')
+    parser.add_argument('--db-filepath')
     return parser.parse_args(argv)
 
 def get_characters(db_filepath):
