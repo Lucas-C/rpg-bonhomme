@@ -6,7 +6,7 @@ body { font-family: Helvetica, Arial, sans-serif; }
 .gallery { max-width: 80%; margin: 0 auto; }
 .layouts { display: flex; flex-wrap: wrap; list-style: none; padding: 0; margin: 0; }
 .layouts:after { content: ""; flex: auto; } /* align last columns to grid */
-.layout { margin: 0 auto; flex-shrink: 0; flex-basis: 24%; }
+.layout { flex-shrink: 0; flex-basis: 24%; }
 .layout-name { display: block; text-align: center; font-family: "courier new", courier, monospace; color: #CC2027; font-weight: bold; font-size: 1.5rem; text-shadow: 3px 3px 2px #ccc; text-decoration: none; }
 @media (max-width: 1000px) { .layout { flex-basis: 32%; } }
 @media (max-width: 800px)  { .layout { flex-basis: 48%;  } }

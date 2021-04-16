@@ -111,6 +111,10 @@ And the Apache httpd.conf:
 
 And the Nginx configuration:
 
+    # Required to handle very long query parameters:
+    http2_max_field_size 64k;
+    large_client_header_buffers 4 64k;
+
     location /jsonp_db {
         include uwsgi_params;
         rewrite ^/jsonp_db(.*)$ $1 break;
@@ -122,8 +126,8 @@ And the Nginx configuration:
 
 Note that nginx has built-in limits on the HTTP headers length,
 that may cause `rpg-bonhomme` to malfunction.
-Try increasing [`http2_max_field_size`](http://nginx.org/en/docs/http/ngx_http_v2_module.html#http2_max_field_size) value
-if you get empty replies or EOF from your server.
+Hence we configure higher values for [`http2_max_field_size`](http://nginx.org/en/docs/http/ngx_http_v2_module.html#http2_max_field_size)
+and [`large_client_header_buffers`](http://nginx.org/en/docs/http/ngx_http_core_module.html#large_client_header_buffers).
 
 
 ## Validating
