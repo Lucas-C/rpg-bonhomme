@@ -77,6 +77,9 @@ input#heavy.armor-uses[type=checkbox] { top: 599px; left: 774px; }
 input#special.armor-uses[type=checkbox] { top: 626px; left: 774px; }
 
 textarea#notes { top: 670px; left: 80px; width: 715px; height: 540px; }
+textarea#notes-2 { top: 1220px; left: 80px; width: 500px; height: 500px; }
+textarea#notes-3 { top: 1220px; left: 590px; width: 500px; height: 500px; }
+textarea#notes-4 { top: 1220px; left: 1100px; width: 500px; height: 500px; }
 
 input#avatar[type=image] { top: 670px; left: 80px; max-width: 715px; max-height: 550px; border-radius: 20px; z-index: 1; }
 input#avatar[type=image]:hover { opacity: 0.05; }
@@ -239,6 +242,19 @@ input#friend-5-nice.friend-status[type=checkbox] { top: 834px; left: 827px; }
 input#friend-5-bad.friend-status[type=checkbox] { top: 836px; left: 848px; }
 input#friend-5.friend-name { top: 830px; left: 874px; width: 192px; height: 22px; }
 
+#character-sheet::before {
+  content: 'Carried';
+  writing-mode: sideways-lr;
+  position: absolute;
+  top: 756px; left: 1074px;
+}
+#character-sheet::after {
+  content: 'Left in hideout';
+  writing-mode: sideways-rl;
+  height: 7rem;
+  position: absolute;
+  top: 814px; left: 1580px;
+}
 input#item-1-load-1.item-load[type=checkbox] { top: 709px; left: 1090px; }
 input#item-1-load-2.item-load[type=checkbox] { top: 709px; left: 1111px; }
 input#item-1.item { top: 700px; left: 1135px; width: 200px; height: 21px; }
@@ -258,18 +274,23 @@ input#item-6-load-1.item-load[type=checkbox] { top: 834px; left: 1090px; }
 input#item-6-load-2.item-load[type=checkbox] { top: 834px; left: 1111px; }
 input#item-6.item { top: 825px; left: 1135px; width: 200px; height: 21px; }
 
+input#item-7-load-0.item-load[type=checkbox] { top: 707px; left: 1352px; }
 input#item-7-load-1.item-load[type=checkbox] { top: 707px; left: 1373px; }
 input#item-7-load-2.item-load[type=checkbox] { top: 707px; left: 1394px; }
 input#item-7.item { top: 699px; left: 1412px; width: 160px; height: 21px; }
+input#item-8-load-0.item-load[type=checkbox] { top: 737px; left: 1352px; }
 input#item-8-load-1.item-load[type=checkbox] { top: 737px; left: 1373px; }
 input#item-8-load-2.item-load[type=checkbox] { top: 737px; left: 1394px; }
 input#item-8.item { top: 729px; left: 1412px; width: 160px; height: 21px; }
+input#item-9-load-0.item-load[type=checkbox] { top: 767px; left: 1352px; }
 input#item-9-load-1.item-load[type=checkbox] { top: 767px; left: 1373px; }
 input#item-9-load-2.item-load[type=checkbox] { top: 767px; left: 1394px; }
 input#item-9.item { top: 759px; left: 1412px; width: 160px; height: 21px; }
+input#item-10-load-0.item-load[type=checkbox] { top: 798px; left: 1352px; }
 input#item-10-load-1.item-load[type=checkbox] { top: 798px; left: 1373px; }
 input#item-10-load-2.item-load[type=checkbox] { top: 798px; left: 1394px; }
 input#item-10.item { top: 790px; left: 1412px; width: 160px; height: 21px; }
+input#item-11-load-0.item-load[type=checkbox] { top: 828px; left: 1352px; }
 input#item-11-load-1.item-load[type=checkbox] { top: 828px; left: 1373px; }
 input#item-11-load-2.item-load[type=checkbox] { top: 828px; left: 1394px; }
 input#item-11.item { top: 820px; left: 1412px; width: 160px; height: 21px; }

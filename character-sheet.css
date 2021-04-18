@@ -13,12 +13,13 @@ body { font-family: Helvetica, Arial, sans-serif; }
 @media (max-width: 450px)  { .layout { flex-basis: 100%; } }
 .characters { list-style: none; padding: 0; margin: 0; }
 .character { margin: 5%; }
+img#background { max-width: 100%; }
 .avatar { width: 100%; box-shadow: 0 0 2px -1px #000; border-radius: 5px; }
-.buttons { position: absolute; top: 0; right: 200px; }
-.button--save-to-server { position: absolute; top: 10px; left: 10px; }
-.button--load-from-server { position: absolute; top: 10px; left: 90px; }
-.button--download-json { position: absolute; top: 80px; left: 10px; }
-.button--upload-json { position: absolute; top: 80px; left: 90px; }
+.buttons                   { position: absolute; top: 0; right: 0; }
+.button--save-to-server   { position: absolute; top: 10px; right: 170px; }
+/*.button--load-from-server { position: absolute; top: 10px; left: 90px; }*/
+.button--download-json    { position: absolute; top: 10px; right: 10px; }
+.button--upload-json      { position: absolute; top: 10px; right: 90px; }
 .read-only-banner { position: absolute; top: -30px; left: -40px; }
 
 /* Inputs styling in order to get the same look cross-browsers & cross-OSs (e.g. for the same FF version, Windows & Ubuntu input default borders differ) */

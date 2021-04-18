@@ -13,7 +13,10 @@
     <header class="header" role="banner">
         <div class="innerheader">
             <h1 class="title">rpg-bonhomme</h1>
-            <aside class="subtitle">Tabletop RPG character sheet editor/viewer, cf. <a href="https://github.com/Lucas-C/rpg-bonhomme">https://github.com/Lucas-C/rpg-bonhomme</a></aside>
+            <aside class="subtitle">
+            <p>Tabletop RPG character sheet editor/viewer, cf. <a href="https://github.com/Lucas-C/rpg-bonhomme">https://github.com/Lucas-C/rpg-bonhomme</a>.</p>
+            <p>Click on the game names to create new characters.</p>
+            </aside>
         </div>
     </header>
     <div class="gallery">
@@ -38,8 +41,8 @@
     <div class="buttons" style="display: none">
       <input type="image" class="button--save-to-server" onclick="rpg_bonhomme.save_character_to_server()"
         title="Save to remote server" src="img/cloud_upload.png" alt="-">
-      <input type="image" class="button--load-from-server" onclick="rpg_bonhomme.load_character_from_server()"
-        title="Load from remote server" src="img/cloud_download.png" alt="-">
+      <!--input type="image" class="button--load-from-server" onclick="rpg_bonhomme.load_character_from_server()"
+        title="Load from remote server" src="img/cloud_download.png" alt="-"-->
       <input type="image" class="button--download-json" onclick="rpg_bonhomme.download_character_as_json()"
         title="Download JSON file" src="img/file_download.png" alt="-"/>
       <input type="image" class="button--upload-json" onclick="document.getElementById('charactersheet_file_picker').click()"
