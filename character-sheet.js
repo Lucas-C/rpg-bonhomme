@@ -120,7 +120,7 @@ window.rpg_bonhomme = (function() {
     load_background_img = function (main_div, layout) {
         var background_img = document.createElement('img');
         background_img.src = 'background/' + layout + '.png';
-        background_img.id = 'background';
+        background_img.classList.add('background');
         main_div.appendChild(background_img);
     },
     create_inputs = function (main_div, input_ids, modification_key) {

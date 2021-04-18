@@ -88,6 +88,13 @@ input#vault-12.vault[type=checkbox] { top: 785px; left: 888px; }
 textarea#notes           { top: 850px; left: 90px; width: 820px; height: 550px; }
 textarea#hunting-grounds { top: 1240px; left: 930px; width: 600px; height: 160px; }
 
+input#avatar[type=image] { top: 850px; left: 90px; max-width: 820px; max-height: 550px; border-radius: 20px; z-index: 1; }
+input#avatar[type=image]:hover { opacity: 0.05; }
+
+textarea#notes-2 { top: 1410px; left: 90px;   width: 580px; height: 500px; }
+textarea#notes-3 { top: 1410px; left: 680px;  width: 580px; height: 500px; }
+textarea#notes-4 { top: 1410px; left: 1270px; width: 580px; height: 500px; }
+
 input#special-ability-1.abilities  { top: 216px; left: 952px; width: 552px; height: 30px; }
 input#special-ability-2.abilities  { top: 256px; left: 952px; width: 552px; height: 30px; }
 input#special-ability-3.abilities  { top: 297px; left: 952px; width: 552px; height: 30px; }
