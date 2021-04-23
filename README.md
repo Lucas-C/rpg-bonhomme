@@ -1,4 +1,7 @@
-<!-- template-index.html potential improvements:
+<!-- 
+TODO: rm nginx cache on layout/*.css
+IDEA: add notes sections that are only visible to the user with the edit key
+template-index.html potential improvements:
 + dynamic, JS-based list of characters on home page (aka get rid of --db-filepath argument of index_generator.py)
 => would also avoid to repeatedly download homepage images while viewing/editing characters
 -->
@@ -24,6 +27,7 @@ which will let you share it with others simply by providing its unique URL
 - [Sylvia](https://chezsoi.org/lucas/rpg-bonhomme?layout=PsiRun&name=Sylvia), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
 - [Yuri Pashlov](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Scavengers&name=yuri_pashlov), a character for Greg Pogorzelski game [Scavengers](http://awarestudios.blogspot.fr/2014/01/scavengers.html)
 - sheets for [Blades In The Dark characters](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=BladesInTheDark) & [crew](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=BladesInTheDark-Crew)
+- sheet for [Ultime Vengeance 3D](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=UltimeVengeance3D) ([jeu à découvrir ici](https://blog.xyrop.com/post/Ultime-Vengeance-3D))
 - no characters yet, but the [Biohazard layout](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Biohazard), for Yno's [Resident-Evil rpg game](http://www.misterfrankenstein.com/wordpress/?page_id=3)
 
 # Usage
