@@ -1,4 +1,4 @@
-<!-- 
+<!--
 TODO: rm nginx cache on layout/*.css
 IDEA: add notes sections that are only visible to the user with the edit key
 template-index.html potential improvements:
