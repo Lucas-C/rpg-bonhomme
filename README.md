@@ -1,34 +1,44 @@
 <!--
-TODO: rm nginx cache on layout/*.css
-IDEA: add notes sections that are only visible to the user with the edit key
-template-index.html potential improvements:
+IDEAS:
+* separate home-made games from other games
+* add notes sections that are only visible to the user with the edit key
+* template-index.html potential improvements:
 + dynamic, JS-based list of characters on home page (aka get rid of --db-filepath argument of index_generator.py)
 => would also avoid to repeatedly download homepage images while viewing/editing characters
 -->
+
+A tabletop RPG character sheet editor & viewer.
 
 [![build status](https://github.com/Lucas-C/rpg-bonhomme/workflows/CI/badge.svg)](https://github.com/Lucas-C/rpg-bonhomme/actions?query=branch%3Amaster)
 [![Known Vulnerabilities](https://snyk.io/test/github/lucas-c/rpg-bonhomme/badge.svg)](https://snyk.io/test/github/lucas-c/rpg-bonhomme)
 
 Features:
-- purely web-based : only require a web browser for end users
-- easily deployable WSGI Python app, also usable locally without Internet connexion
-- locally load & save your character from JSON files, or save your character on a remote server,
-which will let you share it with others simply by providing its unique URL
-- can support character sheets from any game, simply by adding a new background image and matching CSS stylesheet
+
+- **web-based** : only require a web browser for end users
+- characters are read-only by default; **editing is only allowed with a unique URL** generated on character creation
+- **can support character sheets from any game**, simply by adding a new background image and matching CSS stylesheet
+- **easily deployable** on your own server, and also usable locally with no Internet connexion
+- locally load & save your character from **JSON files**, or save it on a remote server
+- _technical_: WSGI Python app implementing a JSONP key-value store backed by SQLite
 
 # Online website & examples
 
 [Homepage](https://chezsoi.org/lucas/rpg-bonhomme)
 
-- [Lythes](https://chezsoi.org/lucas/rpg-bonhomme?layout=Dedale&name=lythes), an android from the French RPG [Dédale](http://lab00.free.fr/sommaire/home.htm).
-- [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme?layout=Absence&name=raphaelle_lepercq_se_fait_appeler_lila_), two characters from a 'one-shot' RPG called 'Absence'.
-- [Atharès](https://chezsoi.org/lucas/rpg-bonhomme?layout=InCognito1&name=athares), a character from the second campaign of my RPG game 'In Cognito'.
-- [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=jacob_valens) from my RPG campaign 'Allegoria'.
-- [Sylvia](https://chezsoi.org/lucas/rpg-bonhomme?layout=PsiRun&name=Sylvia), a psi from the French version of the game [PsyRun](http://nightskygames.com/welcome/game/PsiRun).
-- [Yuri Pashlov](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Scavengers&name=yuri_pashlov), a character for Greg Pogorzelski game [Scavengers](http://awarestudios.blogspot.fr/2014/01/scavengers.html)
-- sheets for [Blades In The Dark characters](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=BladesInTheDark) & [crew](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=BladesInTheDark-Crew)
-- sheet for [Ultime Vengeance 3D](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=UltimeVengeance3D) ([jeu à découvrir ici](https://blog.xyrop.com/post/Ultime-Vengeance-3D))
-- no characters yet, but the [Biohazard layout](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Biohazard), for Yno's [Resident-Evil rpg game](http://www.misterfrankenstein.com/wordpress/?page_id=3)
+Supported games:
+
+- [Blades In The Dark](https://bladesinthedark.com): [character sheet](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=BladesInTheDark) & [crew sheet](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=BladesInTheDark-Crew)
+- [PsyRun](https://chezsoi.org/lucas/rpg-bonhomme?layout=PsiRun) - discover the French version of the game [here](http://nightskygames.com/welcome/game/PsiRun)
+- [Ultime Vengeance 3D](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=UltimeVengeance3D) - discover the game [here](https://blog.xyrop.com/post/Ultime-Vengeance-3D)
+- [Biohazard – Resident Evil RPG](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Biohazard) - discover Yno's game [here](http://www.misterfrankenstein.com/wordpress/?page_id=3)
+- [Scavengers](https://chezsoi.org/lucas/jdr/rpg-bonhomme/?layout=Scavengers) - discover Greg Pogorzelski's game [here](http://awarestudios.blogspot.fr/2014/01/scavengers.html)
+- [Dédale](https://chezsoi.org/lucas/rpg-bonhomme?layout=Dedale) - discover the game [here](http://lab00.free.fr/sommaire/home.htm).
+
+Some character examples from home-made TTRPGs:
+
+- [Kathelyn Terblanche](https://chezsoi.org/lucas/rpg-bonhomme?layout=Absence&name=kathelyn_terblanche) & [Raphaelle Lepercq](https://chezsoi.org/lucas/rpg-bonhomme?layout=Absence&name=raphaelle_lepercq_se_fait_appeler_lila_), two characters from a _one-shot_ TTRPG called 'Absence'
+- [Atharès](https://chezsoi.org/lucas/rpg-bonhomme?layout=InCognito1&name=athares), a character from my TTRPG game _In Cognito_
+- [Ted Sand](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=ted_sand) & [Jacob Valens](https://chezsoi.org/lucas/rpg-bonhomme?layout=Allegoria&name=jacob_valens) from my TTRPG campaign _Allegoria_
 
 # Usage
 
@@ -147,7 +157,7 @@ Require a `jsonp_db.db`:
     make
     make run-server
 
-## CLI ops
+## Useful shell functions
 
 ### Retrieving a modification key
 
@@ -173,7 +183,6 @@ Tl;dr plain English version: https://tldrlegal.com/license/adaptive-public-licen
 # Resources
 
 - zero Javascript dependencies, only 2 Python requirements
-- the banner is from [FreebieVectors](http://www.freebievectors.com/fr/apercu-vecteur/150/rubans-banniere-vecteur-libre-symbole/)
 - all icons are from Google Material Design icons set (CC BY 4.0) : https://github.com/google/material-design-icons
 - the default avatar image was made by [NoHoDamon](https://www.flickr.com/photos/nohodamon/6485519491/in/photolist-7HSNkN-rzqCWQ-7HSNxA-5JtRYh-apeuDG-6MdYX2-aT6YZz-dRq1jf-dbRcxi-6igHjz-PHJD6-dN5YT-79V2QG-5ShoNL-FAQmN-4mU9vu-9rBg5B-9rBg8M-5ShoaN-5Z7D5b-EMUuT-78gz6Q-Gn5u9-GRGtNs) (CC BY-NC-ND)
 
