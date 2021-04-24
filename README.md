@@ -6,7 +6,7 @@ template-index.html potential improvements:
 => would also avoid to repeatedly download homepage images while viewing/editing characters
 -->
 
-[![Build Status](https://travis-ci.com/Lucas-C/rpg-bonhomme.svg?branch=master)](https://travis-ci.com/Lucas-C/rpg-bonhomme)
+[![build status](https://github.com/Lucas-C/rpg-bonhomme/workflows/CI/badge.svg)](https://github.com/Lucas-C/rpg-bonhomme/actions?query=branch%3Amaster)
 [![Known Vulnerabilities](https://snyk.io/test/github/lucas-c/rpg-bonhomme/badge.svg)](https://snyk.io/test/github/lucas-c/rpg-bonhomme)
 
 Features:
