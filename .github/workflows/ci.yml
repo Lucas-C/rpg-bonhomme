@@ -32,16 +32,19 @@ jobs:
           path: |
             ~/.cache/pip
             ~/.cache/pre-commit
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: ${{ runner.os }}-python-${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}-git-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-            ${{ runner.os }}-pip
+            ${{ runner.os }}-python-${{ matrix.python-version }}-pip-${{ hashFiles('requirements.txt') }}
+            ${{ runner.os }}-python-${{ matrix.python-version }}-
 
       - name: Install ⚙️
         run: |
           sudo apt-get install moreutils
           python -m pip install --upgrade pip setuptools wheel
-          sudo make install
+          pip --version
+          pip install --upgrade -r dev-requirements.txt
+          sudo npm install -g csslint htmlhint htmllint-cli jscs jshint
+          pre-commit install
 
       - name: Running checks 🔎
         run: make check
