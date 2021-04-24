@@ -41,7 +41,7 @@ jobs:
         run: |
           sudo apt-get install moreutils
           python -m pip install --upgrade pip setuptools wheel
-          make install
+          sudo make install
 
       - name: Running checks 🔎
         run: make check
