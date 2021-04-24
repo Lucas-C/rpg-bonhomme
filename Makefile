@@ -16,7 +16,7 @@ all: $(OUT_HTML)
 	@:
 
 install: dev-requirements.txt
-	pip install -r $<
+	pip install --upgrade -r $<
 	npm install -g csslint htmlhint htmllint-cli jscs jshint
 	pre-commit install
 

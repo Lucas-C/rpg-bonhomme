@@ -1,5 +1,4 @@
 #!/bin/bash
-RANDOM_101CHAR_KEY=$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 101 | tr -d '\n')
 set -o pipefail -o errexit -o nounset -o xtrace
 
 DB_FILE=jsonp_db.db
@@ -25,7 +24,8 @@ rm tmp.json
 # Error handling:
 curl -s $WSGI_URL/a/ | grep '400 Bad Request : Incorrect request syntax'
 curl -s $WSGI_URL/unset_key | grep 'undefined'
-curl -sX PUT -d 0=1 $WSGI_URL/$RANDOM_101CHAR_KEY | grep 'Key length exceeded maximum'
+CHAR_KEY_LEN_101=Zr1mILxLR3FajFhuKb1k99GovIETrBndZHzlcA6mV7yjtJh8as2CEwHf8C31wzHZrp9ttwfwfNGZW3tXECcEoZ9K3x4I67b0cS5TX
+curl -sX PUT -d 0=1 $WSGI_URL/$CHAR_KEY_LEN_101 | grep 'Key length exceeded maximum'
 
 # Modification-key
 modifkey=$(curl -s "$WSGI_URL/K?callback=_&V1" | sed 's/_(V1, "\(.*\)")/\1/')
