@@ -52,12 +52,12 @@ The currently available layouts matches the list of file in the **layout/** & **
 
 # Internals & asumptions
 
-- a ?layout= URL parameter must always be provided to _index.html_.
-- this _layout_ must match the name of a .css file in **layout/**, and a .png character sheet image in **background/**.
-- input (or textarea) fields are defined once and only once by rules starting with 'input#<name>' in the layout.css,
+- a `?layout=` URL parameter provided to `index.html` allows to select the character sheet.
+- this _layout_ must match the name of a `.css` file in the `layout/` directory, and a `.png` character sheet image in `background/`.
+- `input` (or `textarea`) form fields are defined once and only once by rules starting with `input#<name>` in the `$layout.css` files,
 and they must be the only selectors starting that way in the file.
-Non-textual fields must be specified as 'input[type=.+]#<name>'
-- the _layout.css_ MUST define a text input with id 'name'.
+Non-textual form fields must be specified as `input[type=.+]#<name>`
+- the `layout.css` file ****MUST define a text input with id `#name`.
 - (up)loading a new character currently only replace inputs defined in the provided file,
 non-redefined caracteristics will keep their old value.
 
