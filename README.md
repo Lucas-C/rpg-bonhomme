@@ -1,7 +1,6 @@
 <!--
-IDEAS:
-* separate home-made games from other games
-* add notes sections that are only visible to the user with the edit key
+IDEAS FOR IMPROVEMENTS:
+* add notes sections that are only visible to the user with the modification-key
 * template-index.html potential improvements:
 + dynamic, JS-based list of characters on home page (aka get rid of --db-filepath argument of index_generator.py)
 => would also avoid to repeatedly download homepage images while viewing/editing characters
