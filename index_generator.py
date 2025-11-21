@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
-import argparse, json, os, sys, sqlite3
+import argparse, json, sys, sqlite3
 from contextlib import closing
 from itertools import groupby
+from os import listdir, path  # pylint: disable=no-name-in-module
+
 from jinja2 import Environment, FileSystemLoader
 
 
-THIS_SCRIPT_PARENT_DIR = os.path.dirname(os.path.realpath(__file__))
+THIS_SCRIPT_PARENT_DIR = path.dirname(path.realpath(__file__))
 
 
 def generate_html_index(argv=None):
@@ -40,7 +42,7 @@ def get_characters(db_filepath):
         yield character
 
 def get_layouts():
-    return [os.path.splitext(f)[0] for f in os.listdir(os.path.join(THIS_SCRIPT_PARENT_DIR, 'layout'))]
+    return [path.splitext(f)[0] for f in listdir(path.join(THIS_SCRIPT_PARENT_DIR, 'layout'))]
 
 def db_list_all(db_filepath):
     chars_db = sqlite3.connect(db_filepath, check_same_thread=False)

@@ -36,8 +36,9 @@ check: $(CSS_LAYOUTS) $(CSS_SRC_FILE) $(JS_SRC_FILE) $(PY_INDEX_GEN) $(PY_WSGI) 
 	pre-commit run --all-files
 
 $(CSS_LAYOUTS): $(CSS_DIR)%.css:
-	csslint --ignore=ids,order-alphabetical,overqualified-elements $@
-	grep -q 'input#name' $@ || { echo "No input#name in $@" && false; }
+	@# Check disabled due to: https://github.com/CSSLint/parser-lib/pull/256
+	@if [ "$@" != "layout/BladesInTheDark.css" ]; then csslint --ignore=font-sizes,ids,order-alphabetical,overqualified-elements $@; fi
+	@grep -q 'input#name' $@ || { echo "No input#name in $@" && false; }
 
 run-server: $(PY_WSGI) $(DB_FILE)
 	## Launching a local server to serve HTML files & WSGI apps

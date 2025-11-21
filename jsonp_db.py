@@ -1,26 +1,24 @@
 #!/usr/bin/env python
-import base64, cgi, hashlib, hmac, html, logging, logging.handlers, os, re, sqlite3, traceback
+import base64, hashlib, hmac, html, logging, logging.handlers, re, sqlite3, traceback
+from cgi import FieldStorage  # pylint: disable=deprecated-module
 from collections import namedtuple
+from os.path import exists  # pylint: disable=no-name-in-module
 from threading import Lock
+from urllib.parse import parse_qsl
+
 from configobj import ConfigObj
-try:
-    from urlparse import parse_qsl
-except ImportError:
-    from urllib.parse import parse_qsl
 
-SCRIPT_DIR = os.path.dirname(__file__) or '.'
-
-CONFIG = ConfigObj(os.path.join(SCRIPT_DIR, re.sub('.pyc?$', '.ini', __file__)))
+CONFIG = ConfigObj(re.sub('.pyc?$', '.ini', __file__))
 MAX_KEY_LENGTH = CONFIG.as_int('max_key_length')
 MAX_VALUE_LENGTH = CONFIG.as_int('max_value_length')
 MAX_TABLE_SIZE = CONFIG.as_int('max_table_size')
 REQUIRE_MODIFCATION_KEY = CONFIG.as_bool('require_modification_key')
 MODIFICATION_KEY_SALT = CONFIG.get('modification_key_salt').encode('utf8')
 
-LOG_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('log_file'))
+LOG_FILE = CONFIG.get('log_file')
 LOG_FORMAT = '%(asctime)s - %(process)s [%(levelname)s] %(message)s'
 
-DATABASE_FILE = os.path.join(SCRIPT_DIR, CONFIG.get('db_file'))
+DATABASE_FILE = CONFIG.get('db_file')
 
 HTML_TEMPLATE = """'<!DOCTYPE html>
 <html>
@@ -44,12 +42,12 @@ class HTTPError(Exception):
         super().__init__(message)
         self.code = code
         self.status_string = HTTP_ERROR_STATUS[code]
-        self.status_line = '{} {}'.format(code, self.status_string)
-        self.full_msg = '{e.status_line} : {e}'.format(e=self)
+        self.status_line = f'{code} {self.status_string}'
+        self.full_msg = f'{self.status_line} : {self}'
 
     def format_response(self, jsonp_callback):
         if jsonp_callback:
-            return "{}(new Error('{}'))".format(jsonp_callback, self.full_msg), 'application/javascript'
+            return f"{jsonp_callback}(new Error('{self.full_msg}'))", 'application/javascript'
         html_body = '    <pre>\n' + html.escape(self.full_msg) + '\n    </pre>'
         return HTML_TEMPLATE.format(title=self.status_line, body=html_body), 'text/html'
 
@@ -93,7 +91,7 @@ def pop_form(env):
         return None
     post_env = env.copy()
     post_env['QUERY_STRING'] = ''
-    form = cgi.FieldStorage(
+    form = FieldStorage(
         fp=env.pop('wsgi.input'),
         environ=post_env,
         keep_blank_values=True
@@ -103,8 +101,8 @@ def pop_form(env):
 def parse_query_string(query_string):
     qprm = dict(parse_qsl(query_string, True))
     return RequestParameters(
-        [k for k in qprm if qprm[k] == ''],
-        {k: qprm[k] for k in qprm if qprm[k] != ''},
+        [k for k, v in qprm.items() if v == ''],
+        {k: v for k, v in qprm.items() if v != ''},
     )
 
 def parse_form(form):
@@ -130,27 +128,27 @@ def store_logic(path, query_params, form_params):
     # At this point, it's either a CREATE request or a valid UPDATE request
     log('PUT key="%s":value="%s"', key, new_value)
     db_put(key, new_value)
-    return new_value, '"{}"'.format(modification_key)
+    return new_value, f'"{modification_key}"'
 
 def check_and_extract_params(path, query_params, form_params):
     if not path.startswith('/') or path.count('/') != 1:
-        raise HTTPError('Incorrect request syntax, expecting /<key> and got: "{}"'.format(path), code=400)
+        raise HTTPError(f'Incorrect request syntax, expecting /<key> and got: "{path}"', code=400)
     key = path[1:]
     if MAX_KEY_LENGTH and (len(key) > MAX_KEY_LENGTH):
-        raise ValueError('Key length exceeded maximum: {} > {}'.format(len(key), MAX_KEY_LENGTH))
+        raise ValueError(f'Key length exceeded maximum: {len(key)} > {MAX_KEY_LENGTH}')
     modification_key = query_params.kwargs.pop('modification-key', None)
     if query_params.kwargs or form_params.kwargs:
         log('Extra kwargs found: query_params=%s - form_params=%s', query_params.kwargs, form_params.kwargs)
     if len(query_params.args) + len(form_params.args) > 1:
         raise HTTPError(('Incorrect request syntax, extra args:'
-                         'query_params={0.args} - form_params={1.args}').format(query_params, form_params), code=400)
+                         f'query_params={query_params.args} - form_params={form_params.args}'), code=400)
     new_value = None
     if form_params.args:
         new_value = form_params.args[0]
     elif query_params.args:
         new_value = query_params.args[0]
     if MAX_VALUE_LENGTH and new_value and len(new_value) > MAX_VALUE_LENGTH:
-        raise ValueError('Value length exceeded maximum: {} > {}'.format(len(new_value), MAX_VALUE_LENGTH))
+        raise ValueError(f'Value length exceeded maximum: {len(new_value)} > {MAX_VALUE_LENGTH}')
     return key, new_value, modification_key
 
 def check_modification_key(modification_key, key):
@@ -158,7 +156,7 @@ def check_modification_key(modification_key, key):
         raise HTTPError('No modification-key provided, update forbidden', code=401)
     real_modification_key = get_modification_key(key)
     if real_modification_key != modification_key:
-        raise HTTPError('Invalid modification-key, update forbidden: {}'.format(modification_key), code=401)
+        raise HTTPError(f'Invalid modification-key, update forbidden: {modification_key}', code=401)
 
 # To be extra-safe we could use bcrypt instead of MD5 here (or make this a config option), but YAGNI
 def get_modification_key(key):
@@ -186,7 +184,7 @@ def db_check_table_size():
     query_result = _DB.execute('SELECT COUNT(*) FROM KVStore').fetchone()
     table_size = int(query_result[0])
     if MAX_TABLE_SIZE and table_size > MAX_TABLE_SIZE:
-        raise MemoryError('Table size exceeded limit: {} > {}'.format(table_size, MAX_TABLE_SIZE))
+        raise MemoryError(f'Table size exceeded limit: {table_size} > {MAX_TABLE_SIZE}')
 
 def configure_logger():
     logger = logging.getLogger(__name__)
@@ -212,8 +210,8 @@ log('Starting : %s keys found in the DB - Config: %s', len(db_list_keys()), CONF
 if __name__ == '__main__':
     def app(env, start_response):
         path = env.get('PATH_INFO', '').encode('latin1').decode('utf8')
-        filename = path[1:] if path else ''
-        if filename and os.path.exists(filename):
+        filename = path[1:]
+        if filename and exists(filename):
             filetype = 'text'
             ext = filename.split('.')[-1]
             if ext in ('jpg', 'png'):
